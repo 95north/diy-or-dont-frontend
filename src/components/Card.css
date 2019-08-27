@@ -1,0 +1,65 @@
+.card {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px; /* 5px rounded corners */
+    width: 225px;
+    min-height: 375px;
+    background-color: #d8e3e2;
+    color: #666e56;
+    text-align: center;
+
+    padding: .5rem;    
+    padding: 20px;    
+    margin: 10px;
+    /* Margin : spacing between the cards */
+
+  }
+  
+  /* On mouse-over, add a deeper shadow */
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  
+  /* Add some padding inside the card container */
+  .container {
+    padding: 2px 16px;
+  }
+
+  .ponypic {
+      width: 150px;
+      /* display: inline-block; */
+      margin: auto;
+      padding: 20px;
+  }
+
+  .deleteBtn{
+    background-color: #f1f5e9;
+    color: #666e56;
+
+  }
+
+  .thecontainer {
+      /* DONT FUSS W TOO MUCH, WANT TO USE FLICKITY ANYWAY!  */
+    display: block;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    width: 100vw;
+    padding-left: 15px;
+    /* display: grid;
+    padding: 15px, 15px, 15px, 15px;
+    grid-template-columns: 1fr 1fr 1fr; */
+
+    /* background-color: #ebc5fa; */
+    /* Background color above overrides NavBar :(  */
+    /* justify-content: space-between;
+    align-content: space-around; */
+}
+
+  .hideEdit {
+      display: none;
+  }
+
+  .displayEdit {
+      display: block;
+  }

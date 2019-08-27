@@ -1,26 +1,145 @@
 import React from 'react';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
+import SignUp from './SignUp';
+import LogIn from './components/LogIn.js';
+import Home from './components/Home.js';
+import ProjectContainer from './components/ProjectContainer';
+// import NavBar from './NavBar.js'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+class App extends React.Component {
+
+  state={
+    
+  }
+
+
+    componentDidMount() {
+      let token = localStorage.getItem('token');
+      console.log("Token in frontend App.js: ", token)
+      console.log("Token === undefined?  ", token== "undefined")  // undefined FALSE "undefined" TRUE
+      console.log("Token t/F: ", token ? "VERDAD" : "FALSO")
+
+      if (token && (token != "undefined")) {
+      fetch('http://localhost:3000/retrieve_user', {
+        method: 'GET',
+        headers: {
+        'Content-Type': 'application/json',
+        Accepts: 'application/json',
+        Authorization: `${token}`
+        }
+      })
+        .then(resp => resp.json())
+        .then(user => {
+        this.setState({ user: user });
+        //  this.props.history.push('/dogs');
+        });
+      }
+    }
+  
+
+    signUpSubmit = (e, user) => {
+      e.preventDefault();
+      console.log('Sign Up User:', user);
+      fetch('http://localhost:3000/signup', {
+       method: 'POST',
+       headers: {
+        'Content-Type': 'application/json',
+        Accepts: 'application/json'
+       },
+       body: JSON.stringify({
+        user: {
+         username: user.username,
+         password:  user.password //'test'
+        }
+       })
+      })
+       .then(resp => resp.json())
+       .then(data => {
+        console.log('Response Data', data);
+        localStorage.setItem('token', data.token);
+        this.setState({ user: data.user });
+       });
+     };
+
+
+     logInSubmit= (e, user) =>  {
+      e.preventDefault();
+
+      if (true) {
+      fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accepts: 'application/json'
+        },
+        body: JSON.stringify({
+          user: {
+           username: user.username,
+           password:  user.password //'test'
+          }
+        })
+      })
+          //   Authorization: `${token}`
+          //   }
+          // })
+        .then(resp => resp.json())
+        .then(user => {
+          console.log('Response Data', user);
+          localStorage.setItem('token', user.token);
+          this.setState({ user: user.user });
+
+          // REDIRECT TO HOME !!!!!!
+          // store the JWT in session storage, 
+          // dispatch another action that tells the session reducer we had a successful log in.
+          // this.props.history.push('/dogs');
+        });
+      }
+    }
+
+
+  render(){
+
+    return (
+
+      // <div className="topnav">
+      //     <NavBar onDeleteSubmit={this.onDeleteSubmit} ponies={this.state.ponies} />
+      // </div>
+
+      <Switch>
+
+        <Route
+            path="/signup"
+            render={() => <SignUp submitHandler={this.signUpSubmit} />}
+        />
+
+
+        <Route
+            path="/login"
+            render={() => <LogIn submitHandler={this.logInSubmit} />}
+        />
+
+
+        <Route 
+            path="/home" 
+            component={Home} 
+        />
+
+
+        <Route 
+            path="/projects" 
+            component={ProjectContainer} 
+        />  
+
+
+      </Switch>
+    );
+  }
+
+
+
 }
-
-export default App;
+export default withRouter(App);
