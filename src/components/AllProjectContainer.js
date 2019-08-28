@@ -24,17 +24,53 @@ class AllProjectContainer extends React.Component{
         console.log("Edit CLick")
     }
 
+    calculateAvgs = (proj) =>{
+        let difficultyTotal = 0;
+        let difficultyCounter = 0;
+        let funTotal = 0;
+        let funCounter = 0;
+        let funRatings =[]
+        let timeTotal = 0;
+        let timeCounter = 0;
+        for (let review of proj[1]) {
+            if (review["reviewDifficulty"] ){
+                difficultyTotal = difficultyTotal + review["reviewDifficulty"];
+                difficultyCounter += 1;
+            }
+            if (review["reviewFun"] ){
+                funTotal += review["reviewFun"];
+                funCounter += 1;
+                funRatings.push(review["reviewFun"])
+            }
+            if (review["reviewTime"] ){
+                timeTotal += review["reviewTime"];
+                timeCounter += 1;
+            } 
+        }
+        proj["avgDifficulty"] = difficultyTotal / difficultyCounter
+        proj["avgFun"] = funTotal / funCounter
+        proj["avgTime"] = timeTotal / timeCounter
+        proj["ratingsCount"] = funCounter;
+        proj["funRatings"] = funRatings;
+    }
 
 
     render(){
-        let projectCardsArr = this.state.projects.map( project => <AllProjectCard project={project} onEditClickHandler={this.onEditClickHandler}/>)
+        let allProjectCardsArr;
+        if (this.state.allProjects.length > 0){
+            allProjectCardsArr = this.state.allProjects.map( project => {
+                project[0]["reviewDifficultyAvg"]=this.calculateAvgs(project)
+
+                return <AllProjectCard project={project} onEditClickHandler={this.onEditClickHandler}/>
+            })
+        }
         console.log(this.state)
 
         return(
             <React.Fragment>
 
                 <div className="thecontainer">
-                    <h1> Your Projects: </h1>
+                    <h1> Showing All Projects: </h1>
                     <br></br>
                     {/* <div className={this.state.editInProgress ? "displayEdit" : "hideEdit" }> 
                         <EditForm onEditSubmitHandler={this.onEditSubmitHandler}   
@@ -46,7 +82,7 @@ class AllProjectContainer extends React.Component{
                             editPonyImage={this.state.editPonyImage} 
                         />
                     </div> */}
-                    {projectCardsArr}
+                    {allProjectCardsArr ? allProjectCardsArr : null}
                 </div>
 
             </React.Fragment>
