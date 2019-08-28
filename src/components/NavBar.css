@@ -57,6 +57,15 @@
         }
       }
 
+
+    .menu {
+      background-color: #d8e3e2;
+      width: 22vw; 
+    }
+
+
+
+
     .hideElement {
         display: none;
     }

@@ -1,20 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route, Switch, withRouter, BrowserRouter as Router, Link } from 'react-router-dom';
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
+// import reducer from './reducer.js'
 
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
-import NavBar from './components/NavBar.js';
 
 ReactDOM.render(
     <BrowserRouter>
-        {/* <App 
-            // component={NavBar}
-        > 
-        </App> */}
-        <App/>
+        <Provider store={store}>
+            {/* <App 
+                // component={NavBar}
+                > 
+            </App> */}
+            <App/>
+        </Provider>
     </BrowserRouter>
     , document.getElementById('root'));
 

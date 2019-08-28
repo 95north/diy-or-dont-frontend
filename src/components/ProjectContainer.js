@@ -1,8 +1,9 @@
 import React from 'react';
 import ProjectCard from './ProjectCard.js'
+import {connect} from 'react-redux';
 import cloneDeep from 'lodash/cloneDeep'
-
 import './Card.css'
+
 
 class ProjectContainer extends React.Component{
 
@@ -20,6 +21,7 @@ class ProjectContainer extends React.Component{
             this.setState({projects: projectsData})  
         })
     }
+
 
     onEditClickHandler = () =>{
         console.log("Edit CLick")
@@ -59,4 +61,12 @@ class ProjectContainer extends React.Component{
 
 }
 
-export default ProjectContainer;
+
+
+function mapDispatchToProps(dispatch){
+    return({
+        
+    })
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectContainer);
