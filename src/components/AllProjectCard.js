@@ -1,7 +1,7 @@
 import React from 'react';
 import  './Card.css'
 
-class ProjectCard extends React.Component{
+class AllProjectCard extends React.Component{
     
     render(){
         let project = this.props.project
@@ -27,4 +27,4 @@ class ProjectCard extends React.Component{
 
 
 }
-export default ProjectCard;
+export default AllProjectCard;

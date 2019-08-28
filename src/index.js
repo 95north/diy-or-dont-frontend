@@ -1,13 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Route, Switch, withRouter, BrowserRouter as Router, Link } from 'react-router-dom';
+
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
+import NavBar from './components/NavBar.js';
 
 ReactDOM.render(
     <BrowserRouter>
-        <App />
+        {/* <App 
+            // component={NavBar}
+        > 
+        </App> */}
+        <App/>
     </BrowserRouter>
     , document.getElementById('root'));
 

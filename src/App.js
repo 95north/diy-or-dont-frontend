@@ -1,11 +1,12 @@
 import React from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
-import logo from './logo.svg';
+import { Route, Switch, withRouter, BrowserRouter as Router, Link } from 'react-router-dom';
 import './App.css';
 import SignUp from './SignUp';
 import LogIn from './components/LogIn.js';
 import Home from './components/Home.js';
 import ProjectContainer from './components/ProjectContainer';
+import AllProjectContainer from './components/AllProjectContainer';
+import NavBar from './components/NavBar';
 // import NavBar from './NavBar.js'
 
 
@@ -111,6 +112,8 @@ class App extends React.Component {
 
       <Switch>
 
+
+
         <Route
             path="/signup"
             render={() => <SignUp submitHandler={this.signUpSubmit} />}
@@ -125,14 +128,33 @@ class App extends React.Component {
 
         <Route 
             path="/home" 
-            component={Home} 
+            render={() => 
+              <React.Fragment>
+                <NavBar />
+                <AllProjectContainer />
+              </React.Fragment>
+            } 
+        />
+
+
+        <Route
+            path="/projects" 
+            // component={NavBar}
+            // component={ProjectContainer}
+            render={() => 
+              <React.Fragment>
+                <NavBar />
+                <ProjectContainer />
+              </React.Fragment>
+            }
         />
 
 
         <Route 
-            path="/projects" 
-            component={ProjectContainer} 
-        />  
+            // Display on all pages. If @ top, doesn't hit more specific page
+            path="/" 
+            component={NavBar} 
+        />
 
 
       </Switch>

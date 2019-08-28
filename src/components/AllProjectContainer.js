@@ -1,23 +1,22 @@
 import React from 'react';
-import ProjectCard from './ProjectCard.js'
-import cloneDeep from 'lodash/cloneDeep'
+import AllProjectCard from './AllProjectCard.js'
 
 import './Card.css'
 
-class ProjectContainer extends React.Component{
+class AllProjectContainer extends React.Component{
 
 // check user logged in (token) / get who user is.. 
 // fetch all of user's projects.  (hardcode for now)
     state = {
-        projects: []
+        allProjects: []
     }
 
     componentDidMount(){
-        fetch("http://localhost:3000/projects/1")               // HARD CODED !!! 
+        fetch("http://localhost:3000/allprojects")               // HARD CODED !!! 
         .then( res => res.json() )
         .then( projectsData => {
-            console.log("projectsData is :", projectsData)  //ok for hard coded 
-            this.setState({projects: projectsData})  
+            console.log("ALL projectsData is :", projectsData)  //ok for hard coded 
+            this.setState({allProjects: projectsData})  
         })
     }
 
@@ -28,7 +27,7 @@ class ProjectContainer extends React.Component{
 
 
     render(){
-        let projectCardsArr = this.state.projects.map( project => <ProjectCard project={project} onEditClickHandler={this.onEditClickHandler}/>)
+        let projectCardsArr = this.state.projects.map( project => <AllProjectCard project={project} onEditClickHandler={this.onEditClickHandler}/>)
         console.log(this.state)
 
         return(
@@ -59,4 +58,4 @@ class ProjectContainer extends React.Component{
 
 }
 
-export default ProjectContainer;
+export default AllProjectContainer;
