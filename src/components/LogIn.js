@@ -10,7 +10,7 @@ class LogIn extends React.Component{
     changeHandler = (event)=>{
         // console.log("in change handler", event.target.value)
         let inputName = event.target.name
-        console.log("inputName", inputName)
+        // console.log("inputName", inputName)
         this.setState(
             {[inputName]: event.target.value}
             )

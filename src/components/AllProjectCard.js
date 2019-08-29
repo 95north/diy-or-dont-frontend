@@ -41,7 +41,7 @@ class AllProjectCard extends React.Component{
                 <h3> {project[3].overview}</h3>  <br/>
                 <p> Status:  {project[2].status === "Completed" ? <span> Completed <input type="checkbox" name="completeProject" value="completed" checked={true} /> </span>: project[2].status}</p> */}
                 <button onClick={((e)=>this.props.onEditClickHandler(e, this.props.project))} > Read Reviews </button><br/>
-                <span> Add to My Projects: <input type="checkbox" name="addToMyProjects" value={"projectID"+project[0].id} checked={false} /> </span><br/>
+                <span> Add to My Projects: <input type="checkbox" name="addToMyProjects" value={"projectID"+project[0].id} defaultChecked={false} /> </span><br/>
 
                 {/* <button onClick={console.log("DELETE CLICK")} > Delete from Your Projects</button> */}
             </div>

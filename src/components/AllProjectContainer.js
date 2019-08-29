@@ -1,5 +1,6 @@
 import React from 'react';
 import AllProjectCard from './AllProjectCard.js'
+import {connect} from 'react-redux';
 
 import './Card.css'
 
@@ -12,10 +13,11 @@ class AllProjectContainer extends React.Component{
     }
 
     componentDidMount(){
+        
         fetch("http://localhost:3000/allprojects")               // HARD CODED !!! 
         .then( res => res.json() )
         .then( projectsData => {
-            console.log("ALL projectsData is :", projectsData)  //ok for hard coded 
+            // console.log("ALL projectsData is :", projectsData)  //ok for hard coded 
             this.setState({allProjects: projectsData})  
         })
     }
@@ -64,7 +66,6 @@ class AllProjectContainer extends React.Component{
                 return <AllProjectCard project={project} onEditClickHandler={this.onEditClickHandler}/>
             })
         }
-        console.log(this.state)
 
         return(
             <React.Fragment>
@@ -94,4 +95,15 @@ class AllProjectContainer extends React.Component{
 
 }
 
-export default AllProjectContainer;
+
+function mapStateToProps(state){
+    // console.log("state argument in MSP in aPP: ", state)  An empty obj.
+    // console.log("Called mapStateToPRops! ")   CORRECT, this gets called!
+    console.log("in AllProjectContainer mapStateToPRops!  state is:  ", state )   // Id + token, CORRECT!   
+      return({
+          user: state.user,
+      })
+  }
+  
+
+export default connect(mapStateToProps, null)(AllProjectContainer);

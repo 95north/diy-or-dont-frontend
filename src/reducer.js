@@ -1,13 +1,32 @@
 import {combineReducers} from 'redux';
 
 const defaultState ={
-    username: 'Nancy',
-	userLocation:  'atop red bicycle',
+    // user_token: null, 			// returned from Login fetch request
+	// user_id: null, 			// returned from Login fetch request
+    // username: 'Nancy',
+    // userLocation:  'atop red bicycle',
+    user: {},
+    user_id: '',
 	userProjects: [],   //  [  [(user_proj/“reviews”,  proj,  proj_supplies], … ]
 	userSupplies: [],   //  [ user_supplyObj  + name:supply.name,   … ] 
 	searchTerm: ''	
 }
 
+
+// only extracts/manipulates the user portion of state
+function userReducer(state=defaultState.user, action){   //App
+    console.log("State (arg) in userReducer: ", state) // emptyObj {}
+    console.log("action payload : ", action.payload) // now id&token showing undefined after log in 
+    switch(action.type){
+        // toggle have / need tool.
+        case "LOGGED_IN":
+            return action.payload   // is ONLY: {user_id: x, user_token: x}
+
+            //return([...state, state.user:state]);
+        default: 
+            return state
+    }
+}
 
 
 function projectContainerReducer(state=defaultState.userProjects, action){
@@ -24,7 +43,8 @@ function projectContainerReducer(state=defaultState.userProjects, action){
 
 
 const reducer=combineReducers({
-    userSupplies: projectContainerReducer
+    userSupplies: projectContainerReducer,
+    user: userReducer
 })
 
 export default reducer;

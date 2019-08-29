@@ -7,6 +7,7 @@ import Home from './components/Home.js';
 import ProjectContainer from './components/ProjectContainer';
 import AllProjectContainer from './components/AllProjectContainer';
 import NavBar from './components/NavBar';
+import {connect} from 'react-redux';
 // import NavBar from './NavBar.js'
 
 
@@ -14,13 +15,16 @@ import NavBar from './components/NavBar';
 class App extends React.Component {
 
   state={
+    user_token: null,     // refactoring to put to Store
+    user_id: null,         // refactoring to put to Store
+    appstateLOLOLO : null
     
   }
 
 
 
 
-  
+
 
     componentDidMount() {
       let token = localStorage.getItem('token');
@@ -93,17 +97,22 @@ class App extends React.Component {
           // })
         .then(resp => resp.json())
         .then(user => {
-          console.log('Response Data', user);
           localStorage.setItem('token', user.token);
-          this.setState({ user: user.user });
 
-          // REDIRECT TO HOME !!!!!!
+          this.setState({ user_token: user.token,
+          user_id: user.user_id });
+
+          this.props.loggedInAddIdToStore({ user_token: user.token,
+            user_id: user.user_id });
+
+          this.props.history.push('/home');  //redirect to home.
           // store the JWT in session storage, 
           // dispatch another action that tells the session reducer we had a successful log in.
-          // this.props.history.push('/dogs');
-        });
+        });  // closes the .then 
+
       }
     }
+
 
 
   render(){
@@ -164,8 +173,34 @@ class App extends React.Component {
       </Switch>
     );
   }
+} // end class
 
+function mapDispatchToProps(dispatch){
 
+  console.log("Called MDP !  dispatch arg is:  ", dispatch )   // Id + token, CORRECT!   
+  // console.log("Called MDP !  argB arg is:  ", argB )   // meaninglessObj therefore useless  
 
+    return({
+        loggedInAddIdToStore: (userinfo)=> dispatch(
+          {type: "LOGGED_IN",
+          payload: userinfo   //userReducer gets id  & token, OK! 
+        })
+    })
 }
-export default withRouter(App);
+
+
+function mapStateToProps(state){
+  // console.log("state argument in MSP in aPP: ", state)  An empty obj.
+  // console.log("Called mapStateToPRops! ")   CORRECT, this gets called!
+  console.log("Called mapStateToPRops!  state is:  ", state )   // Id + token, CORRECT!   
+    return({
+        user: state.user,
+    })
+}
+
+
+
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));

@@ -1,4 +1,7 @@
 import React from 'react';
+import { Route, Switch, withRouter, BrowserRouter as Router, Link } from 'react-router-dom';
+import {connect} from 'react-redux';
+// import { Link } from 'react-router';  Doesn't like this.
 import './NavBar.css'
 
 
@@ -21,9 +24,13 @@ class NavBar extends React.Component{
     render(){
         console.log("NavBar props: ", this.props)
 
+
         return(
             <div className="topnav" >
                 <button> Menu Icon Here </button>
+                <Link to='/projects'>My Projects</Link>
+
+
                 <span> Username Here </span>
                 <button onClick={this.onDeleteClick} > Delete Something ? </button>
            
@@ -34,8 +41,13 @@ class NavBar extends React.Component{
             </div>
         )
     }
-
-
-
 }
-export default NavBar;
+
+    function mapStateToProps(state){
+        return({
+            userSupplies: state.userSupplies,
+            user: state.user
+        })
+    }
+
+export default connect(mapStateToProps, null)(NavBar);

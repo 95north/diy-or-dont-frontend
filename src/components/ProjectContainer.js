@@ -1,7 +1,9 @@
 import React from 'react';
 import ProjectCard from './ProjectCard.js'
+import { Route , withRouter, Redirect} from 'react-router-dom';
+import { browserHistory } from 'react-router';
 import {connect} from 'react-redux';
-import cloneDeep from 'lodash/cloneDeep'
+// import cloneDeep from 'lodash/cloneDeep'
 import './Card.css'
 
 
@@ -17,18 +19,26 @@ class ProjectContainer extends React.Component{
     }
 
     componentDidMount(){
-        fetch("http://localhost:3000/projects/1")               // HARD CODED !!! 
-        .then( res => res.json() )
-        .then( projectsData => {
-            let rawDataCopy = [...projectsData]
-            rawDataCopy.pop()            
-            this.setState({
-                projects: rawDataCopy,
-                userSupplies: projectsData[projectsData.length-1][0], 
-                relevantSupplyObjs: projectsData[projectsData.length-1][1] 
-            })  
+        console.log("in ProjCont, props.user is : ", this.props.user.user_id)
+        
+        if (this.props.user.user_id !== "undefined" && this.props.user.user_id > 0 ){
+            fetch(`http://localhost:3000/projects/${this.props.user.user_id}`)               // HARD CODED !!! 
+            .then( res => res.json() )
+            .then( projectsData => {
+                let rawDataCopy = [...projectsData]
+                rawDataCopy.pop()            
+                this.setState({
+                    projects: rawDataCopy,
+                    userSupplies: projectsData[projectsData.length-1][0], 
+                    relevantSupplyObjs: projectsData[projectsData.length-1][1] 
+                })  
 
-        })
+            })
+        } else {
+            return <Redirect to="/login" />
+            // ^^Source:   https://scotch.io/courses/using-react-router-4/authentication-with-redirect
+            // this.props.history.push('/login')  Need to pass down history to use
+        }
     }
 
 
@@ -90,7 +100,8 @@ function mapDispatchToProps(dispatch){
 
 function mapStateToProps(state){
     return({
-        userSupplies: state.userSupplies 
+        userSupplies: state.userSupplies,
+        user: state.user
     })
 }
 
