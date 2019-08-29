@@ -18,6 +18,10 @@ class App extends React.Component {
   }
 
 
+
+
+  
+
     componentDidMount() {
       let token = localStorage.getItem('token');
       console.log("Token in frontend App.js: ", token)

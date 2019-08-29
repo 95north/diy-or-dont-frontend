@@ -10,15 +10,24 @@ class ProjectContainer extends React.Component{
 // check user logged in (token) / get who user is.. 
 // fetch all of user's projects.  (hardcode for now)
     state = {
-        projects: []
+        projects: [],
+        userSupplies: [],
+        relevantSupplyObjs: []
+
     }
 
     componentDidMount(){
         fetch("http://localhost:3000/projects/1")               // HARD CODED !!! 
         .then( res => res.json() )
         .then( projectsData => {
-            console.log("projectsData is :", projectsData)  //ok for hard coded 
-            this.setState({projects: projectsData})  
+            let rawDataCopy = [...projectsData]
+            rawDataCopy.pop()            
+            this.setState({
+                projects: rawDataCopy,
+                userSupplies: projectsData[projectsData.length-1][0], 
+                relevantSupplyObjs: projectsData[projectsData.length-1][1] 
+            })  
+
         })
     }
 
@@ -30,8 +39,18 @@ class ProjectContainer extends React.Component{
 
 
     render(){
-        let projectCardsArr = this.state.projects.map( project => <ProjectCard project={project} onEditClickHandler={this.onEditClickHandler}/>)
-        console.log(this.state)
+        let projectCardsArr = this.state.projects.map( project => {
+            return(
+            <ProjectCard 
+                project={project} 
+                addNeedTool={this.props.addNeedTool}
+                unNeedTool={this.props.unNeedTool}
+                onEditClickHandler={this.onEditClickHandler}
+            />
+            )
+        })
+
+        console.log("State in MY projects Container", this.state)
 
         return(
             <React.Fragment>
@@ -57,16 +76,23 @@ class ProjectContainer extends React.Component{
         )
     }
 
-
-
 }
 
 
 
 function mapDispatchToProps(dispatch){
     return({
-        
+        addNeedTool: ()=> dispatch({type: "ADD_TOOL_NEED"}),
+        unNeedTool: ()=> dispatch({type: "UN_NEED_TOOL"})
     })
 }
+
+
+function mapStateToProps(state){
+    return({
+        userSupplies: state.userSupplies 
+    })
+}
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectContainer);
