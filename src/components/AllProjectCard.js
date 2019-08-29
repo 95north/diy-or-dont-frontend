@@ -19,7 +19,7 @@ class AllProjectCard extends React.Component{
 
     render(){
         let project = this.props.project
-        console.log("One General Project details: ", project)
+        // console.log("One General Project details: ", project)
 
         return(
             <div className="card">

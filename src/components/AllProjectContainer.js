@@ -56,16 +56,48 @@ class AllProjectContainer extends React.Component{
         proj["funRatings"] = funRatings;
     }
 
+    filterProjectsBySearchTerm = ()=>{
+        let returnArr = []
+        let searchTermCopy = this.props.searchTerm.value
+        if (searchTermCopy === "undefined" || searchTermCopy === undefined ){
+            searchTermCopy = ""
+        }
 
+        this.state.allProjects.forEach( proj =>{
+            // console.log("search Filter proj: ", proj[0].name)
+            // let p = proj[0].name.toLowerCase()
+            // p.includes(this.props.searchTerm.value)
+            if (proj[0].name.toLowerCase().includes(searchTermCopy)){
+                // returnArr.push(proj)
+                returnArr.push(proj[0].name)
+            }
+        })
+        return returnArr;
+    }
+
+    
+    
     render(){
-        let allProjectCardsArr;
+
+        // finish filtering projects (should refactor, chunky), then create Project Card.
+        let displayProjectsCardArr 
+        let filteredProjectsName = this.filterProjectsBySearchTerm();
+        let filteredProjectsCardArr = [];
+
         if (this.state.allProjects.length > 0){
-            allProjectCardsArr = this.state.allProjects.map( project => {
+            this.state.allProjects.forEach( proj => {
+                if (filteredProjectsName.includes(proj[0].name)){
+                    filteredProjectsCardArr.push(proj)
+                }
+            })
+            displayProjectsCardArr = filteredProjectsCardArr.map( project => {
                 project[0]["reviewDifficultyAvg"]=this.calculateAvgs(project)
 
                 return <AllProjectCard project={project} onEditClickHandler={this.onEditClickHandler}/>
             })
         }
+
+
 
         return(
             <React.Fragment>
@@ -83,11 +115,10 @@ class AllProjectContainer extends React.Component{
                             editPonyImage={this.state.editPonyImage} 
                         />
                     </div> */}
-                    {allProjectCardsArr ? allProjectCardsArr : null}
+                    {displayProjectsCardArr ? displayProjectsCardArr : null}
                 </div>
 
             </React.Fragment>
-    
         )
     }
 
@@ -102,6 +133,7 @@ function mapStateToProps(state){
     console.log("in AllProjectContainer mapStateToPRops!  state is:  ", state )   // Id + token, CORRECT!   
       return({
           user: state.user,
+          searchTerm: state.searchTerm
       })
   }
   

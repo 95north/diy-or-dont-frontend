@@ -37,11 +37,24 @@ class NavBar extends React.Component{
 
                 <button  >  Create a New Project </button>
                 ......*~+  +~*   *~+  +~*   *~+  +~*   *~+  +~*   *~+  +~*
-                <input type="text" placeholder="Search All Projects" />
+                <input type="text" onChange={((e)=> this.props.updateSearchTerm(e))} placeholder="Search All Projects"  name="allProjSearch"/>
             </div>
         )
     }
 }
+
+
+    function mapDispatchToProps(dispatch){
+        return({
+            updateSearchTerm: (e)=> dispatch({
+                type: "UPDATE_SEARCH_TERM",
+                payload:({
+                    formFieldName: e.target.name,
+                    value:e.target.value
+                }) 
+            }),
+        })
+    }
 
     function mapStateToProps(state){
         return({
@@ -50,4 +63,8 @@ class NavBar extends React.Component{
         })
     }
 
-export default connect(mapStateToProps, null)(NavBar);
+
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
