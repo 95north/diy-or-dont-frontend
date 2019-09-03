@@ -6,6 +6,7 @@ import LogIn from './components/LogIn.js';
 import Home from './components/Home.js';
 import ProjectContainer from './components/ProjectContainer';
 import AllProjectContainer from './components/AllProjectContainer';
+import ToolContainer from './components/ToolContainer';
 import NavBar from './components/NavBar';
 import {connect} from 'react-redux';
 // import NavBar from './NavBar.js'
@@ -100,10 +101,14 @@ class App extends React.Component {
           localStorage.setItem('token', user.token);
 
           this.setState({ user_token: user.token,
-          user_id: user.user_id });
+          user_id: user.user_id});
 
           this.props.loggedInAddIdToStore({ user_token: user.token,
-            user_id: user.user_id });
+            user_id: user.user_id,
+            username: user.user_name,
+            location: user.user_location,
+          
+          });
 
           this.props.history.push('/home');  //redirect to home.
           // store the JWT in session storage, 
@@ -163,6 +168,16 @@ class App extends React.Component {
         />
 
 
+        <Route
+            path="/mytoolbox" 
+            render={() => 
+              <React.Fragment>
+                <NavBar />
+                <ToolContainer />
+              </React.Fragment>
+            }
+        />  
+
         <Route 
             // Display on all pages. If @ top, doesn't hit more specific page
             path="/" 
@@ -177,7 +192,7 @@ class App extends React.Component {
 
 function mapDispatchToProps(dispatch){
 
-  console.log("Called MDP !  dispatch arg is:  ", dispatch )   // Id + token, CORRECT!   
+  // console.log("Called MDP !  dispatch arg is:  ", dispatch )   // Id + token, CORRECT!   
   // console.log("Called MDP !  argB arg is:  ", argB )   // meaninglessObj therefore useless  
 
     return({
@@ -192,7 +207,7 @@ function mapDispatchToProps(dispatch){
 function mapStateToProps(state){
   // console.log("state argument in MSP in aPP: ", state)  An empty obj.
   // console.log("Called mapStateToPRops! ")   CORRECT, this gets called!
-  console.log("Called mapStateToPRops!  state is:  ", state )   // Id + token, CORRECT!   
+  // console.log("Called mapStateToPRops!  state is:  ", state )   // Id + token, CORRECT!   
     return({
         user: state.user,
     })

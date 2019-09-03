@@ -10,7 +10,7 @@ import './Card.css'
 class ProjectContainer extends React.Component{
 
 // check user logged in (token) / get who user is.. 
-// fetch all of user's projects.  (hardcode for now)
+// fetch all of user's projects. 
     state = {
         projects: [],
         userSupplies: [],
@@ -22,7 +22,7 @@ class ProjectContainer extends React.Component{
         console.log("in ProjCont, props.user is : ", this.props.user.user_id)
         
         if (this.props.user.user_id !== "undefined" && this.props.user.user_id > 0 ){
-            fetch(`http://localhost:3000/projects/${this.props.user.user_id}`)               // HARD CODED !!! 
+            fetch(`http://localhost:3000/projects/${this.props.user.user_id}`)              
             .then( res => res.json() )
             .then( projectsData => {
                 let rawDataCopy = [...projectsData]
@@ -33,6 +33,12 @@ class ProjectContainer extends React.Component{
                     relevantSupplyObjs: projectsData[projectsData.length-1][1] 
                 })  
 
+                this.props.addUserAppDataToStore({ 
+                    projects: rawDataCopy,
+                    userSupplies: projectsData[projectsData.length-1][0], 
+                    relevantSupplyObjs: projectsData[projectsData.length-1][1]
+
+                });
             })
         } else {
             return <Redirect to="/login" />
@@ -60,7 +66,7 @@ class ProjectContainer extends React.Component{
             )
         })
 
-        console.log("State in MY projects Container", this.state)
+        console.log("State (NOT STORE) in MY projects Container", this.state)
 
         return(
             <React.Fragment>
@@ -91,7 +97,11 @@ class ProjectContainer extends React.Component{
 
 
 function mapDispatchToProps(dispatch){
-    return({
+    return({        
+        addUserAppDataToStore: (projectsUserSuppliesAndUserSupplyObjs)=> dispatch(
+            {type: "ADD_USER_APP_DATA",
+            payload: projectsUserSuppliesAndUserSupplyObjs
+        }),
         addNeedTool: ()=> dispatch({type: "ADD_TOOL_NEED"}),
         unNeedTool: ()=> dispatch({type: "UN_NEED_TOOL"})
     })

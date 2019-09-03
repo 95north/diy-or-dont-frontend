@@ -7,16 +7,16 @@ const defaultState ={
     // userLocation:  'atop red bicycle',
     user: {},
     user_id: '',
-	userProjects: [],   //  [  [(user_proj/“reviews”,  proj,  proj_supplies], … ]
-	userSupplies: [],   //  [ user_supplyObj  + name:supply.name,   … ] 
+	userProjects: [],       //  [  [(user_proj/“reviews”,  proj,  proj_supplies], … ]
+    userSupplies: [],       //  user’s user_supplies     — set in ProjectContainer 
+    relevantSupplyObjs: [], //  Supply DB Table objects that user has    — set in ProjectContainer
 	searchTerm: ''	
 }
 
 
 // only extracts/manipulates the user portion of state
 function userReducer(state=defaultState.user, action){   //App
-    console.log("State (arg) in userReducer: ", state) // emptyObj {}
-    console.log("action payload : ", action.payload) // now id&token showing undefined after log in 
+    console.log(" userReducer on login action payload : ", action.payload) // now id&token showing undefined after log in 
     switch(action.type){
         // toggle have / need tool.
         case "LOGGED_IN":
@@ -30,12 +30,18 @@ function userReducer(state=defaultState.user, action){   //App
 
 
 function projectContainerReducer(state=defaultState.userProjects, action){
+    console.log("user App Data - action payload : ", action.payload) // now id&token showing undefined after log in 
+
     switch(action.type){
         // toggle have / need tool.
+        // need to update store - trigger re-render
         case "ADD_TOOL_NEED":
             return({...state});
         case "UN_NEED_TOOL":
             return({...state});
+        case "ADD_USER_APP_DATA":
+            return action.payload;
+
         default: 
             return state
     }
@@ -48,7 +54,6 @@ function searchTermReducer(state=defaultState.searchTerm, action){   //App
         // toggle have / need tool.
         case "UPDATE_SEARCH_TERM":
             return action.payload   // is ONLY: {user_id: x, user_token: x}
-
         default: 
             return state
     }

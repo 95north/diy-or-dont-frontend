@@ -27,12 +27,13 @@ class NavBar extends React.Component{
 
         return(
             <div className="topnav" >
-                <button> Menu Icon Here </button>
+                <button> Menu Icon </button>
                 <Link to='/projects'>My Projects</Link>
+                <Link to='/mytoolbox'>My Toolbox</Link>
 
 
-                <span> Username Here </span>
-                <button onClick={this.onDeleteClick} > Delete Something ? </button>
+                <span> {this.props.user.username ? `Hi ${this.props.user.username}` : <Link to='/login'> Login </Link> } </span>
+                <button onClick={this.onDeleteClick} > DeleteFunc? </button>
            
 
                 <button  >  Create a New Project </button>

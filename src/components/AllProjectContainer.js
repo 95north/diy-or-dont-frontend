@@ -1,5 +1,6 @@
 import React from 'react';
 import AllProjectCard from './AllProjectCard.js'
+import NewProjectForm from './NewProjectForm.js'
 import {connect} from 'react-redux';
 
 import './Card.css'
@@ -19,6 +20,8 @@ class AllProjectContainer extends React.Component{
         .then( projectsData => {
             // console.log("ALL projectsData is :", projectsData)  //ok for hard coded 
             this.setState({allProjects: projectsData})  
+            // Add to store: 
+            
         })
     }
 
@@ -126,6 +129,18 @@ class AllProjectContainer extends React.Component{
 
 }
 
+
+// function mapDispatchToProps(dispatch){
+//     return({
+//         updateSearchTerm: (e)=> dispatch({
+//             type: "UPDATE_SEARCH_TERM",
+//             payload:({
+//                 formFieldName: e.target.name,
+//                 value:e.target.value
+//             }) 
+//         }),
+//     })
+// }
 
 function mapStateToProps(state){
     // console.log("state argument in MSP in aPP: ", state)  An empty obj.
