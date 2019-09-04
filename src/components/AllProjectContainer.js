@@ -1,6 +1,7 @@
 import React from 'react';
 import AllProjectCard from './AllProjectCard.js'
 import NewProjectForm from './NewProjectForm.js'
+import { Route, Switch, withRouter, BrowserRouter as Router, Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import './Card.css'
@@ -107,6 +108,7 @@ class AllProjectContainer extends React.Component{
 
                 <div className="thecontainer">
                     <h1> Showing All Projects: </h1>
+                    <Link to="/createproject">Don't See It? Create a New Project</Link>
                     <br></br>
                     {/* <div className={this.state.editInProgress ? "displayEdit" : "hideEdit" }> 
                         <EditForm onEditSubmitHandler={this.onEditSubmitHandler}   
@@ -118,7 +120,9 @@ class AllProjectContainer extends React.Component{
                             editPonyImage={this.state.editPonyImage} 
                         />
                     </div> */}
-                    {displayProjectsCardArr ? displayProjectsCardArr : null}
+
+                    
+                    {displayProjectsCardArr ? displayProjectsCardArr : <Link to="/createproject">Don't See It? Create a New Project</Link>}
                 </div>
 
             </React.Fragment>

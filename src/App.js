@@ -6,9 +6,11 @@ import LogIn from './components/LogIn.js';
 import Home from './components/Home.js';
 import ProjectContainer from './components/ProjectContainer';
 import AllProjectContainer from './components/AllProjectContainer';
+import NewProjectForm from './components/NewProjectForm';
 import ToolContainer from './components/ToolContainer';
 import NavBar from './components/NavBar';
 import {connect} from 'react-redux';
+// import NewProjectForm from './components/NewProjectForm';
 // import NavBar from './NavBar.js'
 
 
@@ -174,6 +176,16 @@ class App extends React.Component {
               <React.Fragment>
                 <NavBar />
                 <ToolContainer />
+              </React.Fragment>
+            }
+        />  
+
+        <Route
+            path="/createproject" 
+            render={() => 
+              <React.Fragment>
+                <NavBar />
+                <NewProjectForm />
               </React.Fragment>
             }
         />  
