@@ -24,11 +24,7 @@ class App extends React.Component {
     
   }
 
-
-
-
-
-
+  
     componentDidMount() {
       let token = localStorage.getItem('token');
       console.log("Token in frontend App.js: ", token)
@@ -217,8 +213,6 @@ function mapDispatchToProps(dispatch){
 
 
 function mapStateToProps(state){
-  // console.log("state argument in MSP in aPP: ", state)  An empty obj.
-  // console.log("Called mapStateToPRops! ")   CORRECT, this gets called!
   // console.log("Called mapStateToPRops!  state is:  ", state )   // Id + token, CORRECT!   
     return({
         user: state.user,

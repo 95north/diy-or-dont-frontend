@@ -104,28 +104,10 @@ class ToolboxDisplay extends React.Component{
                 )
         })
 
-
-
         // let allUserSupplies = this.props.userSupplies.userSupplies
         // return this.props.userSupplies.relevantSupplyObjs.map(function ( supply ){
         //     // let userSupply = this.props.userSupplies.userSupplies.find( us => us.supply_id === supply.id);
         //     //  ^ Can't nest this.props bc scope issues!   this.props undefined. 
-        //     let userSupply = allUserSupplies.find( us => us.supply_id === supply.id);
-        //         if(userSupply.intoolbox === true){  // only display if added to Toolbox
-        //         return(
-        //             <tr>
-        //                 <td>{supply.name}</td>
-        //                 <td>{supply.description}</td>
-        //                 <td>{userSupply.quantity} </td>
-        //                 <td>{userSupply.measurement}</td>
-        //                 <td>{String(userSupply.userneeds)} </td>
-        //                 {/* <td>{this.formatDate(userSupply.updated_at)} </td> */}
-        //                 <td>{userSupply.updated_at} </td>                     
-        //             </tr>
-        //         )
-                
-        //         } 
-        // })
     }
 
 

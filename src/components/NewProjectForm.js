@@ -7,32 +7,11 @@ import AddProjectToolForm from './AddProjectToolForm.js'
 
 class NewProjectForm extends React.Component{
     state ={
-        // // Supplies Table: 
-        // t.string "name"
-        // t.string "description"
-        // t.string "image"
-
-
-        // // Project_supplies Table: 
-        // t.integer "quantity"
-        // t.string "note"
-        // t.boolean "mandatory"
-        // t.bigint "supply_id"
-        // t.bigint "project_id"
-
-
-        // // Projects table
-        // t.string "name"
-        // t.string "overview"
-        // t.string "description"
-        // t.string "image"
-
         allSupplies: [],    // list of all extant tools
         newProjectName: "",
         newProjectOverview: "",
         newProjectDescription: "",
         tools: [{name: "", quantity:"", note: "", mandatory: ""}] //tools used on new project
-        
     }
 
 
@@ -87,14 +66,9 @@ class NewProjectForm extends React.Component{
 
 
     addTool = (e) => {
-        // this.setState((priorState) =>{
-        //     tools: [...priorState.tools, {name: "", quantity:"", note: "", mandatory: ""}]
-        // })
         this.setState({
             tools: [...this.state.tools, {name: "", quantity:"", note: "", mandatory: ""}]
         })
-
-
     }
 
     //refactor to render tool Options. 
@@ -124,29 +98,30 @@ class NewProjectForm extends React.Component{
     // }
 
 
-    handleAddToMyProjectsCheckboxChange = (e) =>{
-        console.log('card props - ', this.props)
-        this.setState({ addToProjectsCheckbox: e.target.checked })
-        console.log("this.props.user.user_id, ", this.props.user.user_id)
-        console.log("this.props.project[0].id , ", this.props.project[0].id )
-        if (this.props.user.user_id === undefined || this.props.user.user_id === "undefined" ){
-            alert("Login!")
-        } else {
+    newProjectFormSubmitHandler = (e) =>{
+        e.preventDefault();
+        console.log("state in new project form SUBMIT: ", this.state)
 
-            fetch(`http://localhost:3000/newuserproject`, {
+        console.log("this.props.user.user_id, ", this.props.user.user_id)
+        // if (this.props.user.user_id === undefined || this.props.user.user_id === "undefined" ){
+        //     alert("Login!")
+        // } 
+
+
+            fetch(`http://localhost:3000/projects`, {
                 headers: { "Content-Type": "application/json; charset=utf-8",
                     Accepts: 'application/json'
                  },
                 method: 'POST',
                 body: JSON.stringify({
-                    user_id: this.props.user.user_id,
-                    project_id: this.props.project[0].id  // GET FROM  THE PROJECT CARD.
-
-                
+                    newProjectName: this.state.newProjectName,
+                    newProjectOverview: this.state.newProjectOverview,
+                    newProjectDescription: this.state.newProjectDescription,
+                    tools: this.state.tools
                 })
             }).then(res => res.json() )
             .then(postResp => console.log(postResp))
-        }
+        
     }
 
 
@@ -162,7 +137,7 @@ class NewProjectForm extends React.Component{
                 <div className="panel">
                     <span onClick={"this.parentElement.style.display='none'"}> X </span>
                     <h1> Create New Project: </h1>
-                        <form onChange={( (e)=>this.changeHandler(e) )}>
+                        <form onChange={( (e)=>this.changeHandler(e) )} onSubmit={((e)=>this.newProjectFormSubmitHandler(e))}>
                             Project Name: <input type="text" placeholder="Eg. Hang a Shelf, Replace Crown Molding, Fix Leaky Toilet" name="newProjectName" onChange={this.changeHandler}/> <br/>
                             Project Overview / Description:<input type="text" placeholder="Eg. Hang a Shelf Using Brackets and Nails or Screws" name="newProjectOverview" onChange={this.changeHandler}/> <br/>
                             Project Instructions: <input type="text" placeholder="Detailed Instructions for how to complete project, plus any tips" name="newProjectDescription" onChange={this.changeHandler}/> <br/>

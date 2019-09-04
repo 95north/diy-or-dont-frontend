@@ -28,6 +28,7 @@ class NavBar extends React.Component{
         return(
             <div className="topnav" >
                 <button> Menu Icon </button>
+                <Link to='/home'>All Projects</Link>
                 <Link to='/projects'>My Projects</Link>
                 <Link to='/mytoolbox'>My Toolbox</Link>
 
@@ -36,7 +37,7 @@ class NavBar extends React.Component{
                 <button onClick={this.onDeleteClick} > DeleteFunc? </button>
            
 
-                <button  >  Create a New Project </button>
+                <button  >  i do nothing! </button>
                 ......*~+  +~*   *~+  +~*   *~+  +~*   *~+  +~*   *~+  +~*
                 <input type="text" onChange={((e)=> this.props.updateSearchTerm(e))} placeholder="Search All Projects"  name="allProjSearch"/>
             </div>
