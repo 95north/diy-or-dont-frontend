@@ -1,37 +1,50 @@
 import React from 'react';
+import './Display.css'
 import {connect} from 'react-redux';
 
 
 class addProjectToolForm extends React.Component{
-    state ={
-        toolCounter : 0,
-        tools: []
-    }
 
-
-    // componentDidMount = () =>{
-    //     console.log("props in addProjectToolForm: ", this.props)
-    //     this.setState({tools: [this.props.tools]})
-    // }
+    constructor(props) {
+        super(props)
     
+        // Create the ref     HARD CODED!!!  Not using. 
+        // this.newTool0 = React.createRef()
+
+        this.state={
+            toolCounter : 0,
+            tools: [],
+            showNewTool: false
+        }
+      } 
+
+    
+
     renderSupplySelectOptions = (index) =>{
-       
-        console.log("props in addProjectToolForm renderSupplySelectOptions: ", this.props)
         let rArr = [];
-            rArr.push(<option selected="selected" disabled="disabled">Select Tool/Supply</option>)
+        rArr.push(<option selected="selected" disabled="disabled">Select Tool/Supply</option>)
 
         this.props.allSupplies.forEach( tool =>{          
             rArr.push(<option value={`toolId${tool.id}`} > {tool.name} </option>)
         })
-        //this.setState({toolCounter: this.state.toolCounter += 1}) crashes it. 
-        rArr.push(<option value="trashMe">Oops Don't Need Another Tool Disregard</option>)
         
+        rArr.push(<option value="trashMe">Oops Don't Need Another Tool Disregard</option>)
+        rArr.push(<option value="newTool" >Create A New Tool</option>)
+
         return(<select className="name" id={"NewProjTool" + index} data-id={index}>{rArr}</select> )
     }
 
 
-    render(){
 
+
+
+
+
+
+
+
+    render(){
+        console.log("this.props.showNewTool :" )
         let toolsCopy=this.props.tools
         console.log("toolsCopy --", toolsCopy)
         
@@ -43,7 +56,7 @@ class addProjectToolForm extends React.Component{
                     noteId = `note${index}`, mandatoryId = `mandatory${index}`
                 return (
                     <div key={index}>
-                        <label htmlFor={toolId}>{`Tool #${index+1}`}</label>
+                        <label htmlFor={toolId}>{`Tool #${index}`}</label>
                         
                         Tool: {this.renderSupplySelectOptions(index)} <br/>
 
@@ -79,7 +92,35 @@ class addProjectToolForm extends React.Component{
                             className="mandatory"
 
                             /><br/>
-                            <br/>
+                        
+                        <div className={this.props.showNewTool.includes(index.toString()) ? "newToolShow" : "newToolHide"} ref={this.newTool0}> 
+
+                        New Tool Name: <input 
+                            type="text" 
+                            name={"NewProjToolNewToolName" + index} 
+                            data-id={index} 
+                            id = {toolId}
+                            value={toolsCopy[index].NewProjToolNewToolName}
+                            placeholder= "New Tool Name"
+                            className="NewProjToolNewToolName"
+                            // ref={ function(node){ this.inputValue = node }.bind(this) }
+                            // className={`newTool${index}`}
+                            // className="newToolHide"
+                            // style={display:'none'}
+
+                        /><br/>
+                        New Tool Description: <input 
+                            type="text" 
+                            name={"NewProjToolNewToolDescription" + index} 
+                            data-id={index} 
+                            id = {toolId}
+                            value={toolsCopy[index].NewProjToolNewToolDescription}
+                            placeholder= "New Tool Description- Not Project Specific"
+                            className="NewProjToolNewToolDescription"
+                        /><br/>
+                        </div>
+
+                    <br/>
                     </div>
                 )
             })

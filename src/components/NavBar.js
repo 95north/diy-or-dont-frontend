@@ -27,18 +27,18 @@ class NavBar extends React.Component{
 
         return(
             <div className="topnav" >
-                <button> Menu Icon </button>
+                {/* <button> Menu Icon </button> */}
+                <span> {this.props.user.username ? `Hi ${this.props.user.username}` : <Link to='/login'> Login </Link> } </span>
                 <Link to='/home'>All Projects</Link>
                 <Link to='/projects'>My Projects</Link>
                 <Link to='/mytoolbox'>My Toolbox</Link>
 
 
-                <span> {this.props.user.username ? `Hi ${this.props.user.username}` : <Link to='/login'> Login </Link> } </span>
                 <button onClick={this.onDeleteClick} > DeleteFunc? </button>
            
 
-                <button  >  i do nothing! </button>
-                ......*~+  +~*   *~+  +~*   *~+  +~*   *~+  +~*   *~+  +~*
+                {/* <button  >  i do nothing! </button> */}
+                {/* ......*~+  +~*   *~+  +~*   *~+  +~*   *~+  +~*   *~+  +~* */}
                 <input type="text" onChange={((e)=> this.props.updateSearchTerm(e))} placeholder="Search All Projects"  name="allProjSearch"/>
             </div>
         )

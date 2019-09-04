@@ -1,7 +1,7 @@
 import React from 'react';
 import  './Card.css'
+import  './Display.css'
 import {connect} from 'react-redux';
-import ReviewContainer from './ReviewContainer.js'
 import AddProjectToolForm from './AddProjectToolForm.js'
 
 
@@ -11,7 +11,8 @@ class NewProjectForm extends React.Component{
         newProjectName: "",
         newProjectOverview: "",
         newProjectDescription: "",
-        tools: [{name: "", quantity:"", note: "", mandatory: ""}] //tools used on new project
+        tools: [ {name: "", quantity:"", note: "", mandatory: "", NewProjToolNewToolName:"", NewProjToolNewToolDescription:"" } ], //tools used on new project
+        showNewTool: []
     }
 
 
@@ -31,7 +32,6 @@ class NewProjectForm extends React.Component{
 
 
     changeHandler = (event)=>{
-        // console.log("in change handler", event.target.value)
         let inputName = event.target.name
         console.log("New Project Form change handler: inputName---", inputName)
         console.log("New Project Form change handler: event target value---", event.target.value)
@@ -41,10 +41,16 @@ class NewProjectForm extends React.Component{
         console.log("New Project Form change handler: event.target.className---", event.target.className)
 
 
-        if (["name", "quantity", "note"].includes(event.target.className)) {
-            let tools = [...this.state.tools]
-            tools[event.target.dataset.id][event.target.className]= event.target.value;
-            this.setState({tools}, ()=> console.log("State! changeHandler for TOOLS ", this.state.tools))
+        if (["name", "quantity", "note", "NewProjToolNewToolName", "NewProjToolNewToolDescription"].includes(event.target.className)) {
+            if (event.target.value === "newTool"){
+                console.log("In new tool!")
+                this.setState({showNewTool : [...this.state.showNewTool, event.target.dataset.id]})
+
+            } else {
+                let tools = [...this.state.tools]
+                tools[event.target.dataset.id][event.target.className]= event.target.value;
+                this.setState({tools}, ()=> console.log("State! changeHandler for TOOLS ", this.state.tools))
+            }
         } else if (event.target.className === "mandatory") {
             let theBooleanVal;
 
@@ -57,45 +63,43 @@ class NewProjectForm extends React.Component{
             let tools = [...this.state.tools]
             tools[event.target.dataset.id][event.target.className]= !theBooleanVal;
             this.setState({tools}, ()=> console.log("State! changeHandler for TOOLS ", this.state.tools))
+        } else if (event.target.className.includes("newTool")) {
+            console.log("In NEWProjectForm. e.target ID is: ", event.target.dataset.id) 
+            // ^^^ newProjTool0 -- On Select (dropdown's head, encloses options) tag.  
+
+            let stateToolArrayIndex = event.target.dataset.id[11..event.target.dataset.id.length]
+            let refId = "newTool" + stateToolArrayIndex
+            
+            this.setState({showNewTool : [...this.state.showNewTool, event.target.dataset.id]})
         } else {
-            this.setState(
-                {[inputName]: event.target.value}
-            )
+                this.setState(
+                    {[inputName]: event.target.value}
+                )
+            }
         }
-    }
 
 
     addTool = (e) => {
         this.setState({
-            tools: [...this.state.tools, {name: "", quantity:"", note: "", mandatory: ""}]
+            tools: [...this.state.tools, {name: "", quantity:"", note: "", mandatory: "", NewProjToolNewToolName:"", NewProjToolNewToolDescription:"" }]
         })
     }
 
-    //refactor to render tool Options. 
-    // renderSupplySelectOptions = () =>{
-    //     let rArr = [];
-    //     this.state.allSupplies.forEach( tool =>{          
-    //         rArr.push(<option value={tool.id}> {tool.name} </option>)
-    //     })
-    //     return(<select name={"NewProjTool" + this.state.toolCounter}>{rArr}</select> )
+
+
+    // displayCreateNewToolForm = (e) => {       // Tried using React Refs... nope. 
+    //     console.log("In NEWProjectForm. e.target is: ", e.target)
+    //     console.log("In NEWProjectForm. e.target ID is: ", e.target.id)
+    //     // ^^^ newProjTool0 -- On Select (dropdown's head, encloses options) tag.  
+
+    //     let toolSelectIdCopy = e.target.id 
+    //     let stateToolArrayIndex = toolSelectIdCopy.slice(11, toolSelectIdCopy.length)
+    //     let refId = "newTool" + stateToolArrayIndex
+
+    //     console.log("this.refs.refId --", this.refId)
+    //     // this.refs.refId.style.display = 'block';
     // }
 
-
-    // returnAdditionalToolForm = () =>{
-        
-    //     this.setState({toolCounter : this.state.toolCounter+=1})
-    //     console.log("tool counter in return addl form: ", this.state.toolCounter)
-    //     return(
-    //         <>
-    //         Tool: {this.renderSupplySelectOptions()} <br/>
-    //         Quantity: <input type="number" name={"NewProjToolQuantity" + this.state.toolCounter} min="1" max="999"></input><br/>
-    //         Note: <input type="text" name={"NewProjToolNote" + this.state.toolCounter}/> <br/>
-    //         Mandatory: <input name={"NewProjToolMandatory" + this.state.toolCounter} type="checkbox" onClick={this.changeHandler}/><br/>
-
-    //         <button type="button" onClick={this.changeHandler} >Add Another Tool to this Project</button><br/>
-    //         </>   
-    //     )
-    // }
 
 
     newProjectFormSubmitHandler = (e) =>{
@@ -103,12 +107,8 @@ class NewProjectForm extends React.Component{
         console.log("state in new project form SUBMIT: ", this.state)
 
         console.log("this.props.user.user_id, ", this.props.user.user_id)
-        // if (this.props.user.user_id === undefined || this.props.user.user_id === "undefined" ){
-        //     alert("Login!")
-        // } 
 
-
-            fetch(`http://localhost:3000/projects`, {
+        fetch(`http://localhost:3000/projects`, {
                 headers: { "Content-Type": "application/json; charset=utf-8",
                     Accepts: 'application/json'
                  },
@@ -120,7 +120,10 @@ class NewProjectForm extends React.Component{
                     tools: this.state.tools
                 })
             }).then(res => res.json() )
-            .then(postResp => console.log(postResp))
+            .then(postResp => {
+                console.log(postResp)
+                alert("Created Okay!")
+            })
         
     }
 
@@ -143,28 +146,12 @@ class NewProjectForm extends React.Component{
                             Project Instructions: <input type="text" placeholder="Detailed Instructions for how to complete project, plus any tips" name="newProjectDescription" onChange={this.changeHandler}/> <br/>
 
                             <br/>
-                            {/* Tool: {this.renderSupplySelectOptions()} <br/>
-                            Quantity: <input type="number" name={"NewProjToolQuantity" + this.state.toolCounter} min="1" max="999"></input><br/>
-                            Note: <input type="text" name={"NewProjToolNote" + this.state.toolCounter}/> <br/>
-                            Mandatory: <input name={"NewProjToolMandatory" + this.state.toolCounter} type="checkbox" onClick={this.changeHandler}/><br/> */}
-
-                            
-                            {/* TOOLS IS NOT DEFINED !  */}
-                            {/* { tools.map((tool, index)=>{
-                                let toolId = `tool${index}`, quantityId = `quantity${index}`,
-                                 noteId = `note${index}`, mandatoryId = `mandatory${index}`
-                                return (
-                                    <div key={index}>
-                                        <label htmlFor={toolId}>{`Tool #${index+1}`}</label>
-                                        Tool: {this.renderSupplySelectOptions()} <br/>
-                                        Quantity: <input type="number" name={"NewProjToolQuantity" + this.state.toolCounter} min="1" max="999"></input><br/>
-                                        Note: <input type="text" name={"NewProjToolNote" + this.state.toolCounter}/> <br/>
-                                        Mandatory: <input name={"NewProjToolMandatory" + this.state.toolCounter} type="checkbox" onClick={this.changeHandler}/><br/>
-
-                                    </div>
-                                )
-                            })} */}
-                            <AddProjectToolForm tools={this.state.tools} allSupplies={this.state.allSupplies} /><br/> 
+                            <AddProjectToolForm 
+                                tools={this.state.tools} 
+                                allSupplies={this.state.allSupplies} 
+                                showNewTool={this.state.showNewTool}
+                                // displayCreateNewToolForm = {this.displayCreateNewToolForm}
+                            /><br/> 
                             <button type="button" onClick={this.addTool} >Add Another Tool to this Project</button><br/>
 
 
@@ -175,15 +162,7 @@ class NewProjectForm extends React.Component{
                         </form>
                 </div>
             </div>
-
             </>
-
-
-
-            // <div className="card">
-  
-            // </div>
-
         )
     }
 
