@@ -1,5 +1,6 @@
 import React from 'react';
 import NewReviewContainer from './NewReviewContainer'
+import {connect} from 'react-redux';
 
 import  './Card.css'
 
@@ -54,4 +55,21 @@ class ProjectCard extends React.Component{
 
 
 }
-export default ProjectCard;
+
+
+
+function mapDispatchToProps(dispatch){
+    return({        
+    })
+}
+
+
+function mapStateToProps(state){
+    return({
+        userSupplies: state.userSupplies,
+        user: state.user
+    })
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectCard);

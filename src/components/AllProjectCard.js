@@ -7,21 +7,123 @@ import ReviewContainer from './ReviewContainer.js'
 class AllProjectCard extends React.Component{
     state ={
         addToProjectsCheckbox: false, 
+
         displayReviews: false
     }
 
 
     renderToolLIs = (toolObjsArr) =>{
+
+        console.log("props in allProjectCAarD: ", this.props)
+        // let userTools = this.props.userSupplies
+        let toolbox = []
+        let shoppingList = []
+
+        if (this.props.userSupplies){
+            this.props.userSupplies.forEach(
+                (s)=>{
+                    if(s.userneeds ){
+                        shoppingList.push(s.supply_id)
+                    }
+                    if (s.intoolbox){
+                        toolbox.push(s.supply_id)
+                    }
+                }
+            )
+        }
+
         let rArr = [];
         if(toolObjsArr.length > 0){
             toolObjsArr.map( tool =>{           //refactor to Each or using Map functionality? 
-                rArr.push(<li> {tool.name} </li>)
+                console.log("tool is -- ", tool)
+                console.log("toolbox.includes(tool.id)", toolbox.includes(tool.id))
+
+                rArr.push(<li><b> {tool.name} </b></li>)
+
+                rArr.push(<li> 
+                    <span> {toolbox.includes(tool.id) ? 
+                    "In Your Toolbox!" : "Add to My Toolbox"} : 
+                    <input 
+                        type="checkbox" 
+                        name="addToMyToolbox" 
+                        value={"toolboxID"+tool.id} 
+                        defaultChecked={toolbox.includes(tool.id)} 
+                        onChange={((e)=>this.handleAddToToolboxCheckboxChange(e))} 
+                    /> 
+                    </span>
+                </li>)
+
+                rArr.push(<li> 
+                    <span> {shoppingList.includes(tool.id) ? 
+                    "In Your Shopping List" : "Add to Shopping List"} : 
+                    <input 
+                        type="checkbox" 
+                        name="addToMyShoppingList" 
+                        value={"shoppinID"+tool.id} 
+                        defaultChecked={shoppingList.includes(tool.id)} 
+                        onChange={((e)=>this.handleAddToShoppingListCheckboxChange(e))} 
+                    /> 
+                    </span>
+                </li>)
             })
             return rArr
         } else {
             return <li>No Tools Listed</li>
         }
     }
+
+
+
+
+    handleAddToToolboxCheckboxChange = (e) =>{
+        let postbody={
+            userId: this.props.user.user_id,
+            supplyId: parseInt(e.target.value.slice(9, e.target.value.length)),
+            intoolbox: "true"
+        }
+        if (this.props.user.user_id === undefined || this.props.user.user_id === "undefined" ){
+            alert("Login!")
+        } else {
+            fetch('http://localhost:3000/addtomytoolbox', {
+                method: 'POST',
+                headers: { 
+                    "Content-Type": "application/json; charset=utf-8"
+                },
+                body: JSON.stringify(
+                    postbody
+                )
+            }).then(res => res.json() )
+            .then(postResp => {
+                console.log(postResp)
+            })
+        }
+    }
+
+
+    handleAddToShoppingListCheckboxChange = (e) =>{
+        let postbody={
+            userId: this.props.user.user_id,
+            supplyId: parseInt(e.target.value.slice(9, e.target.value.length)),
+            userneeds: "true"
+        }
+        if (this.props.user.user_id === undefined || this.props.user.user_id === "undefined" ){
+            alert("Login!")
+        } else {
+            fetch('http://localhost:3000/addtomytoolbox', {
+                method: 'POST',
+                headers: { 
+                    "Content-Type": "application/json; charset=utf-8"
+                },
+                body: JSON.stringify(
+                    postbody
+                )
+            }).then(res => res.json() )
+            .then(postResp => {
+                console.log(postResp)
+            })
+        }
+    }
+
 
 
     handleAddToMyProjectsCheckboxChange = (e) =>{
@@ -114,8 +216,8 @@ function mapStateToProps(state){
     // console.log("state argument in MSP in aPP: ", state)  An empty obj.
     // console.log("Called mapStateToPRops! ")   CORRECT, this gets called!
       return({
-          user: state.user
-
+          user: state.user,
+          userSupplies: state.userSupplies.userSupplies
       })
   }
   

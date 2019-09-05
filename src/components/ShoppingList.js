@@ -83,7 +83,7 @@ class ShoppingList extends React.Component{
                 console.log("supply in Shopping List: ", supply)
                 console.log("userSupply in Shopping List: ", userSupply)
 
-                if(userSupply.userneeds === true){  // only display if added to Toolbox
+                if(userSupply.userneeds === true || userSupply.userneeds === "true"){  // only display if added to Toolbox
                 return(
                     <tr>
                         <td>{supply.name} </td>

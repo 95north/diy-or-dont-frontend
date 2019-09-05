@@ -78,7 +78,7 @@ class ToolboxDisplay extends React.Component{
     // need to first filter to only  intoolbox=== true,  THEN map
     renderTableRows = () => { 
         let filteredUserSupplies = this.props.userSupplies.userSupplies.filter(function(supply){
-            return supply.intoolbox === true
+            return (supply.intoolbox === true  || supply.intoolbox === "true" )
         })    // Checked, this works! 
 
         // console.log("filteredUserSupplies is : ", filteredUserSupplies)
