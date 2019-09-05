@@ -123,7 +123,7 @@ class AllProjectContainer extends React.Component{
                     </div> */}
 
 
-                        {displayProjectsCardArr ? displayProjectsCardArr : 
+                        {(displayProjectsCardArr && displayProjectsCardArr.length>0)? displayProjectsCardArr : 
                         <div className="card"><Link to="/createproject">Don't See It? Create a New Project</Link></div> }
 
                 </div>

@@ -61,6 +61,7 @@ class NewReviewContainer extends React.Component{
             e.preventDefault();
             // Need User_Project Id! 
     
+            console.log(this.props.userProject_id)
             fetch(`http://localhost:3000/review/${this.props.userProject_id}`, {
                 method: 'PATCH',                                // UserProject already exists, update review part
                 headers: { "Content-Type": "application/json; charset=utf-8", 
@@ -91,13 +92,13 @@ class NewReviewContainer extends React.Component{
 
 
     render(){
-        console.log("props: USER PROJECT ID??  ", this.props)
+        console.log("New Review Containter props: USER PROJECT ID??  ", this.props)
 
         return(
 
             <div className="panel-wrap">
                 <div className="panel">
-                    <form>
+                    <form onSubmit={((e)=>this.onSubmitReviewForm(e))}>
                         <span onClick={"this.parentElement.style.display='none'"}> X </span><br/><br/>
                             Review:  {this.props.userProject_name} <br/><br/>
 
@@ -127,8 +128,8 @@ class NewReviewContainer extends React.Component{
 
                            Miserable or Fun? : <br/>
                             <select
-                                name="reviewDifficulty" 
-                                value={this.state.reviewDifficulty} 
+                                name="reviewFun" 
+                                value={this.state.reviewFun} 
                                 onChange={this.changeHandler}
                             >
                                 <option value="1"> 1 (Miserable) </option>
@@ -161,7 +162,7 @@ class NewReviewContainer extends React.Component{
                             <input 
                                 type="submit" 
                                 value=" Submit "
-                                onSubmit={((e)=>this.onSubmitReviewForm(e))}
+                                
                             /><br/>
 
                     </form>
