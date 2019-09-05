@@ -40,16 +40,16 @@ class AllProjectContainer extends React.Component{
         let timeTotal = 0;
         let timeCounter = 0;
         for (let review of proj[1]) {
-            if (review["reviewDifficulty"] ){
+            if (review["reviewDifficulty"] && review["reviewDifficulty"] !== "" && review["reviewDifficulty"] !== null){
                 difficultyTotal = difficultyTotal + review["reviewDifficulty"];
                 difficultyCounter += 1;
             }
-            if (review["reviewFun"] ){
+            if (review["reviewFun"] && review["reviewFun"] !== "" && review["reviewFun"] !== null){
                 funTotal += review["reviewFun"];
                 funCounter += 1;
                 funRatings.push(review["reviewFun"])
             }
-            if (review["reviewTime"] ){
+            if (review["reviewTime"] && review["reviewTime"] !== ""  && review["reviewTime"] !== null){
                 timeTotal += review["reviewTime"];
                 timeCounter += 1;
             } 
@@ -59,6 +59,7 @@ class AllProjectContainer extends React.Component{
         proj["avgTime"] = timeTotal / timeCounter
         proj["ratingsCount"] = funCounter;
         proj["funRatings"] = funRatings;
+        console.log("porj (for Averages) in AllProjectContainer -", proj)
     }
 
     filterProjectsBySearchTerm = ()=>{
@@ -131,9 +132,6 @@ class AllProjectContainer extends React.Component{
             </React.Fragment>
         )
     }
-
-
-
 }
 
                                 // Below: flickity carousel. Don't like. 

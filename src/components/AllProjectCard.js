@@ -164,10 +164,10 @@ class AllProjectCard extends React.Component{
         return(
             <div className="card">
                 <h3> {project[0].name}</h3>
-                <span> Average Difficulty Rating: {project.avgDifficulty} </span><br/>
-                <span> Average Fun Rating: {project.avgFun} </span><br/>
-                <span> Avg Hours To Complete: {project.avgTime} </span><br/>
-                <span> Total Reviews: {project.ratingsCount} </span><br/><br/>
+                <span> Average Difficulty Rating: {project.avgDifficulty ? project.avgDifficulty : "Add to Your Projects to be the First to Review!" } </span><br/>
+                <span> Average Fun Rating: {project.avgFun ? project.avgFun : "N/A" } </span><br/>
+                <span> Avg Hours To Complete: {project.avgTime ? project.avgTime : "N/A" } </span><br/>
+                <span> Total Reviews: {project.ratingsCount ? project.ratingsCount : "N/A" } </span><br/><br/>
                 <div> Tools Required: <br/>
                     <ul>{this.renderToolLIs(project[2])}</ul>
                 </div><br/>

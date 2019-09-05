@@ -108,9 +108,11 @@ class NewReviewContainer extends React.Component{
                                 value={this.state.status} 
                                 onChange={this.changeHandler}
                             >
+                                <option value="" selected="selected" disabled> Chose One </option>
                                 <option value="Not Started"> Not Started </option>
                                 <option value="In Progress"> In Progress </option>
                                 <option value="Completed"> Completed </option>
+                                <option value="Gave Up"> I Gave Up </option>
                             </select><br/>
 
                             Difficulty of Project: <br/>
@@ -119,6 +121,7 @@ class NewReviewContainer extends React.Component{
                                 value={this.state.reviewDifficulty} 
                                 onChange={this.changeHandler}
                             >
+                                <option value="" selected="selected" disabled> Chose One </option>
                                 <option value="1"> 1 (Very Easy) </option>
                                 <option value="2"> 2 </option>
                                 <option value="3"> 3 </option>
@@ -132,6 +135,7 @@ class NewReviewContainer extends React.Component{
                                 value={this.state.reviewFun} 
                                 onChange={this.changeHandler}
                             >
+                                <option value="" selected="selected" disabled> Chose One </option>
                                 <option value="1"> 1 (Miserable) </option>
                                 <option value="2"> 2 </option>
                                 <option value="3"> 3 </option>
