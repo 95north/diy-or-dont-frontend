@@ -12,11 +12,30 @@ class ReviewContainer extends React.Component{
     // ( in store, only have logged in user's reviews )
     // Map each review to a ReviewCard
 
+    constructor(props) {
+        super(props)
 
+        this.state = {
 
-    state = {
-        reviewData: []
+            reviewData: []
 
+        }
+
+        console.log("Review container props: ", this.props)
+        // console.log("props in reviews", this.props.displayReviews === this.props.project_id)
+        // if (this.props.displayReviews === this.props.project_id){
+        //     this.fetchReviews();
+        // }
+
+    }
+
+    componentDidMount = () =>{
+        console.log("props in reviews", this.props.displayReviews === this.props.project_id)
+    }
+
+    shouldComponentUpdate(nextProps) {
+        const diffDisplayReviews = this.props.displayReviews !== nextProps.displayReviews
+        return diffDisplayReviews 
     }
 
 
@@ -37,43 +56,45 @@ class ReviewContainer extends React.Component{
         })
         .then( res => {
             console.log("Resp is: ", res) // gets 200 OK
-            res.json(); 
+            return res.json(); 
         })
         .then( reviewData => {
             console.log("reviews :", reviewData)
             // this.setState({
             //     reviewData: reviewData
             // })
+            this.renderReviewCards(reviewData)
             // this.renderReviewCards();  
         })
     }
 
 
     renderReviewCards = () =>{
-        let reviewCardsArr = this.state.reviewData.map( review => {
-            return(
-                <ReviewCard 
-                    review={review} 
-                />
-            )
-        })
+        if (this.state.reviewData !== [] ){
+
+            let reviewCardsArr = this.state.reviewData.map( review => {
+                return(
+                    <ReviewCard 
+                        review={review} 
+                    />
+                )
+            })
+        } else {
+            return null
+        }
     }
+
 
     onClickHandlerXButton = ()=>{
 
     }
  
 
-
-
     render(){
         // console.log(this.props)
 
-
-
-
         // console.log("State in MY reviews Container", this.state)
-        if (this.props.displayReviews){
+        if (this.props.displayReviews === this.props.project_id){
             this.fetchReviews();
         }
 
@@ -84,7 +105,11 @@ class ReviewContainer extends React.Component{
 
                 <div className="panel-wrap">
                     <div className="panel">
+                        
                         <span onClick={"this.parentElement.style.display='none'"}> X </span>
+                        
+                            {/* Get error message onClick is string, not a function!! */}
+
                         <h1> Reviews: </h1>
 
 

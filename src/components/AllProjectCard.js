@@ -14,8 +14,7 @@ class AllProjectCard extends React.Component{
 
     renderToolLIs = (toolObjsArr) =>{
 
-        console.log("props in allProjectCAarD: ", this.props)
-        // let userTools = this.props.userSupplies
+        // console.log("props in allProjectCAarD: ", this.props)
         let toolbox = []
         let shoppingList = []
 
@@ -35,8 +34,8 @@ class AllProjectCard extends React.Component{
         let rArr = [];
         if(toolObjsArr.length > 0){
             toolObjsArr.map( tool =>{           //refactor to Each or using Map functionality? 
-                console.log("tool is -- ", tool)
-                console.log("toolbox.includes(tool.id)", toolbox.includes(tool.id))
+                // console.log("ALLPROJECTCARD tool is -- ", tool)
+                // console.log(" ALLPROJECTCARD  toolbox.includes(tool.id)", toolbox.includes(tool.id))
 
                 rArr.push(<li><b> {tool.name} </b></li>)
 
@@ -127,10 +126,10 @@ class AllProjectCard extends React.Component{
 
 
     handleAddToMyProjectsCheckboxChange = (e) =>{
-        console.log('card props - ', this.props)
+        // console.log('card props - ', this.props)
         this.setState({ addToProjectsCheckbox: e.target.checked })
-        console.log("this.props.user.user_id, ", this.props.user.user_id)
-        console.log("this.props.project[0].id , ", this.props.project[0].id )
+        // console.log("this.props.user.user_id, ", this.props.user.user_id)
+        // console.log("this.props.project[0].id , ", this.props.project[0].id )
         if (this.props.user.user_id === undefined || this.props.user.user_id === "undefined" ){
             alert("Login!")
         } else {
@@ -153,14 +152,14 @@ class AllProjectCard extends React.Component{
 
 
     toggleDisplayReviewsState = () => {
-        console.log("toggled state on READ REVIEWS")
-        this.setState({displayReviews: !this.state.displayReviews})
+        this.setState({displayReviews: this.props.project[0].id})
+        console.log("toggled state on READ REVIEWS, id is--", this.props.project[0].id)
     }
 
 
     render(){
         let project = this.props.project
-        // console.log("One General Project details: ", project)
+        console.log("ALLPROJ CARD - One General Project details: ", project[0].id)
 
         return(
             <div className="card">
@@ -168,8 +167,8 @@ class AllProjectCard extends React.Component{
                 <span> Average Difficulty Rating: {project.avgDifficulty} </span><br/>
                 <span> Average Fun Rating: {project.avgFun} </span><br/>
                 <span> Avg Hours To Complete: {project.avgTime} </span><br/>
-                <span> Total Reviews: {project.ratingsCount} </span><br/>
-                <div> Tools Required: Pull from store if logged in and check off if user has? <br/>
+                <span> Total Reviews: {project.ratingsCount} </span><br/><br/>
+                <div> Tools Required: <br/>
                     <ul>{this.renderToolLIs(project[2])}</ul>
                 </div><br/>
 

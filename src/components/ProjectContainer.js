@@ -19,12 +19,16 @@ class ProjectContainer extends React.Component{
     }
 
     componentDidMount(){
-        console.log("in ProjCont, props.user is : ", this.props.user.user_id)
+        // console.log("in ProjCont, props.user is : ", this.props.user.user_id)
         
         if (this.props.user.user_id !== "undefined" && this.props.user.user_id > 0 ){
             fetch(`http://localhost:3000/projects/${this.props.user.user_id}`)              
-            .then( res => res.json() )
+            .then( res => {
+                console.log("PROJECt Container json fetch resp: ", res)
+                return res.json() 
+            })
             .then( projectsData => {
+                console.log("PROJECt Container json fetch resp: ", projectsData)
                 let rawDataCopy = [...projectsData]
                 rawDataCopy.pop()            
                 this.setState({
@@ -66,7 +70,6 @@ class ProjectContainer extends React.Component{
             )
         })
 
-        console.log("State (NOT STORE) in MY projects Container", this.state)
 
         return(
             <React.Fragment>
