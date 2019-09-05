@@ -24,27 +24,31 @@ class NewReviewContainer extends React.Component{
     }
 
 
-    // fetchReview = () =>{                                // USE FOR *EDIT* ?
-    //     console.log("props: ", this.props)
-    //     // Need User_Project Id! 
+    componentDidMount = () =>{             // fetch own review to edit. 
+        fetch(`http://localhost:3000/review/${this.props.userProject_id}`, {
+            method: 'GET',
+            headers: { "Content-Type": "application/json; charset=utf-8", 
+            Accepts: 'application/json' }
+        })
+        .then( res => {
+            console.log("componentDidMount Resp is: ", res) // gets 200 OK
+            return res.json(); 
+        })
+        .then( reviewData => {
+            console.log(" componentDidMount review Show :", reviewData)
+            this.setState({
+                // initialFormData: reviewData
+                status: reviewData.status,
+                usernote: reviewData.usernote,
+                reviewDifficulty: reviewData.reviewDifficulty,
+                reviewFun: reviewData.reviewFun,
+                reviewText: reviewData.reviewTime,
+                reviewText: reviewData.reviewText
 
-    //     fetch(`http://localhost:3000/review/${this.props.USERPROJECTID!!!!!}`, {
-    //         method: 'GET',
-    //         headers: { "Content-Type": "application/json; charset=utf-8", 
-    //         Accepts: 'application/json' }
-    //     })
-    //     .then( res => {
-    //         console.log("Resp is: ", res) // gets 200 OK
-    //         res.json(); 
-    //     })
-    //     .then( reviewData => {
-    //         console.log("review :", reviewData)
-    //         // this.setState({
-    //         //     reviewData: reviewData
-    //         // })
-    //         // this.renderReviewCards();  
-    //     })
-    // }
+            })
+            // this.renderReviewCards();  
+        })
+    }
 
 
     changeHandler = (event)=>{
@@ -77,7 +81,7 @@ class NewReviewContainer extends React.Component{
             })
             .then( res => {
                 console.log("Resp is: ", res) //
-                res.json(); 
+                return res.json(); 
             })
             .then( reviewData => {
                 console.log("review :", reviewData)
@@ -92,7 +96,7 @@ class NewReviewContainer extends React.Component{
 
 
     render(){
-        console.log("New Review Containter props: USER PROJECT ID??  ", this.props)
+        // console.log("New Review Containter props: USER PROJECT ID??  ", this.props)
 
         return(
 
