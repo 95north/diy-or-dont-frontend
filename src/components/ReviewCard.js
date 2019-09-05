@@ -28,10 +28,7 @@ class ReviewCard extends React.Component{
                     {/* User notes on project: {review.usernote}<br/> */}
                     User's Project Status: {review.status}<br/>
 
-                    
-
                 </div>
-
             </div>
 
         )
