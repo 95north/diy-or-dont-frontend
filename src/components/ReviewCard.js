@@ -5,14 +5,29 @@ import {connect} from 'react-redux';
 import './Sidebar.css'
 
 
-class ReviewContainer extends React.Component{
+class ReviewCard extends React.Component{
+
 
 
     render(){
+        let user = this.props.review[1]
+        let review = this.props.review[0]
+
+        console.log("props in ReviewCard: ", this.props)
         return(
             <div>
                 <div>
-                    Review
+                    <h2> Review </h2>
+                    {user["username"]}  from  {user.location} <br/>
+                    on  {review.updated_at}<br/>
+    
+                    Project Difficulty: {review.reviewDifficulty}<br/>
+                    Project Miserable / Fun Rating: {review.reviewFun}<br/>
+                    {user["username"]}'s time to Complete: {review.reviewTime}<br/>
+                    User's review: <br/> {review.reviewText}<br/>
+                    {/* User notes on project: {review.usernote}<br/> */}
+                    User's Project Status: {review.status}<br/>
+
                     
 
                 </div>
@@ -45,4 +60,4 @@ function mapStateToProps(state){
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReviewContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewCard);
