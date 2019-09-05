@@ -3,6 +3,7 @@ import AllProjectCard from './AllProjectCard.js'
 import NewProjectForm from './NewProjectForm.js'
 import { Route, Switch, withRouter, BrowserRouter as Router, Link } from 'react-router-dom';
 import {connect} from 'react-redux';
+import CarouselConfiguration from './CarouselConfiguration.js';
 
 import './Card.css'
 
@@ -16,7 +17,7 @@ class AllProjectContainer extends React.Component{
 
     componentDidMount(){
         
-        fetch("http://localhost:3000/allprojects")               // HARD CODED !!! 
+        fetch("http://localhost:3000/allprojects")               
         .then( res => res.json() )
         .then( projectsData => {
             // console.log("ALL projectsData is :", projectsData)  //ok for hard coded 
@@ -108,7 +109,7 @@ class AllProjectContainer extends React.Component{
 
                 <div className="thecontainer">
                     <h1> Showing All Projects: </h1>
-                    <Link to="/createproject">Don't See It? Create a New Project</Link>
+                    {/* <Link to="/createproject">Don't See It? Create a New Project</Link> */}
                     <br></br>
                     {/* <div className={this.state.editInProgress ? "displayEdit" : "hideEdit" }> 
                         <EditForm onEditSubmitHandler={this.onEditSubmitHandler}   
@@ -121,8 +122,10 @@ class AllProjectContainer extends React.Component{
                         />
                     </div> */}
 
-                    
-                    {displayProjectsCardArr ? displayProjectsCardArr : <Link to="/createproject">Don't See It? Create a New Project</Link>}
+
+                        {displayProjectsCardArr ? displayProjectsCardArr : 
+                        <div className="card"><Link to="/createproject">Don't See It? Create a New Project</Link></div> }
+
                 </div>
 
             </React.Fragment>
@@ -132,6 +135,28 @@ class AllProjectContainer extends React.Component{
 
 
 }
+
+                                // Below: flickity carousel. Don't like. 
+                                {/* 
+                                {displayProjectsCardArr ? 
+                                <CarouselConfiguration
+                                    options={{
+                                    // autoPlay: 4000,
+                                    // pauseAutoPlayOnHover: true,
+                                    wrapAround: true,
+                                    fullscreen: true,
+                                    adaptiveHeight: false,  // was true
+                                    }}
+                                >
+                                    {displayProjectsCardArr}
+
+                                </CarouselConfiguration>
+                                : 
+                                // <div className="card">
+                                    <Link to="/createproject">Don't See It? Create a New Project</Link>
+                                
+                                */}
+
 
 
 // function mapDispatchToProps(dispatch){

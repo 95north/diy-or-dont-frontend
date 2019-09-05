@@ -134,15 +134,15 @@ class ProjectCard extends React.Component{
             <div className="card">
                 <h3> {project[3].name}</h3>
                 <img className="projectpic" src={this.props.project.image} alt="A project" />
-                <p> User Notes: {project[2].usernote}</p>
-                <p> Date Added: {project[2].created_at.slice(0, 10)} </p>
+                <div>  User Notes: {project[2].usernote}</div> <br/>
+                <div>  Date Added: {project[2].created_at.slice(0, 10)} </div><br/>
 
 
-                <p> Tools Required: </p>
+                <div> <b> Tools Required: </b> </div>
                 <ul>{this.renderToolLIs(project[4])}</ul>
                 
                 <h3> {project[3].overview}</h3>  <br/>
-                <p> Status:  {project[2].status === "Completed" ? <span> Completed <input type="checkbox" name="completeProject" value="completed" defaultChecked={true} /> </span>: project[2].status}</p>
+                <div>  Status:  {project[2].status === "Completed" ? <span> Completed <input type="checkbox" name="completeProject" value="completed" defaultChecked={true} /> </span>: project[2].status}</div><br/>
                  {/* ^^^ Change so Edit form displays if user wants to complete */}
 
 
