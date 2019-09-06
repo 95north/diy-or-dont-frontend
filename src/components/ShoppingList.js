@@ -57,15 +57,12 @@ class ShoppingList extends React.Component{
             let output = []
             let deMilitarizedHour;
             let amPm = "AM"
-
                 if (parseInt([d[11], d[12]].join("")) > 12 ) {
                     deMilitarizedHour = parseInt([d[11], d[12]].join("")) - 12
                     amPm = "PM"
                 } else {
                     deMilitarizedHour = parseInt( [d[11], d[12]].join(""))
                 }
-
-
             output.push(d[5],d[6], "-", d[8],d[9], "-", d[0],d[1],d[2],d[3], "    ", deMilitarizedHour,":",d[14],d[15], " ", amPm )
             return(output.join(""))
         } else {
@@ -74,28 +71,80 @@ class ShoppingList extends React.Component{
     }
 
 
+    checkForSupplyInToolbox = (xx) =>{
+        console.log( "TEST ", xx)
+    }
+
+
     renderTableRows = () => {
         let allUserSupplies = this.props.userSupplies.userSupplies
-        return this.props.userSupplies.relevantSupplyObjs.map(function ( supply ){
-            // let userSupply = this.props.userSupplies.userSupplies.find( us => us.supply_id === supply.id);
-            //  ^ Can't nest this.props bc scope issues!   this.props undefined. 
-            let userSupply = allUserSupplies.find( us => us.supply_id === supply.id);
-                console.log("supply in Shopping List: ", supply)
-                console.log("userSupply in Shopping List: ", userSupply)
+        let relevantCommoditySupplies = this.props.userSupplies.relevantSupplyObjs
+        console.log("this.props.userSupplies.userSupplies", this.props.userSupplies.userSupplies)
+        console.log("this.props.userSupplies.relevantSupplyObjs", this.props.userSupplies.relevantSupplyObjs)
 
-                if(userSupply.userneeds === true || userSupply.userneeds === "true"){  // only display if added to Toolbox
+        return allUserSupplies.map(function ( uSupply ){
+
+            // for each relevantSupplyCommodity, find the userSupply record. 
+            let supplyCommodity = relevantCommoditySupplies.find( s => uSupply.supply_id === s.id);
+            // console.log("supply in Shopping List: ", supply)
+            // console.log("userSupply in Shopping List: ", userSupply)
+            
+            
+            if(uSupply.userneeds === true || uSupply.userneeds === "true"){  // only display if in shopping list
+                
+                // console.log("THIS", this) // undefined
+                let formatDate = (input) => {
+                    if (input) {
+                        let d = input.toString()     
+                        let output = []
+                        let deMilitarizedHour;
+                        let amPm = "AM"
+                            if (parseInt([d[11], d[12]].join("")) > 12 ) {
+                                deMilitarizedHour = parseInt([d[11], d[12]].join("")) - 12
+                                amPm = "PM"
+                            } else {
+                                deMilitarizedHour = parseInt( [d[11], d[12]].join(""))
+                            }
+                        output.push(d[5],d[6], "-", d[8],d[9], "-", d[0],d[1],d[2],d[3], "    ", deMilitarizedHour,":",d[14],d[15], " ", amPm )
+                        return(output.join(""))
+                    } else {
+                        return("")
+                    }
+                }
+                let date = formatDate(uSupply.updated_at)
+
+
+                let supply_in_toolbox = (supply_id) =>{          //look if have item in toolbox 
+                    // console.log("supply_id", supply_id)
+                    // console.log("us_id.supply_id", uSupply.supply_id)
+
+                    return allUserSupplies.find( us => {
+                        console.log("supply_id ", supply_id  )
+                        console.log("us.supply_id", us.supply_id )
+                        return (us.supply_id === supply_id && us.intoolbox)
+                            return true
+                        
+                    })
+                }
+                
+                let haveSupplyInToolbox = supply_in_toolbox(supplyCommodity.id)
+                console.log("haveSupplyInToolbox", haveSupplyInToolbox )
+                
                 return(
                     <tr>
-                        <td>{supply.name} </td>
-                        <td>{supply.description} </td>
-                        <td>{userSupply.quantity} </td>
-                        <td>{userSupply.measurement} </td>
-                        <td> Project Name </td>
-                        <td>{String(userSupply.intoolbox)} </td>
-                        {/* <td>{this.formatDate(userSupply.updated_at)} </td> */}
-                        <td>{userSupply.updated_at} </td>                     
+                        <td>{supplyCommodity.name} </td>
+                        <td>{supplyCommodity.description} </td>
+                        <td>{uSupply.quantity} </td>
+                        <td>{uSupply.measurement} </td>
+                        <td> {uSupply.project_name ? uSupply.project_name : "Not recorded"} </td>
+                        {/* <td>{String(uSupply.intoolbox)} </td> */}
+                        <td>{haveSupplyInToolbox ? "yes" : "no"} </td>
+
+                        {/* <td>{formatDate(uSupply.updated_at)} </td> */}
+                        <td>{date} </td>       
+
                         {/* <td style="display:none;"> Project ID </td>  GETTTING ERROR*/}
-                        <td> Project ID </td>
+                        <td> {uSupply.id} </td>
                     </tr>
                 )
                 } 

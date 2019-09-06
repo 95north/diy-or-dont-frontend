@@ -75,21 +75,43 @@ class ToolboxDisplay extends React.Component{
     }
  
 
-    // need to first filter to only  intoolbox=== true,  THEN map
     renderTableRows = () => { 
         let filteredUserSupplies = this.props.userSupplies.userSupplies.filter(function(supply){
             return (supply.intoolbox === true  || supply.intoolbox === "true" )
         })    // Checked, this works! 
 
-        // console.log("filteredUserSupplies is : ", filteredUserSupplies)
-
         let allRelevantSupplyObjs = this.props.userSupplies.relevantSupplyObjs 
+        let allUserSupplies = this.props.userSupplies.userSupplies
 
         return filteredUserSupplies.map(function ( supply ){
 
-            // let userSupply = allUserSupplies.find( us => us.supply_id === supply.id);
-
             let relevantSupplyObj = allRelevantSupplyObjs.find( s => s.id === supply.supply_id);
+            let formatDate = (input) => {
+                if (input) {
+                    let d = input.toString()     
+                    let output = []
+                    let deMilitarizedHour;
+                    let amPm = "AM"
+                        if (parseInt([d[11], d[12]].join("")) > 12 ) {
+                            deMilitarizedHour = parseInt([d[11], d[12]].join("")) - 12
+                            amPm = "PM"
+                        } else {
+                            deMilitarizedHour = parseInt( [d[11], d[12]].join(""))
+                        }
+                    output.push(d[5],d[6], "-", d[8],d[9], "-", d[0],d[1],d[2],d[3], "    ", deMilitarizedHour,":",d[14],d[15], " ", amPm )
+                    return(output.join(""))
+                } else {
+                    return("")
+                }
+            }
+            let date = formatDate(supply.updated_at)
+
+            let supply_in_shoppingList = (supply_id) =>{          //look if have item in toolbox 
+                return allUserSupplies.find( us => {
+                    return (us.supply_id === supply_id && us.userneeds)                
+                })
+            }
+            let haveSupplyInshoppingList = supply_in_shoppingList(supply.supply_id)
 
                 return(
                     <tr>
@@ -97,9 +119,11 @@ class ToolboxDisplay extends React.Component{
                         <td>{relevantSupplyObj.description}</td>
                         <td>{supply.quantity} </td>
                         <td>{supply.measurement}</td>
-                        <td>{String(supply.userneeds)} </td>
+                        {/* <td>{String(supply.userneeds)} </td> */}
+                        <td>{haveSupplyInshoppingList ? "yes" : "no"} </td>
                         {/* <td>{this.formatDate(userSupply.updated_at)} </td> */}
-                        <td>{supply.updated_at} </td>                     
+                        {/* <td>{supply.updated_at} </td>                      */}
+                        <td>{date} </td>  
                     </tr>
                 )
         })
