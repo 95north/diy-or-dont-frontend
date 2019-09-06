@@ -12,7 +12,7 @@ class AllProjectCard extends React.Component{
     }
 
 
-    renderToolLIs = (toolObjsArr) =>{
+    renderToolLIs = (toolObjsArr, projectName) =>{
 
         // console.log("props in allProjectCAarD: ", this.props)
         let toolbox = []
@@ -47,7 +47,7 @@ class AllProjectCard extends React.Component{
                         name="addToMyToolbox" 
                         value={"toolboxID"+tool.id} 
                         defaultChecked={toolbox.includes(tool.id)} 
-                        onChange={((e)=>this.handleAddToToolboxCheckboxChange(e))} 
+                        onChange={((e)=>this.handleAddToToolboxCheckboxChange(e, projectName))} 
                     /> 
                     </span>
                 </li>)
@@ -60,7 +60,7 @@ class AllProjectCard extends React.Component{
                         name="addToMyShoppingList" 
                         value={"shoppinID"+tool.id} 
                         defaultChecked={shoppingList.includes(tool.id)} 
-                        onChange={((e)=>this.handleAddToShoppingListCheckboxChange(e))} 
+                        onChange={((e)=>this.handleAddToShoppingListCheckboxChange(e, projectName))} 
                     /> 
                     </span>
                 </li>)
@@ -74,11 +74,12 @@ class AllProjectCard extends React.Component{
 
 
 
-    handleAddToToolboxCheckboxChange = (e) =>{
+    handleAddToToolboxCheckboxChange = (e, projectName) =>{
         let postbody={
             userId: this.props.user.user_id,
             supplyId: parseInt(e.target.value.slice(9, e.target.value.length)),
-            intoolbox: "true"
+            intoolbox: "true",
+            projectName: projectName
         }
         if (this.props.user.user_id === undefined || this.props.user.user_id === "undefined" ){
             alert("Login!")
@@ -99,16 +100,17 @@ class AllProjectCard extends React.Component{
     }
 
 
-    handleAddToShoppingListCheckboxChange = (e) =>{
+    handleAddToShoppingListCheckboxChange = (e, projectName) =>{
         let postbody={
             userId: this.props.user.user_id,
             supplyId: parseInt(e.target.value.slice(9, e.target.value.length)),
-            userneeds: "true"
+            userneeds: "true",
+            projectName: projectName
         }
         if (this.props.user.user_id === undefined || this.props.user.user_id === "undefined" ){
             alert("Login!")
         } else {
-            fetch('http://localhost:3000/addtomytoolbox', {
+            fetch('http://localhost:3000/add_to_shopping_list', {
                 method: 'POST',
                 headers: { 
                     "Content-Type": "application/json; charset=utf-8"
@@ -169,7 +171,7 @@ class AllProjectCard extends React.Component{
                 <span> Avg Hours To Complete: {project.avgTime ? project.avgTime : "N/A" } </span><br/>
                 <span> Total Reviews: {project.ratingsCount ? project.ratingsCount : "N/A" } </span><br/><br/>
                 <div> Tools Required: <br/>
-                    <ul>{this.renderToolLIs(project[2])}</ul>
+                    <ul>{this.renderToolLIs(project[2], project[0].name)}</ul>
                 </div><br/>
 
                 {/* <label for="clicker" id="expand-btn"> Read Reviews? </label> */}

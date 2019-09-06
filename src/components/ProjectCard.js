@@ -16,7 +16,7 @@ class ProjectCard extends React.Component{
     }
 
 
-    renderToolLIs = (toolObjsArr) =>{
+    renderToolLIs = (toolObjsArr, projectName) =>{
 
         let toolbox = []
         let shoppingList = []
@@ -47,7 +47,7 @@ class ProjectCard extends React.Component{
                         name="addToMyToolbox" 
                         value={"toolboxID"+tool.id} 
                         defaultChecked={toolbox.includes(tool.id)} 
-                        onChange={((e)=>this.handleAddToToolboxCheckboxChange(e))} 
+                        onChange={((e)=>this.handleAddToToolboxCheckboxChange(e, projectName))} 
                     /> 
                     </span>
                 </li>)
@@ -60,7 +60,7 @@ class ProjectCard extends React.Component{
                         name="addToMyShoppingList" 
                         value={"shoppinID"+tool.id} 
                         defaultChecked={shoppingList.includes(tool.id)} 
-                        onChange={((e)=>this.handleAddToShoppingListCheckboxChange(e))} 
+                        onChange={((e)=>this.handleAddToShoppingListCheckboxChange(e, projectName))} 
                     /> 
                     </span>
                 </li>)
@@ -72,11 +72,12 @@ class ProjectCard extends React.Component{
     }
 
 
-    handleAddToToolboxCheckboxChange = (e) =>{
+    handleAddToToolboxCheckboxChange = (e, projectName) =>{
         let postbody={
             userId: this.props.user.user_id,
             supplyId: parseInt(e.target.value.slice(9, e.target.value.length)),
-            intoolbox: "true"
+            intoolbox: "true",
+            project_name: projectName
         }
         if (this.props.user.user_id === undefined || this.props.user.user_id === "undefined" ){
             alert("Login!")
@@ -97,16 +98,18 @@ class ProjectCard extends React.Component{
     }
 
 
-    handleAddToShoppingListCheckboxChange = (e) =>{
+
+    handleAddToShoppingListCheckboxChange = (e, projectName) =>{
         let postbody={
             userId: this.props.user.user_id,
             supplyId: parseInt(e.target.value.slice(9, e.target.value.length)),
-            userneeds: "true"
+            userneeds: "true",
+            project_name: projectName
         }
         if (this.props.user.user_id === undefined || this.props.user.user_id === "undefined" ){
             alert("Login!")
         } else {
-            fetch('http://localhost:3000/addtomytoolbox', {
+            fetch('http://localhost:3000/add_to_shopping_list', {
                 method: 'POST',
                 headers: { 
                     "Content-Type": "application/json; charset=utf-8"
@@ -122,6 +125,23 @@ class ProjectCard extends React.Component{
     }
 
 
+
+    deleteFromMyProjectsClick = (e, userProjectIdToDelete) =>{
+        e.preventDefault();
+
+        fetch(`http://localhost:3000/user_projects/${userProjectIdToDelete}`, {
+            method: 'DELETE',
+            headers: { 
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            body: JSON.stringify({
+                userProjectIdToDelete: userProjectIdToDelete 
+            })
+        }).then(res => res.json() )
+        .then(postResp => {
+            console.log(postResp)
+        })
+    }
 
 
 
@@ -139,7 +159,7 @@ class ProjectCard extends React.Component{
 
 
                 <div> <b> Tools Required: </b> </div>
-                <ul>{this.renderToolLIs(project[4])}</ul>
+                <ul>{this.renderToolLIs(project[4], project[3].name)}</ul>
                 
                 <h3> {project[3].overview}</h3>  <br/>
                 <div>  Status:  {project[2].status === "Completed" ? <span> Completed <input type="checkbox" name="completeProject" value="completed" defaultChecked={true} /> </span>: project[2].status}</div><br/>
@@ -161,7 +181,7 @@ class ProjectCard extends React.Component{
                     Leave Review  OR Edit Your Review 
                 </button> */}
                
-                <button onClick={console.log("DELETE CLICK")} > Delete from Your Projects</button>
+                <button onClick={(e)=>this.deleteFromMyProjectsClick(e, project[2].id)} > Delete from Your Projects</button>
             </div>
 
         )

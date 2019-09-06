@@ -10,47 +10,26 @@ class ShoppingList extends React.Component{
     }
 
 
-    changeHandler = (event)=>{
-        // console.log("in change handler", event.target.value)
-        let inputName = event.target.name
-        console.log("inputName", inputName)
-        this.setState(
-            {[inputName]: event.target.value}
-        )
+    onDeleteItemClick= (e, userSupplyId) =>{
+        e.preventDefault();
+        fetch(`http://localhost:3000/user_supplies/${userSupplyId}`, {
+            method: 'DELETE',                   // UserProject already exists, update review part
+            headers: { "Content-Type": "application/json; charset=utf-8", 
+            accepts: 'application/json' },
+            body: JSON.stringify({
+               userSupplyIdToDelete: userSupplyId
+            })                
+        })
+        .then( res => {
+            console.log("Resp is: ", res) //
+            res.json(); 
+        })
+        .then( dData => {
+            console.log("deleted Tooxbox item resp:", dData)
+        })
     }
 
-
-    onSubmitReviewForm = (e)=>{
-            e.preventDefault();
-            // Need User_Project Id! 
     
-            fetch(`http://localhost:3000/review/${this.props.userProject_id}`, {
-                method: 'PATCH',                                // UserProject already exists, update review part
-                headers: { "Content-Type": "application/json; charset=utf-8", 
-                accepts: 'application/json' },
-                body: JSON.stringify({
-                    status: this.state.status,
-                    reviewDifficulty: this.state.reviewDifficulty,
-                    reviewFun: this.state.reviewFun,
-                    reviewTime: this.state.reviewTime,
-                    reviewText: this.state.reviewText,
-                    completedDate: this.state.completedDate
-                })                
-            })
-            .then( res => {
-                console.log("Resp is: ", res) //
-                res.json(); 
-            })
-            .then( reviewData => {
-                console.log("review :", reviewData)
-                // this.setState({
-                //     reviewData: reviewData
-                // })
-                // this.renderReviewCards();  
-            })
-    }
- 
-
     formatDate = (input) => {
         if (input) {
             let d = input.toString()     
@@ -71,27 +50,39 @@ class ShoppingList extends React.Component{
     }
 
 
-    checkForSupplyInToolbox = (xx) =>{
-        console.log( "TEST ", xx)
+    moveUserSupplyFromShoppingListToToolbox = (e, userSupplyId) =>{
+        e.preventDefault();
+        console.log("clicked Move to Toolbox")
+        fetch(`http://localhost:3000/move_to_toolbox/${userSupplyId}`, {
+            method: 'PATCH',                                // UserProject already exists, update review part
+            headers: { "Content-Type": "application/json; charset=utf-8", 
+            accepts: 'application/json' },
+            body: JSON.stringify({
+                userSupplyId: "BLAH"
+            })                
+        })
+        .then( res => {
+            console.log("Resp is: ", res) //
+            return res.json(); 
+        })
+        .then( patchJSON => {
+            console.log("patchJSON  :", patchJSON)
+        })
     }
 
 
     renderTableRows = () => {
         let allUserSupplies = this.props.userSupplies.userSupplies
         let relevantCommoditySupplies = this.props.userSupplies.relevantSupplyObjs
-        console.log("this.props.userSupplies.userSupplies", this.props.userSupplies.userSupplies)
-        console.log("this.props.userSupplies.relevantSupplyObjs", this.props.userSupplies.relevantSupplyObjs)
+        // console.log("this.props.userSupplies.userSupplies", this.props.userSupplies.userSupplies)
+        // console.log("this.props.userSupplies.relevantSupplyObjs", this.props.userSupplies.relevantSupplyObjs)
 
-        return allUserSupplies.map(function ( uSupply ){
+        return allUserSupplies.map(( uSupply ) => {
 
             // for each relevantSupplyCommodity, find the userSupply record. 
-            let supplyCommodity = relevantCommoditySupplies.find( s => uSupply.supply_id === s.id);
-            // console.log("supply in Shopping List: ", supply)
-            // console.log("userSupply in Shopping List: ", userSupply)
-            
+            let supplyCommodity = relevantCommoditySupplies.find( s => uSupply.supply_id === s.id);            
             
             if(uSupply.userneeds === true || uSupply.userneeds === "true"){  // only display if in shopping list
-                
                 // console.log("THIS", this) // undefined
                 let formatDate = (input) => {
                     if (input) {
@@ -117,19 +108,13 @@ class ShoppingList extends React.Component{
                 let supply_in_toolbox = (supply_id) =>{          //look if have item in toolbox 
                     // console.log("supply_id", supply_id)
                     // console.log("us_id.supply_id", uSupply.supply_id)
-
                     return allUserSupplies.find( us => {
-                        console.log("supply_id ", supply_id  )
-                        console.log("us.supply_id", us.supply_id )
                         return (us.supply_id === supply_id && us.intoolbox)
-                            return true
-                        
                     })
                 }
-                
                 let haveSupplyInToolbox = supply_in_toolbox(supplyCommodity.id)
-                console.log("haveSupplyInToolbox", haveSupplyInToolbox )
-                
+
+
                 return(
                     <tr>
                         <td>{supplyCommodity.name} </td>
@@ -145,6 +130,8 @@ class ShoppingList extends React.Component{
 
                         {/* <td style="display:none;"> Project ID </td>  GETTTING ERROR*/}
                         <td> {uSupply.id} </td>
+                        <td> <button onClick={(e)=>this.onDeleteItemClick(e, uSupply.id) }> Delete </button> </td>
+                        <td> <button onClick={(e)=>this.moveUserSupplyFromShoppingListToToolbox(e, uSupply.id)}> Move To Toolbox </button> </td>
                     </tr>
                 )
                 } 
@@ -154,9 +141,9 @@ class ShoppingList extends React.Component{
 
 
     render(){
-        console.log("shopping list  props:   ", this.props)
+        // console.log("shopping list  props:   ", this.props)
         let tableRows = this.renderTableRows();
-        console.log("tableRows in render Shopping List: ", tableRows)
+        // console.log("tableRows in render Shopping List: ", tableRows)
 
 
         return(
@@ -172,6 +159,8 @@ class ShoppingList extends React.Component{
                     <th> In Toolbox? </th>
                     <th> Supply Last Updated </th>
                     <th style={{display:'none;'}}> Project ID </th>
+                    <th> Delete Item </th>
+                    <th> Move to Toolbox </th>
                 </tr>
                 {tableRows}
             </table>

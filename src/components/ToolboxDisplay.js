@@ -7,48 +7,35 @@ import './Table.css'
 
 
 class ToolboxDisplay extends React.Component{
-    state = {
+    constructor (props){
+        super(props);
+      
+        this.state = {
+            triggerRender: ""
+          };
+      
+        // this.onDeleteItemClick = this.onDeleteItemClick.bind(this);
+      
     }
 
 
-    changeHandler = (event)=>{
-        // console.log("in change handler", event.target.value)
-        let inputName = event.target.name
-        console.log("inputName", inputName)
-        this.setState(
-            {[inputName]: event.target.value}
-        )
-    }
-
-
-    onSubmitReviewForm = (e)=>{
-            e.preventDefault();
-            // Need User_Project Id! 
-    
-            fetch(`http://localhost:3000/review/${this.props.userProject_id}`, {
-                method: 'PATCH',                                // UserProject already exists, update review part
-                headers: { "Content-Type": "application/json; charset=utf-8", 
-                accepts: 'application/json' },
-                body: JSON.stringify({
-                    status: this.state.status,
-                    reviewDifficulty: this.state.reviewDifficulty,
-                    reviewFun: this.state.reviewFun,
-                    reviewTime: this.state.reviewTime,
-                    reviewText: this.state.reviewText,
-                    completedDate: this.state.completedDate
-                })                
-            })
-            .then( res => {
-                console.log("Resp is: ", res) //
-                res.json(); 
-            })
-            .then( reviewData => {
-                console.log("review :", reviewData)
-                // this.setState({
-                //     reviewData: reviewData
-                // })
-                // this.renderReviewCards();  
-            })
+    onDeleteItemClick111= (e, userSupplyId) =>{
+        e.preventDefault();
+        fetch(`http://localhost:3000/user_supplies/${userSupplyId}`, {
+            method: 'DELETE',                   // UserProject already exists, update review part
+            headers: { "Content-Type": "application/json; charset=utf-8", 
+            accepts: 'application/json' },
+            body: JSON.stringify({
+               userSupplyIdToDelete: userSupplyId
+            })                
+        })
+        .then( res => {
+            console.log("Resp is: ", res) //
+            res.json(); 
+        })
+        .then( dData => {
+            console.log("deleted Tooxbox item resp:", dData)
+        })
     }
 
 
@@ -75,7 +62,30 @@ class ToolboxDisplay extends React.Component{
     }
  
 
-    renderTableRows = () => { 
+     renderTableRows=()=>  { 
+        let onDeleteItemClick= (e, userSupplyId) =>{
+            e.preventDefault();
+            // e.target.parentElement.display
+            fetch(`http://localhost:3000/user_supplies/${userSupplyId}`, {
+                method: 'DELETE',                   // UserProject already exists, update review part
+                headers: { "Content-Type": "application/json; charset=utf-8", 
+                accepts: 'application/json' },
+                body: JSON.stringify({
+                   userSupplyIdToDelete: userSupplyId
+                })                
+            })
+            .then( res => {
+                console.log("Resp is: ", res) //
+                res.json(); 
+            })
+            .then( dData => {
+                // console.log("deleted Tooxbox item resp:", dData)
+            })
+        }
+
+
+        console.log("This in ToolboxDisplay renderTableRows: ", this) // is ToolboxDisplay class.. 
+
         let filteredUserSupplies = this.props.userSupplies.userSupplies.filter(function(supply){
             return (supply.intoolbox === true  || supply.intoolbox === "true" )
         })    // Checked, this works! 
@@ -84,8 +94,9 @@ class ToolboxDisplay extends React.Component{
         let allUserSupplies = this.props.userSupplies.userSupplies
 
         return filteredUserSupplies.map(function ( supply ){
-
             let relevantSupplyObj = allRelevantSupplyObjs.find( s => s.id === supply.supply_id);
+
+
             let formatDate = (input) => {
                 if (input) {
                     let d = input.toString()     
@@ -106,6 +117,7 @@ class ToolboxDisplay extends React.Component{
             }
             let date = formatDate(supply.updated_at)
 
+
             let supply_in_shoppingList = (supply_id) =>{          //look if have item in toolbox 
                 return allUserSupplies.find( us => {
                     return (us.supply_id === supply_id && us.userneeds)                
@@ -113,17 +125,22 @@ class ToolboxDisplay extends React.Component{
             }
             let haveSupplyInshoppingList = supply_in_shoppingList(supply.supply_id)
 
+
                 return(
                     <tr>
                         <td>{relevantSupplyObj.name}</td>
                         <td>{relevantSupplyObj.description}</td>
                         <td>{supply.quantity} </td>
                         <td>{supply.measurement}</td>
+                        <td>{supply.project_name ? supply.project_name : "No Info" }</td>
                         {/* <td>{String(supply.userneeds)} </td> */}
                         <td>{haveSupplyInshoppingList ? "yes" : "no"} </td>
                         {/* <td>{this.formatDate(userSupply.updated_at)} </td> */}
                         {/* <td>{supply.updated_at} </td>                      */}
-                        <td>{date} </td>  
+                        <td>{date} </td> 
+                        {/* <td><button onClick={((e)=>onDeleteItemClick(e, supply.id))} > Delete From Toolbox! </button> </td>   */}
+                        <td><button onClick={(e)=>onDeleteItemClick(e, supply.id)} > Delete </button> </td>  
+                    
                     </tr>
                 )
         })
@@ -152,8 +169,10 @@ class ToolboxDisplay extends React.Component{
                     <th> Description </th>
                     <th> Quantity </th> 
                     <th> Measurement </th>
+                    <th> Added From Project: </th>
                     <th> On Shopping List? </th>
                     <th> Supply Last Updated </th>
+                    <th> Remove Item? </th>
                 </tr>
                 {tableRows}
             </table>
