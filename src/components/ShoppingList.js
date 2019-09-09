@@ -3,10 +3,13 @@ import { Route , withRouter, Redirect} from 'react-router-dom';
 import { browserHistory } from 'react-router';
 import {connect} from 'react-redux';
 import './Sidebar.css'
+import './Display.css'
 
 
 class ShoppingList extends React.Component{
     state = {
+        textMessage: "false",
+        phoneNumber: ""
     }
 
 
@@ -52,6 +55,7 @@ class ShoppingList extends React.Component{
 
     moveUserSupplyFromShoppingListToToolbox = (e, userSupplyId) =>{
         e.preventDefault();
+
         console.log("clicked Move to Toolbox")
         fetch(`http://localhost:3000/move_to_toolbox/${userSupplyId}`, {
             method: 'PATCH',                                // UserProject already exists, update review part
@@ -141,24 +145,37 @@ class ShoppingList extends React.Component{
 
     onSendTextMessageButtonClick = (e)=>{
         e.preventDefault();
+        console.log("Clicked Send Text MESSAGE !! ")
+        this.setState({textMessage: "true"})
+    }
+
+
+    changeHandler =(event)=>{
+        let inputName = event.target.name
+        console.log("inputName", inputName)
+        this.setState(
+            {[inputName]: event.target.value}
+        )
+    }
+
+    sendTextMessage = (e) =>{
+        e.preventDefault()
         let textBody = this.renderShoppingListTextMessageBody();
+        let toPhone = "1" + this.state.phoneNumber.toString()
 
         fetch(`http://localhost:3000/text_shopping_list`, {
             method: 'POST',                                // UserProject already exists, update review part
             headers: { "Content-Type": "application/json; charset=utf-8", 
             accepts: 'application/json' },
             body: JSON.stringify({
-                to: "BLAH",
+                to: toPhone,
                 text: textBody
             })                
         })
         .then( res => {
             console.log("Resp is: ", res) //
-            // return res.json(); 
+            this.setState({textMessage: "false"})
         })
-        // .then( textSentResp => {
-        //     console.log("textSentResp :", textSentResp)
-        // })
     }
 
 
@@ -200,6 +217,8 @@ class ShoppingList extends React.Component{
 
 
     render(){
+        console.log("STATE is Shopping List   ", this.state)
+
         // console.log("shopping list  props:   ", this.props)
         let tableRows = this.renderTableRows();
         // console.log("tableRows in render Shopping List: ", tableRows)
@@ -223,8 +242,19 @@ class ShoppingList extends React.Component{
                 </tr>
                 {tableRows}
             </table>
+
             <br/>
-            <button onClick={((e)=>this.onSendTextMessageButtonClick(e))}> Text Me!  </button>
+            <button onClick={((e)=>this.onSendTextMessageButtonClick(e))}> Text Me My Shopping List!  </button>
+
+            <div className={"hideThing"}>
+            {/* <div className={this.state.textMessage==="false" ? "hideThing" : "showThing" } >                     */}
+                <form onSubmit={(e=>this.sendTextMessage(e))}>
+                    Enter Your 10 digit Phone Number (no 1 US Code), no dashes or spaces: <br/>
+                    <input type="number" name="phoneNumber" onChange={this.changeHandler} value={this.state.phoneNumber} min="2000000000" max="9999999999" placeholder="enter 10 digit US phone number, no spaces or dashes"></input>
+                    <input type="submit" value=" Send Text " />
+                </form>
+            </div>
+
             <br/>
             <br/>
             </>

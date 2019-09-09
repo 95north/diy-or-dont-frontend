@@ -59,7 +59,7 @@ class AllProjectContainer extends React.Component{
         proj["avgTime"] = timeTotal / timeCounter
         proj["ratingsCount"] = funCounter;
         proj["funRatings"] = funRatings;
-        console.log("porj (for Averages) in AllProjectContainer -", proj)
+        // console.log("porj (for Averages) in AllProjectContainer -", proj)
     }
 
     filterProjectsBySearchTerm = ()=>{

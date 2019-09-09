@@ -21,7 +21,7 @@ class ReviewContainer extends React.Component{
             reviewData: [], 
             reviewCardsArr : []
         }
-        console.log("Review container props: ", this.props)
+        // console.log("Review container props: ", this.props)
     }
 
     // componentDidMount = () =>{
