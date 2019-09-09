@@ -156,7 +156,7 @@ class AllProjectCard extends React.Component{
 
 
     toggleDisplayReviewsState = () => {    // for review to display
-        // if (this.state.displayReviews !== this.props.project[0].id)
+        // BEFORE REFACTOR, THOUGHT ABOUT:  if (this.state.displayReviews !== this.props.project[0].id)
         this.setState({displayReviews: this.props.project[0].id})
         console.log("toggled state on READ REVIEWS, id is--", this.props.project[0].id)
     }
@@ -182,31 +182,20 @@ class AllProjectCard extends React.Component{
                 {/* <button className="" onClick={this.toggleDisplayReviewsState}> Show Reviews </button><br/> */}
                 {/* { this.state.displayReviews ? <ReviewContainer/> : null } */}
             
+                
 
-                <input id="clicker" type="checkbox" onClick={this.toggleDisplayReviewsState}/>
+                {/* BELOW- using This (not parent) component's:  toggleDisplayReviewsState} */}
+                {/* <input id="clicker" type="checkbox" onClick={this.toggleDisplayReviewsState}/> */}
+                <input id="clicker" type="checkbox" onClick={(()=>this.props.toggleReviewToDisplay(project[0].id))}/>
                 <label for="clicker">Show Reviews</label>
 
-                <ReviewContainer displayReviews={this.state.displayReviews} project_id={project[0].id}/> 
+                {/* <ReviewContainer displayReviews={this.state.displayReviews} project_id={project[0].id}/>  */}
+                {/* <ReviewContainer displayReviews={this.state.displayReviews} project_id={project[0].id}/>  */}
+
 
                 <br/>
                 <span> {this.state.addToProjectsCheckbox ? "Already In Your Projects" : "Add to My Projects"}: <input type="checkbox" name="addToMyProjects" value={"projectID"+project[0].id} defaultChecked={false} onChange={((e)=>this.handleAddToMyProjectsCheckboxChange(e))} /> </span><br/>
                 
-
-
-
-
-
-                {/* <p> Difficulty: ??? Show Avg Rating, or User's Review Rating?  Or have link to see Project Info (show pg / 1 card), that has avg. </p>
-                <p> Time: ??? ^^^ </p>
-                <img className="projectpic" src={this.props.project.image} alt="A project" />
-                <p> User Notes: {project[2].usernote}</p>
-                <p> Date Added: {project[2].created_at.slice(0, 10)} </p>
-                <p> Tools Needed: How work? Check tools in user toolbox? Say either "Have" or "Add to Toolbox" ? Or they check off for each one?</p>
-                <h3> {project[3].overview}</h3>  <br/>
-                <p> Status:  {project[2].status === "Completed" ? <span> Completed <input type="checkbox" name="completeProject" value="completed" checked={true} /> </span>: project[2].status}</p> */}
-
-                {/* <button onClick={((e)=>this.props.onEditClickHandler(e, this.props.project))} > Edit Reviews </button><br/> */}
-                {/* <button onClick={console.log("DELETE CLICK")} > Delete from Your Projects</button> */}            
             </div>
 
         )

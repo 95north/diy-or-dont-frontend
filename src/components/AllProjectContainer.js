@@ -1,5 +1,6 @@
 import React from 'react';
 import AllProjectCard from './AllProjectCard.js'
+import ReviewContainer from './ReviewContainer.js'
 import NewProjectForm from './NewProjectForm.js'
 import { Route, Switch, withRouter, BrowserRouter as Router, Link, Redirect } from 'react-router-dom';
 import {connect} from 'react-redux';
@@ -12,7 +13,10 @@ class AllProjectContainer extends React.Component{
 // check user logged in (token) / get who user is.. 
 // fetch all of user's projects.  (hardcode for now)
     state = {
-        allProjects: []
+        allProjects: [],
+        reviewToDisplay: 0,
+        displayReviewFlag: true,
+        displayReviews: true
     }
 
     componentDidMount = ()=>{
@@ -53,6 +57,18 @@ class AllProjectContainer extends React.Component{
             // this.props.history.push('/login')  Need to pass down history to use
         }
 
+
+    }
+
+    toggleReviewToDisplay =(project_id)=>{
+        console.log(" All PROJ cont  state before", this.state)
+
+        if (this.state.reviewToDisplay === project_id){
+            this.setState({reviewToDisplay: project_id, displayReviewFlag: false})
+        } else {
+            this.setState({reviewToDisplay: project_id, displayReviewFlag: true})
+        }
+        console.log(" All PROJ cont  state After", this.state)
 
     }
 
@@ -129,7 +145,11 @@ class AllProjectContainer extends React.Component{
             displayProjectsCardArr = filteredProjectsCardArr.map( project => {
                 project[0]["reviewDifficultyAvg"]=this.calculateAvgs(project)
 
-                return <AllProjectCard project={project} onEditClickHandler={this.onEditClickHandler}/>
+                return <AllProjectCard 
+                    project={project} 
+                    onEditClickHandler={this.onEditClickHandler}  
+                    toggleReviewToDisplay={this.toggleReviewToDisplay}
+                    />
             })
         }
 
@@ -157,7 +177,30 @@ class AllProjectContainer extends React.Component{
                         {(displayProjectsCardArr && displayProjectsCardArr.length>0)? displayProjectsCardArr : 
                         <div className="card"><Link to="/createproject">Don't See It? Create a New Project</Link></div> }
 
+                        {/* Was in child, moved to parent! */}
+
+                        <ReviewContainer 
+                        
+                        displayReviews={this.state.reviewToDisplay}
+                        reviewToDisplay={this.state.reviewToDisplay}
+                        //className={this.state.displayReviewFlag ? "newToolShow" : "newToolHide"}
+                        
+                        >
+                          <h1> ReviewContainer </h1> 
+                        </ReviewContainer> 
+                        
                 </div>
+                <br/>
+                <br/>
+                <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
 
             </React.Fragment>
         )

@@ -61,8 +61,8 @@ class ReviewContainer extends React.Component{
 
     fetchReviews = () =>{
         // console.log("props: ", this.props)
-
-        fetch(`http://localhost:3000/reviews/${this.props.project_id}`, {
+        fetch(`http://localhost:3000/reviews/${this.props.reviewToDisplay}`, {
+        // fetch(`http://localhost:3000/reviews/${this.props.project_id}`, {
             method: 'GET'
         })
         .then( res => {
@@ -107,7 +107,13 @@ class ReviewContainer extends React.Component{
  
 
     render(){
-        if (this.props.displayReviews === this.props.project_id){
+        this.fetchReviews();
+        console.log("Props in Review Container Render:: ", this.props)
+
+        //if (this.props.displayReviews === this.props.project_id){  //Before Refactor
+        if (this.props.displayReviews === this.props.reviewToDisplay){  //Before Refactor
+
+            console.log("Called Fetch Reviews! ")
             this.fetchReviews();
         }
         // console.log(this.props)

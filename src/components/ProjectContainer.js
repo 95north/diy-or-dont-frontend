@@ -3,6 +3,8 @@ import ProjectCard from './ProjectCard.js'
 import { Route , withRouter, Redirect} from 'react-router-dom';
 import { browserHistory } from 'react-router';
 import {connect} from 'react-redux';
+import ReviewContainer from './ReviewContainer.js';
+
 // import cloneDeep from 'lodash/cloneDeep'
 import './Card.css'
 
@@ -15,7 +17,6 @@ class ProjectContainer extends React.Component{
         projects: [],
         userSupplies: [],
         relevantSupplyObjs: []
-
     }
 
     componentDidMount(){
@@ -52,6 +53,10 @@ class ProjectContainer extends React.Component{
     }
 
 
+
+
+
+
     onEditClickHandler = () =>{
         console.log("Edit CLick")
     }
@@ -66,6 +71,7 @@ class ProjectContainer extends React.Component{
                 addNeedTool={this.props.addNeedTool}
                 unNeedTool={this.props.unNeedTool}
                 onEditClickHandler={this.onEditClickHandler}
+                //toggleReviewToDisplay={this.toggleReviewToDisplay}
             />
             )
         })
@@ -88,6 +94,13 @@ class ProjectContainer extends React.Component{
                         />
                     </div> */}
                     {projectCardsArr}
+
+                    {/* MESSED UP REFACTOR, DONT NEED THIS HERE */}
+                    {/* <ReviewContainer 
+                    reviewToDisplay={this.state.reviewToDisplay} 
+                    className={this.state.displayReviewFlag ? "newToolShow" : "newToolHide"}
+                    />  */}
+
                 </div>
 
             </React.Fragment>

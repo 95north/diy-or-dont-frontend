@@ -166,11 +166,13 @@ class ProjectCard extends React.Component{
                  {/* ^^^ Change so Edit form displays if user wants to complete */}
 
 
-                <input id="clicker" type="checkbox" onClick={this.toggleDisplayReviewsState}/>
+                <input id="clicker" type="checkbox" onClick={this.props.toggleReviewToDisplay(project[2].id)}/>
+                {/* <input id="clicker" type="checkbox" onClick={this.toggleDisplayReviewsState}/> */}
                 <label for="clicker">Leave New Review  OR Edit Your Review </label>
 
                 <NewReviewContainer 
                     displayReviewForm={this.state.displayReviewForm} 
+                    //FROM WHEN REFACTORED WRONG   displayReviewForm={this.props.toggleReviewToDisplay(project[2].id)}
                     userProject_id={project[2].id} 
                     userProject_name={project[3].name}
                     toggleDisplayReviewsState = {this.toggleDisplayReviewsState}
