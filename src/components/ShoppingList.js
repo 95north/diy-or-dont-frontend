@@ -246,8 +246,8 @@ class ShoppingList extends React.Component{
             <br/>
             <button onClick={((e)=>this.onSendTextMessageButtonClick(e))}> Text Me My Shopping List!  </button>
 
-            <div className={"hideThing"}>
-            {/* <div className={this.state.textMessage==="false" ? "hideThing" : "showThing" } >                     */}
+            {/* <div className="newToolHide">   NO Idea why it doesn't like this className but newToolHide works..*/}
+            <div className={this.state.textMessage==="false" ? "newToolHide" : "newToolShow" } >                    
                 <form onSubmit={(e=>this.sendTextMessage(e))}>
                     Enter Your 10 digit Phone Number (no 1 US Code), no dashes or spaces: <br/>
                     <input type="number" name="phoneNumber" onChange={this.changeHandler} value={this.state.phoneNumber} min="2000000000" max="9999999999" placeholder="enter 10 digit US phone number, no spaces or dashes"></input>

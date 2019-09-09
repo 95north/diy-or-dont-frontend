@@ -1,7 +1,7 @@
 import React from 'react';
 import AllProjectCard from './AllProjectCard.js'
 import NewProjectForm from './NewProjectForm.js'
-import { Route, Switch, withRouter, BrowserRouter as Router, Link } from 'react-router-dom';
+import { Route, Switch, withRouter, BrowserRouter as Router, Link, Redirect } from 'react-router-dom';
 import {connect} from 'react-redux';
 import CarouselConfiguration from './CarouselConfiguration.js';
 
@@ -25,6 +25,37 @@ class AllProjectContainer extends React.Component{
             // Add to store: 
             
         })
+
+        if (this.props.user.user_id !== "undefined" && this.props.user.user_id > 0 ){
+            fetch(`http://localhost:3000/projects/${this.props.user.user_id}`)              
+            .then( res => {
+                console.log("PROJECt Container json fetch resp: ", res)
+                return res.json() 
+            })
+            .then( projectsData => {
+                console.log("PROJECt Container json fetch resp: ", projectsData)
+                let rawDataCopy = [...projectsData]
+                rawDataCopy.pop()            
+                this.setState({
+                    projects: rawDataCopy,
+                    userSupplies: projectsData[projectsData.length-1][0], 
+                    relevantSupplyObjs: projectsData[projectsData.length-1][1] 
+                })  
+
+                this.props.addUserAppDataToStore({ 
+                    projects: rawDataCopy,
+                    userSupplies: projectsData[projectsData.length-1][0], 
+                    relevantSupplyObjs: projectsData[projectsData.length-1][1]
+
+                });
+            })
+        } else {
+            return <Redirect to="/login" />
+            // ^^Source:   https://scotch.io/courses/using-react-router-4/authentication-with-redirect
+            // this.props.history.push('/login')  Need to pass down history to use
+        }
+
+
     }
 
     onEditClickHandler = () =>{
@@ -157,17 +188,16 @@ class AllProjectContainer extends React.Component{
 
 
 
-// function mapDispatchToProps(dispatch){
-//     return({
-//         updateSearchTerm: (e)=> dispatch({
-//             type: "UPDATE_SEARCH_TERM",
-//             payload:({
-//                 formFieldName: e.target.name,
-//                 value:e.target.value
-//             }) 
-//         }),
-//     })
-// }
+function mapDispatchToProps(dispatch){
+    return({        
+        addUserAppDataToStore: (projectsUserSuppliesAndUserSupplyObjs)=> dispatch(
+            {type: "ADD_USER_APP_DATA",
+            payload: projectsUserSuppliesAndUserSupplyObjs
+        }),
+        addNeedTool: ()=> dispatch({type: "ADD_TOOL_NEED"}),
+        unNeedTool: ()=> dispatch({type: "UN_NEED_TOOL"})
+    })
+}
 
 function mapStateToProps(state){
     // console.log("state argument in MSP in aPP: ", state)  An empty obj.
@@ -180,4 +210,4 @@ function mapStateToProps(state){
   }
   
 
-export default connect(mapStateToProps, null)(AllProjectContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(AllProjectContainer);

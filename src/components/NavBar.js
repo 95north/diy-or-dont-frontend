@@ -31,7 +31,7 @@ class NavBar extends React.Component{
                 <span> {this.props.user.username ? `  Hi ${this.props.user.username}!  ` : <Link to='/login'> Login </Link> } </span>
                 <Link to='/home'>All Projects</Link>
                 <Link to='/projects'>My Projects</Link>
-                <Link to='/mytoolbox'>My Toolbox</Link>
+                <Link to='/mytoolbox'>My Toolbox + Shopping List</Link>
 
 
                 {/* <button onClick={this.onDeleteClick} > DeleteFunc? </button> */}

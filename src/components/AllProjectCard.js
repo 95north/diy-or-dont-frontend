@@ -12,6 +12,8 @@ class AllProjectCard extends React.Component{
     }
 
 
+
+
     renderToolLIs = (toolObjsArr, projectName) =>{
 
         // console.log("props in allProjectCAarD: ", this.props)
@@ -212,6 +214,8 @@ class AllProjectCard extends React.Component{
 
 
 }
+
+
 
 function mapStateToProps(state){
     // console.log("state argument in MSP in aPP: ", state)  An empty obj.
