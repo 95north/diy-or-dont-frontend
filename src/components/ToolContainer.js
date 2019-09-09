@@ -22,35 +22,6 @@ class NewReviewContainer extends React.Component{
     }
 
 
-    onSubmitReviewForm = (e)=>{
-            e.preventDefault();
-    
-            fetch(`http://localhost:3000/review/${this.props.userProject_id}`, {
-                method: 'PATCH',                                // UserProject already exists, update review part
-                headers: { "Content-Type": "application/json; charset=utf-8", 
-                accepts: 'application/json' },
-                body: JSON.stringify({
-                    status: this.state.status,
-                    reviewDifficulty: this.state.reviewDifficulty,
-                    reviewFun: this.state.reviewFun,
-                    reviewTime: this.state.reviewTime,
-                    reviewText: this.state.reviewText,
-                    completedDate: this.state.completedDate
-                })                
-            })
-            .then( res => {
-                console.log("Resp is: ", res) //
-                res.json(); 
-            })
-            .then( reviewData => {
-                console.log("review :", reviewData)
-                // this.setState({
-                //     reviewData: reviewData
-                // })
-                // this.renderReviewCards();  
-            })
-    }
- 
 
 
 
@@ -62,6 +33,7 @@ class NewReviewContainer extends React.Component{
                 ~*+ Tool Display +*~
                 <ShoppingList />
                 <ToolboxDisplay />
+                <br/>
             </>
         )
     }

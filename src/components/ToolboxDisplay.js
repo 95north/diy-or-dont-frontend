@@ -19,7 +19,7 @@ class ToolboxDisplay extends React.Component{
     }
 
 
-    onDeleteItemClick111= (e, userSupplyId) =>{
+    onDeleteItemClick111= (e, userSupplyId) =>{     // UNUSED, refactor map() to use THIS to access this
         e.preventDefault();
         fetch(`http://localhost:3000/user_supplies/${userSupplyId}`, {
             method: 'DELETE',                   // UserProject already exists, update review part

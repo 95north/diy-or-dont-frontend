@@ -29,7 +29,7 @@ class ShoppingList extends React.Component{
         })
     }
 
-    
+
     formatDate = (input) => {
         if (input) {
             let d = input.toString()     
@@ -139,6 +139,65 @@ class ShoppingList extends React.Component{
     }
 
 
+    onSendTextMessageButtonClick = (e)=>{
+        e.preventDefault();
+        let textBody = this.renderShoppingListTextMessageBody();
+
+        fetch(`http://localhost:3000/text_shopping_list`, {
+            method: 'POST',                                // UserProject already exists, update review part
+            headers: { "Content-Type": "application/json; charset=utf-8", 
+            accepts: 'application/json' },
+            body: JSON.stringify({
+                to: "BLAH",
+                text: textBody
+            })                
+        })
+        .then( res => {
+            console.log("Resp is: ", res) //
+            // return res.json(); 
+        })
+        // .then( textSentResp => {
+        //     console.log("textSentResp :", textSentResp)
+        // })
+    }
+
+
+    renderShoppingListTextMessageBody = () => {
+        let allUserSupplies = this.props.userSupplies.userSupplies
+        let relevantCommoditySupplies = this.props.userSupplies.relevantSupplyObjs
+
+        return allUserSupplies.map(( uSupply ) => {
+
+            // for each relevantSupplyCommodity, find the userSupply record. 
+            let supplyCommodity = relevantCommoditySupplies.find( s => uSupply.supply_id === s.id);            
+            
+            if(uSupply.userneeds === true || uSupply.userneeds === "true"){  // only display if in shopping list
+
+                let supply_in_toolbox = (supply_id) =>{          //look if have item in toolbox 
+                    return allUserSupplies.find( us => {
+                        return (us.supply_id === supply_id && us.intoolbox)
+                    })
+                }
+                let haveSupplyInToolbox = supply_in_toolbox(supplyCommodity.id)
+
+
+                return(
+                    [supplyCommodity.name, 
+                        supplyCommodity.description, 
+                        (uSupply.quantity ? uSupply.quantity : 1), 
+                        (!uSupply.measurement ?  "No measurement note" : uSupply.measurement ), 
+                        // ((uSupply.project_name === "" || uSupply.project_name === undefined) ?  "No Project Listed" : uSupply.project_name ), 
+                        (!uSupply.project_name ?  "No Project Listed" : uSupply.project_name ), 
+                        
+                        (haveSupplyInToolbox ? "Is In My Toolbox" : "Not in My Toolbox") 
+                    ]
+                )
+                } 
+        })  // ends map allUserSupplies, which is returned 
+    }
+
+
+
 
     render(){
         // console.log("shopping list  props:   ", this.props)
@@ -164,6 +223,10 @@ class ShoppingList extends React.Component{
                 </tr>
                 {tableRows}
             </table>
+            <br/>
+            <button onClick={((e)=>this.onSendTextMessageButtonClick(e))}> Text Me!  </button>
+            <br/>
+            <br/>
             </>
         )
     } // render
