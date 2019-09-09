@@ -29,6 +29,10 @@
   [type="checkbox"]:checked ~ .panel-wrap {
     transform: translateX(0%);
   }
+
+  .go-away {
+    transform: translateX(0%);
+  }
   
   
   /* demo display */

@@ -15,8 +15,7 @@ class AllProjectContainer extends React.Component{
         allProjects: []
     }
 
-    componentDidMount(){
-        
+    componentDidMount = ()=>{
         fetch("http://localhost:3000/allprojects")               
         .then( res => res.json() )
         .then( projectsData => {
@@ -25,7 +24,6 @@ class AllProjectContainer extends React.Component{
             // Add to store: 
             
         })
-
         if (this.props.user.user_id !== "undefined" && this.props.user.user_id > 0 ){
             fetch(`http://localhost:3000/projects/${this.props.user.user_id}`)              
             .then( res => {
@@ -57,6 +55,7 @@ class AllProjectContainer extends React.Component{
 
 
     }
+
 
     onEditClickHandler = () =>{
         console.log("Edit CLick")
@@ -188,6 +187,7 @@ class AllProjectContainer extends React.Component{
 
 
 
+
 function mapDispatchToProps(dispatch){
     return({        
         addUserAppDataToStore: (projectsUserSuppliesAndUserSupplyObjs)=> dispatch(
@@ -198,6 +198,7 @@ function mapDispatchToProps(dispatch){
         unNeedTool: ()=> dispatch({type: "UN_NEED_TOOL"})
     })
 }
+                                
 
 function mapStateToProps(state){
     // console.log("state argument in MSP in aPP: ", state)  An empty obj.

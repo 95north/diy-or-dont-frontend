@@ -11,7 +11,7 @@ class ProjectCard extends React.Component{
 
 
     toggleDisplayReviewsState = () => {
-        console.log("toggled state on New / Edit A  REVIEW")
+        console.log("toggled state on New / Edit A  REVIEW, ", this.state.displayReviewForm)
         this.setState({displayReviewForm: !this.state.displayReviewForm})
     }
 
@@ -162,7 +162,7 @@ class ProjectCard extends React.Component{
                 <ul>{this.renderToolLIs(project[4], project[3].name)}</ul>
                 
                 <h3> {project[3].overview}</h3>  <br/>
-                <div>  Status:  {project[2].status === "Completed" ? <span> Completed <input type="checkbox" name="completeProject" value="completed" defaultChecked={true} /> </span>: project[2].status}</div><br/>
+                <div>  Status:  {project[2].status === "Completed" ? <span> Completed <input type="checkbox" name="completeProject" value="completed" defaultChecked={this.state.displayReviewForm} /> </span>: project[2].status}</div><br/>
                  {/* ^^^ Change so Edit form displays if user wants to complete */}
 
 
@@ -173,6 +173,7 @@ class ProjectCard extends React.Component{
                     displayReviewForm={this.state.displayReviewForm} 
                     userProject_id={project[2].id} 
                     userProject_name={project[3].name}
+                    toggleDisplayReviewsState = {this.toggleDisplayReviewsState}
                 /> 
                 <br/>
 

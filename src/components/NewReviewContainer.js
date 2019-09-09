@@ -84,6 +84,7 @@ class NewReviewContainer extends React.Component{
                 return res.json(); 
             })
             .then( reviewData => {
+                this.props.toggleDisplayReviewsState();
                 console.log("review :", reviewData)
                 // this.setState({
                 //     reviewData: reviewData

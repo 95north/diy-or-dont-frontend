@@ -155,7 +155,8 @@ class AllProjectCard extends React.Component{
     }
 
 
-    toggleDisplayReviewsState = () => {
+    toggleDisplayReviewsState = () => {    // for review to display
+        // if (this.state.displayReviews !== this.props.project[0].id)
         this.setState({displayReviews: this.props.project[0].id})
         console.log("toggled state on READ REVIEWS, id is--", this.props.project[0].id)
     }
@@ -163,7 +164,7 @@ class AllProjectCard extends React.Component{
 
     render(){
         let project = this.props.project
-        console.log("ALLPROJ CARD - One General Project details: ", project[0].id)
+        // console.log("ALLPROJ CARD - One General Project details: ", project[0].id)
 
         return(
             <div className="card">

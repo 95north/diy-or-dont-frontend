@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, withRouter, BrowserRouter as Router, Link } from 'react-router-dom';
+import { Route, Switch, withRouter, BrowserRouter as Router, Redirect, Link } from 'react-router-dom';
 import './App.css';
 import SignUp from './SignUp';
 import LogIn from './components/LogIn.js';
@@ -24,7 +24,9 @@ class App extends React.Component {
     
   }
 
-  
+
+
+
     componentDidMount() {
       let token = localStorage.getItem('token');
       console.log("Token in frontend App.js: ", token)
@@ -46,8 +48,12 @@ class App extends React.Component {
         //  this.props.history.push('/dogs');
         });
       }
-    }
+
+
+    }  // end componentDidMount
   
+
+
 
     signUpSubmit = (e, user) => {
       e.preventDefault();
@@ -198,12 +204,17 @@ class App extends React.Component {
   }
 } // end class
 
-function mapDispatchToProps(dispatch){
 
   // console.log("Called MDP !  dispatch arg is:  ", dispatch )   // Id + token, CORRECT!   
   // console.log("Called MDP !  argB arg is:  ", argB )   // meaninglessObj therefore useless  
 
+
+  function mapDispatchToProps(dispatch){
     return({
+        addUserAppDataToStore: (projectsUserSuppliesAndUserSupplyObjs)=> dispatch(
+          {type: "ADD_USER_APP_DATA",
+          payload: projectsUserSuppliesAndUserSupplyObjs
+        }),
         loggedInAddIdToStore: (userinfo)=> dispatch(
           {type: "LOGGED_IN",
           payload: userinfo   //userReducer gets id  & token, OK! 
