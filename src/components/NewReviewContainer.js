@@ -20,8 +20,17 @@ class NewReviewContainer extends React.Component{
         reviewFun:"",
         reviewTime:"",
         reviewText:"",
-        completedDate: ""
+        completedDate: "",
+        displayReviewForm: false   // NEW
     }
+
+
+
+    toggleDisplayReviewFormState = () => {
+        // console.log("toggled state on New / Edit A  REVIEW", this.state.displayReviewForm)
+        this.setState({displayReviewForm: !this.state.displayReviewForm})
+    }
+
 
 
     componentDidMount = () =>{             // fetch own review to edit. 
@@ -43,8 +52,7 @@ class NewReviewContainer extends React.Component{
                 reviewDifficulty: reviewData.reviewDifficulty,
                 reviewFun: reviewData.reviewFun,
                 reviewText: reviewData.reviewTime,
-                reviewText: reviewData.reviewText
-
+                reviewText: reviewData.reviewText,
             })
             // this.renderReviewCards();  
         })
@@ -61,8 +69,11 @@ class NewReviewContainer extends React.Component{
     }
 
 
+
+
     onSubmitReviewForm = (e)=>{
             e.preventDefault();
+            this.toggleDisplayReviewFormState()
             // Need User_Project Id! 
     
             console.log(this.props.userProject_id)
@@ -84,7 +95,6 @@ class NewReviewContainer extends React.Component{
                 return res.json(); 
             })
             .then( reviewData => {
-                this.props.toggleDisplayReviewsState();
                 console.log("review :", reviewData)
                 // this.setState({
                 //     reviewData: reviewData
@@ -100,11 +110,14 @@ class NewReviewContainer extends React.Component{
         // console.log("New Review Containter props: USER PROJECT ID??  ", this.props)
 
         return(
-
+            // <div className={ this.state.displayReviewForm ? null : "go-away"}> 
+            // ^^ Makes it super buggy, and review forms align with cards roughly (but staggered)
             <div className="panel-wrap">
                 <div className="panel">
                     <form onSubmit={((e)=>this.onSubmitReviewForm(e))}>
-                        <span onClick={"this.parentElement.style.display='none'"}> X </span><br/><br/>
+                        <span onClick={this.displayReviewForm}> X </span><br/><br/>
+                        {/* Was:   */}
+                        {/* <span onClick={"this.parentElement.style.display='none'"}> X </span><br/><br/> */}
                             Review:  {this.props.userProject_name} <br/><br/>
 
                             Status: 
@@ -177,6 +190,7 @@ class NewReviewContainer extends React.Component{
                     </form>
                 </div>
             </div>
+            // </div>
         )
     }
 }

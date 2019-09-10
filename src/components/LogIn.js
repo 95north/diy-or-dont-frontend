@@ -33,7 +33,7 @@ class LogIn extends React.Component{
                         onChange={this.changeHandler}
                     />    
                     <input 
-                        type = "text" 
+                        type = "text" //////  Change to password 
                         name = "password"
                         placeholder="Password" 
                         value={this.state.password} 

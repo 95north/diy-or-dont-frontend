@@ -8,7 +8,7 @@ class AllProjectCard extends React.Component{
     state ={
         addToProjectsCheckbox: false, 
 
-        displayReviews: false
+        displayReviews: false  // Orig 
     }
 
 
@@ -157,9 +157,16 @@ class AllProjectCard extends React.Component{
 
     toggleDisplayReviewsState = () => {    // for review to display
         // BEFORE REFACTOR, THOUGHT ABOUT:  if (this.state.displayReviews !== this.props.project[0].id)
+
+        // Refactor attempt  @ 5PM Monday:
         this.setState({displayReviews: this.props.project[0].id})
         console.log("toggled state on READ REVIEWS, id is--", this.props.project[0].id)
+
+        //Orig:  branch addNewProjAddNewTool
+        // console.log("toggled state on READ REVIEWS")
+        // this.setState({displayReviews: !this.state.displayReviews})
     }
+
 
 
     render(){
@@ -185,12 +192,26 @@ class AllProjectCard extends React.Component{
                 
 
                 {/* BELOW- using This (not parent) component's:  toggleDisplayReviewsState} */}
-                {/* <input id="clicker" type="checkbox" onClick={this.toggleDisplayReviewsState}/> */}
-                <input id="clicker" type="checkbox" onClick={(()=>this.props.toggleReviewToDisplay(project[0].id))}/>
+
+
+                {/* <input id="clicker" type="checkbox" onClick={(()=>this.props.toggleReviewToDisplay(project[0].id))}/>
+                <label for="clicker">Show Reviews</label> */}
+
+                {/* Original Way:  */}
+
+                <input id="clicker" type="checkbox" onClick={this.toggleDisplayReviewsState}/>
                 <label for="clicker">Show Reviews</label>
 
-                {/* <ReviewContainer displayReviews={this.state.displayReviews} project_id={project[0].id}/>  */}
-                {/* <ReviewContainer displayReviews={this.state.displayReviews} project_id={project[0].id}/>  */}
+                <ReviewContainer 
+                    displayReviews={this.state.displayReviews} 
+                    project_id={project[0].id}
+                    reviewToDisplay={this.state.displayReviews} 
+                />
+
+
+
+
+
 
 
                 <br/>

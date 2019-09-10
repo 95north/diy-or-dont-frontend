@@ -25,10 +25,13 @@ class ShoppingList extends React.Component{
         })
         .then( res => {
             console.log("Resp is: ", res) //
-            res.json(); 
+            return res.json(); 
         })
         .then( dData => {
             console.log("deleted Tooxbox item resp:", dData)
+            this.props.deleteUserSupplyFromShoppingList({
+                userSupplyId: userSupplyId
+            })
             // this.props.triggerReRender()  // GETS CALLED, BUT DOESNT WORK
         })
     }
@@ -72,6 +75,9 @@ class ShoppingList extends React.Component{
         })
         .then( patchJSON => {
             console.log("patchJSON  :", patchJSON)
+            this.props.moveFromShoppingListToToolbox({
+                userSupplyId: userSupplyId
+            })
             // this.props.triggerReRender()
         })
     }
@@ -276,8 +282,15 @@ class ShoppingList extends React.Component{
 
 function mapDispatchToProps(dispatch){
     return({
-        // addNeedTool: ()=> dispatch({type: "ADD_TOOL_NEED"}),
-        // unNeedTool: ()=> dispatch({type: "UN_NEED_TOOL"})
+        deleteUserSupplyFromShoppingList: (userSupplyId)=> dispatch(
+            {type: "DELETE_USER_SUPPLY",
+            payload: userSupplyId
+        }),
+        moveFromShoppingListToToolbox: (userSupplyId)=> dispatch(
+            {type: "MOVE_FROM_SHOPPING_LIST_TO_TOOLBOX",
+            payload: userSupplyId
+        }),
+
     })
 }
 

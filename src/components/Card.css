@@ -42,9 +42,9 @@
 
   .thecontainer {
       /* DONT FUSS W TOO MUCH, WANT TO USE FLICKITY ANYWAY!  */
-    display: block;
+    display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-
+    grid-template-rows: auto;
     width: 100vw;
     padding-left: 15px;
     /* display: grid;

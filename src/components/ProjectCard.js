@@ -2,16 +2,22 @@ import React from 'react';
 import NewReviewContainer from './NewReviewContainer'
 import {connect} from 'react-redux';
 
+
 import  './Card.css'
 
 class ProjectCard extends React.Component{
     state ={
         displayReviewForm: false,
+        displayReviews: false
     }
 
 
     toggleDisplayReviewsState = () => {
-        console.log("toggled state on New / Edit A  REVIEW, ", this.state.displayReviewForm)
+        // console.log("toggled state on New / Edit A  REVIEW, ", this.state.displayReviewForm)
+        // this.setState({displayReviewForm: !this.state.displayReviewForm})
+
+        // from branch: addNewProjAddNewTool from Fri6th
+        console.log("toggled state on New / Edit A  REVIEW", this.state.displayReviewForm)
         this.setState({displayReviewForm: !this.state.displayReviewForm})
     }
 
@@ -137,9 +143,12 @@ class ProjectCard extends React.Component{
             body: JSON.stringify({
                 userProjectIdToDelete: userProjectIdToDelete 
             })
-        }).then(res => res.json() )
+        }).then(res => {
+            this.props.onDeleteUserProjectClick(userProjectIdToDelete);
+            return res.json() 
+        })
         .then(postResp => {
-            console.log(postResp)
+            console.log("deleteFromMyProjectsClick  ", postResp)
         })
     }
 
@@ -166,17 +175,30 @@ class ProjectCard extends React.Component{
                  {/* ^^^ Change so Edit form displays if user wants to complete */}
 
 
-                <input id="clicker" type="checkbox" onClick={this.props.toggleReviewToDisplay(project[2].id)}/>
-                {/* <input id="clicker" type="checkbox" onClick={this.toggleDisplayReviewsState}/> */}
-                <label for="clicker">Leave New Review  OR Edit Your Review </label>
-
+                {/* <input id="clicker" type="checkbox" onClick={this.props.toggleReviewToDisplay(project[2].id)}/> */}
+                
+                {/* <label for="clicker">Leave New Review  OR Edit Your Review </label>
                 <NewReviewContainer 
                     displayReviewForm={this.state.displayReviewForm} 
                     //FROM WHEN REFACTORED WRONG   displayReviewForm={this.props.toggleReviewToDisplay(project[2].id)}
                     userProject_id={project[2].id} 
                     userProject_name={project[3].name}
-                    toggleDisplayReviewsState = {this.toggleDisplayReviewsState}
+                />  */}
+
+                {/* Below: Original Display V. from branch: addNewProjAddNewTool from Fri6th */}
+                <input id="clicker" type="checkbox" onClick={this.toggleDisplayReviewsState}/>
+                <label for="clicker">Leave New Review  OR Edit Your Review </label>
+                <NewReviewContainer 
+                    displayReviewForm={this.state.displayReviewForm} 
+                    userProject_id={project[2].id} 
+                    userProject_name={project[3].name}
                 /> 
+                <br/>
+
+
+
+
+
                 <br/>
 
                 {/* <button 
@@ -197,7 +219,11 @@ class ProjectCard extends React.Component{
 
 
 function mapDispatchToProps(dispatch){
-    return({        
+    return({   
+        deleteUserProject: (userProjectIdToDelete)=> dispatch(
+            {type: "DELETE_USER_PROJECT",
+            payload: userProjectIdToDelete
+          }),
     })
 }
 

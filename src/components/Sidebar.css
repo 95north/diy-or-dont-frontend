@@ -10,7 +10,8 @@
 
   }
   .panel {
-    position: absolute;
+    /* position: absolute; */
+    position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
@@ -19,6 +20,11 @@
     color: #eee;
     overflow: auto;
     padding: 1em;
+    /* height: 200px; */
+  }
+
+  .decoy{
+    top: 0;  
   }
   
   /* simulate panel state control --
@@ -35,7 +41,7 @@
     transform: translateX(0%);
   }
   
-  
+
   /* demo display */
   *,*:before, *:after {box-sizing: border-box;}
   

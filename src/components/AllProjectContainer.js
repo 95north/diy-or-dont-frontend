@@ -158,8 +158,8 @@ class AllProjectContainer extends React.Component{
         return(
             <React.Fragment>
 
+                <h1> Showing All Projects: </h1>
                 <div className="thecontainer">
-                    <h1> Showing All Projects: </h1>
                     {/* <Link to="/createproject">Don't See It? Create a New Project</Link> */}
                     <br></br>
                     {/* <div className={this.state.editInProgress ? "displayEdit" : "hideEdit" }> 
@@ -188,7 +188,7 @@ class AllProjectContainer extends React.Component{
                         >
                           <h1> ReviewContainer </h1> 
                         </ReviewContainer> 
-                        
+
                 </div>
                 <br/>
                 <br/>

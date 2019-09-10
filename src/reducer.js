@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux';
+import cloneDeep from 'lodash/cloneDeep';
 
 const defaultState ={
     // user_token: null, 			// returned from Login fetch request
@@ -7,7 +8,7 @@ const defaultState ={
     // userLocation:  'atop red bicycle',
     user: {},
     user_id: '',
-	userProjects: [],       //  [  [(user_proj/“reviews”,  proj,  proj_supplies], … ]
+	userProjects: [],       //  IS NOT USED HERE??  Is just PROJECTS[  [(user_proj/“reviews”,  proj,  proj_supplies], … ]
     userSupplies: [],       //  user’s user_supplies     — set in ProjectContainer 
     relevantSupplyObjs: [], //  Supply DB Table objects that user has    — set in ProjectContainer
 	searchTerm: ''	
@@ -35,13 +36,36 @@ function projectContainerReducer(state=defaultState.userProjects, action){
     switch(action.type){
         // toggle have / need tool.
         // need to update store - trigger re-render
-        case "ADD_TOOL_NEED":
-            return({...state});
-        case "UN_NEED_TOOL":
-            return({...state});
+        // case "ADD_TOOL_NEED":
+        //     return({...state});
+        // case "UN_NEED_TOOL":
+        //     return({...state});
         case "ADD_USER_APP_DATA":
             return action.payload;
-
+        case "DELETE_USER_SUPPLY":
+            let userSuppliesCopy = state.userSupplies
+            let eliminate= userSuppliesCopy.find(us => us.id === action.payload.userSupplyId)
+            let returnArr = userSuppliesCopy.filter(function (us){
+                return (us.id !== eliminate.id);
+            })
+            return ({...state, userSupplies: returnArr}) // is ONLY: {user_id: x, user_token: x}
+        case "MOVE_FROM_SHOPPING_LIST_TO_TOOLBOX":
+            let userSuppliesLocal = state.userSupplies
+            let toToolbox= userSuppliesLocal.find(us => us.id === action.payload.userSupplyId)
+            toToolbox.userneeds = false
+            toToolbox.intoolbox = true
+            return ({...state, userSupplies: userSuppliesLocal}) // is ONLY: {user_id: x, user_token: x}
+        case "DELETE_USER_PROJECT":   // NOT USED!!! THIS IN REGULAR STATE OF PROJ CONTAINER!!! 
+            let userProjectsCopy= cloneDeep(state.projects);
+            let returnArray = []; 
+            userProjectsCopy.forEach( function (proj){
+                if (proj[2]["id"]!== action.payload.userProjectIdToDelete){
+                    returnArray.push(proj)
+                } else {
+                }
+            })
+            return ({...state, projects: returnArray}) // is ONLY: {user_id: x, user_token: x}
+        
         default: 
             return state
     }
@@ -59,6 +83,11 @@ function searchTermReducer(state=defaultState.searchTerm, action){   //App
     }
 }
 
+
+
+// function UserSupplyReducer(state= defaultState.userSupplies){
+
+// }
 
 
 const reducer=combineReducers({

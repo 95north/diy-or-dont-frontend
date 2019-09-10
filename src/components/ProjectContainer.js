@@ -4,6 +4,8 @@ import { Route , withRouter, Redirect} from 'react-router-dom';
 import { browserHistory } from 'react-router';
 import {connect} from 'react-redux';
 import ReviewContainer from './ReviewContainer.js';
+import cloneDeep from 'lodash/cloneDeep';
+
 
 // import cloneDeep from 'lodash/cloneDeep'
 import './Card.css'
@@ -18,6 +20,7 @@ class ProjectContainer extends React.Component{
         userSupplies: [],
         relevantSupplyObjs: []
     }
+
 
     componentDidMount(){
         // console.log("in ProjCont, props.user is : ", this.props.user.user_id)
@@ -53,62 +56,83 @@ class ProjectContainer extends React.Component{
     }
 
 
+    onDeleteUserProjectClick=(userProjectIdToDelete)=>{
+        let userProjectsCopy= cloneDeep(this.state.projects);
+        let returnArray = []; 
+            
+        userProjectsCopy.forEach( function (proj){
+            if (proj[2]["id"]!== userProjectIdToDelete){
+                returnArray.push(proj)
+            } else {
+            }
+        })
+        this.setState({projects: returnArray})
+    }
 
 
 
 
     onEditClickHandler = () =>{
         console.log("Edit CLick")
+
     }
 
 
 
     render(){
-        let projectCardsArr = this.state.projects.map( project => {
+        if (this.state.projects){
+            let projectCardsArr = this.state.projects.map( project => {
+                return(
+                <ProjectCard 
+                    project={project} 
+                    addNeedTool={this.props.addNeedTool}
+                    unNeedTool={this.props.unNeedTool}
+                    onEditClickHandler={this.onEditClickHandler}
+                    onDeleteUserProjectClick={this.onDeleteUserProjectClick}
+                    //toggleReviewToDisplay={this.toggleReviewToDisplay}
+                />
+                )
+            })
+
+
             return(
-            <ProjectCard 
-                project={project} 
-                addNeedTool={this.props.addNeedTool}
-                unNeedTool={this.props.unNeedTool}
-                onEditClickHandler={this.onEditClickHandler}
-                //toggleReviewToDisplay={this.toggleReviewToDisplay}
-            />
-            )
-        })
+                <React.Fragment>
 
-
-        return(
-            <React.Fragment>
-
-                <div className="thecontainer">
                     <h1> Your Projects: </h1>
-                    <br></br>
-                    {/* <div className={this.state.editInProgress ? "displayEdit" : "hideEdit" }> 
-                        <EditForm onEditSubmitHandler={this.onEditSubmitHandler}   
-                            onEditFormChangeHandler={this.onEditFormChangeHandler}
-                            editPonyId={this.state.editPonyId} 
-                            editPonyName={this.state.editPonyName} 
-                            editPonyFavorite={this.state.editPonyFavorite} 
-                            editPonyButt={this.state.editPonyButt} 
-                            editPonyImage={this.state.editPonyImage} 
-                        />
-                    </div> */}
-                    {projectCardsArr}
+                    <br/>
+                    <div className="thecontainer">
+                        {/* <br></br> */}
+                        {/* <div className={this.state.editInProgress ? "displayEdit" : "hideEdit" }> 
+                            <EditForm onEditSubmitHandler={this.onEditSubmitHandler}   
+                                onEditFormChangeHandler={this.onEditFormChangeHandler}
+                                editPonyId={this.state.editPonyId} 
+                                editPonyName={this.state.editPonyName} 
+                                editPonyFavorite={this.state.editPonyFavorite} 
+                                editPonyButt={this.state.editPonyButt} 
+                                editPonyImage={this.state.editPonyImage} 
+                            />
+                        </div> */}
+                        {projectCardsArr}
 
-                    {/* MESSED UP REFACTOR, DONT NEED THIS HERE */}
-                    {/* <ReviewContainer 
-                    reviewToDisplay={this.state.reviewToDisplay} 
-                    className={this.state.displayReviewFlag ? "newToolShow" : "newToolHide"}
-                    />  */}
+                        {/* MESSED UP REFACTOR, DONT NEED THIS HERE */}
+                        {/* <ReviewContainer 
+                        reviewToDisplay={this.state.reviewToDisplay} 
+                        className={this.state.displayReviewFlag ? "newToolShow" : "newToolHide"}
+                        />  */}
 
-                </div>
+                    </div>
 
-            </React.Fragment>
-    
-        )
-    }
+                </React.Fragment>
+        
+            )
+        } else {
+            return(
+                <h2> Login! </h2>
+            )
+        }
+    } // ends render
 
-}
+} // ends class
 
 
 
