@@ -73,7 +73,8 @@ class NewReviewContainer extends React.Component{
 
     onSubmitReviewForm = (e)=>{
             e.preventDefault();
-            this.toggleDisplayReviewFormState()
+            this.props.activeReviewIdVoidInStore()
+            // this.toggleDisplayReviewFormState()
             // Need User_Project Id! 
     
             console.log(this.props.userProject_id)
@@ -108,14 +109,17 @@ class NewReviewContainer extends React.Component{
 
     render(){
         // console.log("New Review Containter props: USER PROJECT ID??  ", this.props)
-
+        if(this.props.activeReviewId){
         return(
             // <div className={ this.state.displayReviewForm ? null : "go-away"}> 
             // ^^ Makes it super buggy, and review forms align with cards roughly (but staggered)
-            <div className="panel-wrap">
-                <div className="panel">
+            // <div className="panel-wrap">
+            //     <div className="panel">
+                <div id="mypanel">
+
                     <form onSubmit={((e)=>this.onSubmitReviewForm(e))}>
-                        <span onClick={this.displayReviewForm}> X </span><br/><br/>
+                    <span onClick={((e)=>this.props.activeReviewIdVoidInStore(this.props.project_id))}> X </span>
+                        <br/>
                         {/* Was:   */}
                         {/* <span onClick={"this.parentElement.style.display='none'"}> X </span><br/><br/> */}
                             Review:  {this.props.userProject_name} <br/><br/>
@@ -189,26 +193,39 @@ class NewReviewContainer extends React.Component{
 
                     </form>
                 </div>
-            </div>
+            // </div>
             // </div>
         )
+        } else {
+            return(null)
+        }
     }
 }
 
 
 
 function mapDispatchToProps(dispatch){
-    return({
-        // addNeedTool: ()=> dispatch({type: "ADD_TOOL_NEED"}),
-        // unNeedTool: ()=> dispatch({type: "UN_NEED_TOOL"})
+    return({        
+        activeReviewIdAddToStore: (e, projectId)=> dispatch(
+            {type: "UPDATE_ACTIVE_REVIEW_ID",
+            payload: projectId
+        }),
+        activeReviewIdVoidInStore: (e, projectId)=> dispatch(
+            {type: "VOID_ACTIVE_REVIEW_ID",
+            payload: projectId
+        }),
+
     })
 }
+
 
 
 function mapStateToProps(state){
     return({
         // userSupplies: state.userSupplies,
-        user: state.user
+        user: state.user,
+        activeReviewId: state.activeReviewId
+
     })
 }
 

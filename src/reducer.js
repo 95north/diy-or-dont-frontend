@@ -13,6 +13,7 @@ const defaultState ={
     relevantSupplyObjs: [], //  Supply DB Table objects that user has    — set in ProjectContainer
     searchTerm: '',
     activeProjectId: false,
+    activeReviewId: false,
 
 
 }
@@ -97,6 +98,23 @@ function activeProjectIdReducer(state=defaultState.activeProjectId, action){
     }
 }
 
+
+function activeReviewIdReducer(state=defaultState.activeReviewId, action){
+    switch(action.type){
+        // toggle have / need tool.
+        case "UPDATE_ACTIVE_REVIEW_ID":
+            console.log("UPDATE_ACTIVE_REVIEW_ID in the redcer", action.payload)
+            // OK- allREVIEWsCont + ReviewsCont both getting this in props
+            return action.payload   // is ONLY: {user_id: x, user_token: x}
+        case "VOID_ACTIVE_REVIEW_ID":
+            return false  // is ONLY: {user_id: x, user_token: x}
+        default: 
+            return state
+    }
+}
+
+
+
 // function UserSupplyReducer(state= defaultState.userSupplies){
 
 // }
@@ -106,7 +124,9 @@ const reducer=combineReducers({
     userSupplies: projectContainerReducer,
     user: userReducer,
     searchTerm: searchTermReducer,
-    activeProjectId: activeProjectIdReducer
+    activeProjectId: activeProjectIdReducer,
+    activeReviewId: activeReviewIdReducer
+
 })
 
 export default reducer;

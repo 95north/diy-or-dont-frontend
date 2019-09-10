@@ -60,7 +60,7 @@ class AllProjectContainer extends React.Component{
 
     }
 
-    toggleReviewToDisplay =(project_id)=>{
+    toggleReviewToDisplay =(project_id)=>{  /// NOT USING, CHANGED TO STORE
         // console.log(" All PROJ cont  toggleReviewToDisplay   state before", this.state)
 
         if (this.state.reviewToDisplay === project_id){
@@ -178,18 +178,6 @@ class AllProjectContainer extends React.Component{
                             {(displayProjectsCardArr && displayProjectsCardArr.length>0)? displayProjectsCardArr : 
                             <div className="card"><Link to="/createproject">Don't See It? Create a New Project</Link></div> }
     
-                            {/* Was in child, moved to parent! */}
-                            {/* <div className={this.props.displayReviewFlag ?  "panel-wrap" : "go-none" }> */}
-    
-            
-                                {/* ReviewContainer was here */}
-    
-                            {/* </div> */}
-    
-    
-                            {/* <h1> ReviewContainer </h1> 
-                            <ReviewContainer/>  */}
-    
                     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
                     </div>
                 </React.Fragment>
@@ -256,7 +244,8 @@ function mapStateToProps(state){
       return({
           user: state.user,
           searchTerm: state.searchTerm,
-          activeProjectId: state.activeProjectId
+          activeProjectId: state.activeProjectId,
+          activeReviewId: state.activeReviewId
       })
   }
   

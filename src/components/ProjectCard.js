@@ -175,37 +175,25 @@ class ProjectCard extends React.Component{
                  {/* ^^^ Change so Edit form displays if user wants to complete */}
 
 
-                {/* <input id="clicker" type="checkbox" onClick={this.props.toggleReviewToDisplay(project[2].id)}/> */}
-                
-                {/* <label for="clicker">Leave New Review  OR Edit Your Review </label>
-                <NewReviewContainer 
-                    displayReviewForm={this.state.displayReviewForm} 
-                    //FROM WHEN REFACTORED WRONG   displayReviewForm={this.props.toggleReviewToDisplay(project[2].id)}
-                    userProject_id={project[2].id} 
-                    userProject_name={project[3].name}
-                />  */}
 
                 {/* Below: Original Display V. from branch: addNewProjAddNewTool from Fri6th */}
-                <input id="clicker" type="checkbox" onClick={this.toggleDisplayReviewsState}/>
-                <label for="clicker">Leave New Review  OR Edit Your Review </label>
+                {/* <input id="clicker" type="checkbox" onClick={this.toggleDisplayReviewsState}/>
+                <label for="clicker">Leave New Review  OR Edit Your Review </label> */}
+                
+                <button 
+                    onClick={((e)=>this.props.activeReviewIdAddToStore(e, project[2].id))} > 
+                    Leave Review  OR Edit Your Review 
+                </button>
+
+
                 <NewReviewContainer 
-                    displayReviewForm={this.state.displayReviewForm} 
+                    // displayReviewForm={this.state.displayReviewForm} 
                     userProject_id={project[2].id} 
                     userProject_name={project[3].name}
                 /> 
-                <br/>
-
-
-
-
 
                 <br/>
-
-                {/* <button 
-                    onClick={((e)=>this.props.onEditClickHandler(e, this.props.project))} > 
-                    Leave Review  OR Edit Your Review 
-                </button> */}
-               
+                <br/>               
                 <button onClick={(e)=>this.deleteFromMyProjectsClick(e, project[2].id)} > Delete from Your Projects</button>
             </div>
 
@@ -223,7 +211,11 @@ function mapDispatchToProps(dispatch){
         deleteUserProject: (userProjectIdToDelete)=> dispatch(
             {type: "DELETE_USER_PROJECT",
             payload: userProjectIdToDelete
-          }),
+        }),
+        activeReviewIdAddToStore: (e, projectId)=> dispatch(
+            {type: "UPDATE_ACTIVE_REVIEW_ID",
+            payload: projectId
+        }),
     })
 }
 
@@ -231,7 +223,8 @@ function mapDispatchToProps(dispatch){
 function mapStateToProps(state){
     return({
         userSupplies: state.userSupplies.userSupplies,
-        user: state.user
+        user: state.user,
+        activeReviewId: state.activeReviewId
     })
 }
 
