@@ -26,7 +26,7 @@ class NewReviewContainer extends React.Component{
 
 
 
-    toggleDisplayReviewFormState = () => {
+    toggleDisplayReviewFormState = () => {   // NOT USED, NOW IN STORE
         // console.log("toggled state on New / Edit A  REVIEW", this.state.displayReviewForm)
         this.setState({displayReviewForm: !this.state.displayReviewForm})
     }

@@ -122,6 +122,7 @@ class NewProjectForm extends React.Component{
             }).then(res => res.json() )
             .then(postResp => {
                 console.log(postResp)
+                this.props.activeNewProjectVoidInStore();
                 alert("Created Okay!")
             })
         
@@ -131,16 +132,21 @@ class NewProjectForm extends React.Component{
 
     render(){
         let project = this.props.project
-
+        if(this.props.newProjectFormFlag){
         return(
             <>
-            <input id="clicker" type="checkbox" onClick={this.toggleDisplayReviewsState}/>
+            {/* <input id="clicker" type="checkbox" onClick={this.toggleDisplayReviewsState}/>
             <label for="clicker">Show New Project Form</label>
-            <div className="panel-wrap">
-                <div className="panel">
-                    <span onClick={"this.parentElement.style.display='none'"}> X </span>
+             */}
+            {/* <div className="panel-wrap"> */}
+                {/* <div className="panel"> */}
+                <div id="mypanel">
+                <span onClick={this.props.activeNewProjectVoidInStore}> X </span>
                     <h1> Create New Project: </h1>
-                        <form onChange={( (e)=>this.changeHandler(e) )} onSubmit={((e)=>this.newProjectFormSubmitHandler(e))}>
+                        <form 
+                            onChange={( (e)=>this.changeHandler(e) )} 
+                            onSubmit={((e)=>this.newProjectFormSubmitHandler(e))}
+                        >
                             Project Name: <input type="text" placeholder="Eg. Hang a Shelf, Replace Crown Molding, Fix Leaky Toilet" name="newProjectName" onChange={this.changeHandler}/> <br/>
                             Project Overview / Description:<input type="text" placeholder="Eg. Hang a Shelf Using Brackets and Nails or Screws" name="newProjectOverview" onChange={this.changeHandler}/> <br/>
                             Project Instructions: <input type="text" placeholder="Detailed Instructions for how to complete project, plus any tips" name="newProjectDescription" onChange={this.changeHandler}/> <br/>
@@ -161,21 +167,35 @@ class NewProjectForm extends React.Component{
 
                         </form>
                 </div>
-            </div>
+            {/* </div> */}
             </>
         )
+        } else {
+            return null
+        } 
     }
-
-
 
 }
 
+function mapDispatchToProps(dispatch){
+    return({        
+        activeNewProjectVoidInStore: ()=> dispatch(
+            {type: "VOID_NEW_PROJECT_FORM_FLAG",
+            // payload: projectId
+        }),
+
+    })
+}
+
+
+
 function mapStateToProps(state){
       return({
-          user: state.user
+          user: state.user,
+          newProjectFormFlag: state.newProjectFormFlag          
 
       })
   }
   
 
-export default connect(mapStateToProps, null)(NewProjectForm);
+export default connect(mapStateToProps, mapDispatchToProps)(NewProjectForm);

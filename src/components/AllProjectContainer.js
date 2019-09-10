@@ -175,11 +175,18 @@ class AllProjectContainer extends React.Component{
                             displayReviewFlag={this.state.displayReviewFlag}
                         />
 
-                            {(displayProjectsCardArr && displayProjectsCardArr.length>0)? displayProjectsCardArr : 
-                            <div className="card"><Link to="/createproject">Don't See It? Create a New Project</Link></div> }
-    
+                            {(displayProjectsCardArr && displayProjectsCardArr.length>0)? displayProjectsCardArr :  
+                            // <div className="card"><Link to="/createproject">Don't See It? Create a New Project</Link></div> }
+                            <div className="card">
+                            <button onClick={this.props.activeNewProjectVoidInStore}>
+                                Don't See It? Create a New Project
+                            </button>
+                            </div> 
+                            }
+
                     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
                     </div>
+            
                 </React.Fragment>
             )
         } else {
@@ -191,11 +198,17 @@ class AllProjectContainer extends React.Component{
                             <br/>
         
                                 {(displayProjectsCardArr && displayProjectsCardArr.length>0)? displayProjectsCardArr : 
-                                <div className="card"><Link to="/createproject">Don't See It? Create a New Project</Link></div> }
+                                // <div className="card"><Link to="/createproject">Don't See It? Create a New Project</Link></div> }
+                                <div className="card">
+                                    <button onClick={this.props.activeNewProjectVoidInStore}>
+                                        Don't See It? Create a New Project
+                                    </button>
+                                </div> }
         
         
                         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
                         </div>
+                    <NewProjectForm/>
                     </React.Fragment>
             )
         }
@@ -232,6 +245,9 @@ function mapDispatchToProps(dispatch){
             {type: "ADD_USER_APP_DATA",
             payload: projectsUserSuppliesAndUserSupplyObjs
         }),
+        activeNewProjectVoidInStore: ()=> dispatch(
+            {type: "ACTIVATE_NEW_PROJECT_FORM_FLAG",
+        })
 
     })
 }

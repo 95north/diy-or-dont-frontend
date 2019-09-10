@@ -14,6 +14,7 @@ const defaultState ={
     searchTerm: '',
     activeProjectId: false,
     activeReviewId: false,
+    newProjectFormFlag: false,
 
 
 }
@@ -86,13 +87,12 @@ function searchTermReducer(state=defaultState.searchTerm, action){   //App
 
 function activeProjectIdReducer(state=defaultState.activeProjectId, action){
     switch(action.type){
-        // toggle have / need tool.
         case "UPDATE_ACTIVE_PROJECT_ID":
             // console.log("UPDATE_ACTIVE_PROJECT_ID in the redcer", action.payload)
             // OK- allProjectsCont + ReviewsCont both getting this in props
-            return action.payload   // is ONLY: {user_id: x, user_token: x}
+            return action.payload   
         case "VOID_ACTIVE_PROJECT_ID":
-            return false  // is ONLY: {user_id: x, user_token: x}
+            return false  
         default: 
             return state
     }
@@ -101,13 +101,23 @@ function activeProjectIdReducer(state=defaultState.activeProjectId, action){
 
 function activeReviewIdReducer(state=defaultState.activeReviewId, action){
     switch(action.type){
-        // toggle have / need tool.
         case "UPDATE_ACTIVE_REVIEW_ID":
-            console.log("UPDATE_ACTIVE_REVIEW_ID in the redcer", action.payload)
-            // OK- allREVIEWsCont + ReviewsCont both getting this in props
-            return action.payload   // is ONLY: {user_id: x, user_token: x}
+            return action.payload   
         case "VOID_ACTIVE_REVIEW_ID":
-            return false  // is ONLY: {user_id: x, user_token: x}
+            return false 
+        default: 
+            return state
+    }
+}
+
+
+function newProjectFormFlagReducer(state=defaultState.activeReviewId, action){
+    switch(action.type){
+        case "ACTIVATE_NEW_PROJECT_FORM_FLAG":
+            console.log("ACTIVATE_NEW_PROJECT_FORM_FLAGin the redcer")
+            return true   
+        case "VOID_NEW_PROJECT_FORM_FLAG":
+            return false  
         default: 
             return state
     }
@@ -125,7 +135,8 @@ const reducer=combineReducers({
     user: userReducer,
     searchTerm: searchTermReducer,
     activeProjectId: activeProjectIdReducer,
-    activeReviewId: activeReviewIdReducer
+    activeReviewId: activeReviewIdReducer,
+    newProjectFormFlag: newProjectFormFlagReducer
 
 })
 
