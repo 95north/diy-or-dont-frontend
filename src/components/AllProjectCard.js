@@ -2,6 +2,8 @@ import React from 'react';
 import  './Card.css'
 import {connect} from 'react-redux';
 import ReviewContainer from './ReviewContainer.js'
+import { tsObjectKeyword, throwStatement } from '@babel/types';
+import { timingSafeEqual } from 'crypto';
 
 
 class AllProjectCard extends React.Component{
@@ -96,7 +98,7 @@ class AllProjectCard extends React.Component{
                 )
             }).then(res => res.json() )
             .then(postResp => {
-                console.log(postResp)
+                // console.log(postResp)
             })
         }
     }
@@ -122,7 +124,7 @@ class AllProjectCard extends React.Component{
                 )
             }).then(res => res.json() )
             .then(postResp => {
-                console.log(postResp)
+                // console.log(postResp)
             })
         }
     }
@@ -150,22 +152,24 @@ class AllProjectCard extends React.Component{
                 
                 })
             }).then(res => res.json() )
-            .then(postResp => console.log(postResp))
+            .then(postResp => {
+                // console.log(postResp)
+            })
         }
     }
 
 
-    toggleDisplayReviewsState = () => {    // for review to display
-        // BEFORE REFACTOR, THOUGHT ABOUT:  if (this.state.displayReviews !== this.props.project[0].id)
+    // toggleDisplayReviewsState = () => {    // NOT CURRENTLY BEING USED
+    //     // BEFORE REFACTOR, THOUGHT ABOUT:  if (this.state.displayReviews !== this.props.project[0].id)
 
-        // Refactor attempt  @ 5PM Monday:
-        this.setState({displayReviews: this.props.project[0].id})
-        console.log("toggled state on READ REVIEWS, id is--", this.props.project[0].id)
+    //     // Refactor attempt  @ 5PM Monday:
+    //     this.setState({displayReviews: this.props.project[0].id})
+    //     // console.log("toggled state on READ REVIEWS, id is--", this.props.project[0].id)
 
-        //Orig:  branch addNewProjAddNewTool
-        // console.log("toggled state on READ REVIEWS")
-        // this.setState({displayReviews: !this.state.displayReviews})
-    }
+    //     //Orig:  branch addNewProjAddNewTool
+    //     // console.log("toggled state on READ REVIEWS")
+    //     // this.setState({displayReviews: !this.state.displayReviews})
+    // }
 
 
 
@@ -199,14 +203,30 @@ class AllProjectCard extends React.Component{
 
                 {/* Original Way:  */}
 
-                <input id="clicker" type="checkbox" onClick={this.toggleDisplayReviewsState}/>
-                <label for="clicker">Show Reviews</label>
+                {/* <input id="clicker" type="checkbox" onClick={this.toggleDisplayReviewsState} checked={this.props.displayReviewFlag}/> */}
+               
+                {/* <input id="displayOneProjectReviewsCheckbox" 
+                        type="checkbox" 
+                        onClick={((e)=>this.props.toggleReviewToDisplay(project[0].id))} 
+                />        
+                <label for="displayOneProjectReviewsCheckbox">Show Reviews</label>
+                */}
 
-                <ReviewContainer 
+                <button
+                    type="button"
+                    value="Show Reviews Button"
+                    onClick={((e)=>this.props.activeProjectIdAddToStore(e, project[0].id))} 
+                    //onClick={((e)=>this.props.toggleReviewToDisplay(project[0].id))} 
+                > Show Reviews </button> 
+
+
+                {/* // Now THIS is rendering, AllProjC one isn't.  */}
+                {/* <ReviewContainer 
+                    toggleReviewToDisplay={this.props.toggleReviewToDisplay}
                     displayReviews={this.state.displayReviews} 
                     project_id={project[0].id}
                     reviewToDisplay={this.state.displayReviews} 
-                />
+                /> */}
 
 
 
@@ -227,6 +247,16 @@ class AllProjectCard extends React.Component{
 }
 
 
+function mapDispatchToProps(dispatch){
+    return({        
+        activeProjectIdAddToStore: (e, projectId)=> dispatch(
+            {type: "UPDATE_ACTIVE_PROJECT_ID",
+            payload: projectId
+        }),
+
+    })
+}
+
 
 function mapStateToProps(state){
     // console.log("state argument in MSP in aPP: ", state)  An empty obj.
@@ -238,4 +268,4 @@ function mapStateToProps(state){
   }
   
 
-export default connect(mapStateToProps, null)(AllProjectCard);
+export default connect(mapStateToProps, mapDispatchToProps)(AllProjectCard);

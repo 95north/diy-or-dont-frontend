@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch, withRouter, BrowserRouter as Router, Redirect, Link } from 'react-router-dom';
 import './App.css';
+import './components/Sidebar.css';
 import SignUp from './SignUp';
 import LogIn from './components/LogIn.js';
 import Home from './components/Home.js';
@@ -128,10 +129,13 @@ class App extends React.Component {
 
     return (
 
+      
       // <div className="topnav">
       //     <NavBar onDeleteSubmit={this.onDeleteSubmit} ponies={this.state.ponies} />
       // </div>
 
+      // <div className="panel-wrap"> 
+      // <div className="panel"> 
       <Switch>
 
 
@@ -200,6 +204,9 @@ class App extends React.Component {
 
 
       </Switch>
+
+      // {/* </div> */}
+      // {/* </div> */}
     );
   }
 } // end class

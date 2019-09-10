@@ -15,7 +15,7 @@ class AllProjectContainer extends React.Component{
     state = {
         allProjects: [],
         reviewToDisplay: 0,
-        displayReviewFlag: true,
+        displayReviewFlag: false,
         displayReviews: true
     }
 
@@ -61,14 +61,15 @@ class AllProjectContainer extends React.Component{
     }
 
     toggleReviewToDisplay =(project_id)=>{
-        console.log(" All PROJ cont  state before", this.state)
+        // console.log(" All PROJ cont  toggleReviewToDisplay   state before", this.state)
 
         if (this.state.reviewToDisplay === project_id){
-            this.setState({reviewToDisplay: project_id, displayReviewFlag: false})
+
+            this.setState({reviewToDisplay: project_id, displayReviewFlag: !this.state.displayReviewFlag})
         } else {
             this.setState({reviewToDisplay: project_id, displayReviewFlag: true})
         }
-        console.log(" All PROJ cont  state After", this.state)
+        console.log(" All PROJ cont   toggleReviewToDisplay   state After", this.state)
 
     }
 
@@ -146,64 +147,70 @@ class AllProjectContainer extends React.Component{
                 project[0]["reviewDifficultyAvg"]=this.calculateAvgs(project)
 
                 return <AllProjectCard 
+                    displayReviewFlag={this.state.displayReviewFlag}  // change w toggleReviewToDisplay
                     project={project} 
                     onEditClickHandler={this.onEditClickHandler}  
                     toggleReviewToDisplay={this.toggleReviewToDisplay}
+                    // does not pass down project ID, bc that is given as prop to ea. CARD
                     />
             })
         }
 
 
+        if (this.props.activeProjectId){
 
-        return(
-            <React.Fragment>
-
-                <h1> Showing All Projects: </h1>
-                <div className="thecontainer">
-                    {/* <Link to="/createproject">Don't See It? Create a New Project</Link> */}
-                    <br></br>
-                    {/* <div className={this.state.editInProgress ? "displayEdit" : "hideEdit" }> 
-                        <EditForm onEditSubmitHandler={this.onEditSubmitHandler}   
-                            onEditFormChangeHandler={this.onEditFormChangeHandler}
-                            editPonyId={this.state.editPonyId} 
-                            editPonyName={this.state.editPonyName} 
-                            editPonyFavorite={this.state.editPonyFavorite} 
-                            editPonyButt={this.state.editPonyButt} 
-                            editPonyImage={this.state.editPonyImage} 
-                        />
-                    </div> */}
-
-
-                        {(displayProjectsCardArr && displayProjectsCardArr.length>0)? displayProjectsCardArr : 
-                        <div className="card"><Link to="/createproject">Don't See It? Create a New Project</Link></div> }
-
-                        {/* Was in child, moved to parent! */}
-
+            return(
+                <React.Fragment>
+    
+                    <h1> Showing All Projects: </h1>
+                    <div className="thecontainer">
+                        <br/>
+    
                         <ReviewContainer 
-                        
-                        displayReviews={this.state.reviewToDisplay}
-                        reviewToDisplay={this.state.reviewToDisplay}
-                        //className={this.state.displayReviewFlag ? "newToolShow" : "newToolHide"}
-                        
-                        >
-                          <h1> ReviewContainer </h1> 
-                        </ReviewContainer> 
+                            // className={this.props.displayReviewFlag ?  "panel-wrap" : "go-none" }
+                            //  ^^ Was getting passed down as a Prop...
+                            toggleReviewToDisplay={this.toggleReviewToDisplay}
+                            displayReviews={this.state.reviewToDisplay}
+                            reviewToDisplay={this.state.reviewToDisplay}
+                            displayReviewFlag={this.state.displayReviewFlag}
+                        />
 
-                </div>
-                <br/>
-                <br/>
-                <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-
-            </React.Fragment>
-        )
+                            {(displayProjectsCardArr && displayProjectsCardArr.length>0)? displayProjectsCardArr : 
+                            <div className="card"><Link to="/createproject">Don't See It? Create a New Project</Link></div> }
+    
+                            {/* Was in child, moved to parent! */}
+                            {/* <div className={this.props.displayReviewFlag ?  "panel-wrap" : "go-none" }> */}
+    
+            
+                                {/* ReviewContainer was here */}
+    
+                            {/* </div> */}
+    
+    
+                            {/* <h1> ReviewContainer </h1> 
+                            <ReviewContainer/>  */}
+    
+                    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                    </div>
+                </React.Fragment>
+            )
+        } else {
+            return (
+                    <React.Fragment>
+        
+                        <h1> Showing All Projects: </h1>
+                        <div className="thecontainer">
+                            <br/>
+        
+                                {(displayProjectsCardArr && displayProjectsCardArr.length>0)? displayProjectsCardArr : 
+                                <div className="card"><Link to="/createproject">Don't See It? Create a New Project</Link></div> }
+        
+        
+                        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                        </div>
+                    </React.Fragment>
+            )
+        }
     }
 }
 
@@ -237,8 +244,7 @@ function mapDispatchToProps(dispatch){
             {type: "ADD_USER_APP_DATA",
             payload: projectsUserSuppliesAndUserSupplyObjs
         }),
-        addNeedTool: ()=> dispatch({type: "ADD_TOOL_NEED"}),
-        unNeedTool: ()=> dispatch({type: "UN_NEED_TOOL"})
+
     })
 }
                                 
@@ -249,7 +255,8 @@ function mapStateToProps(state){
     console.log("in AllProjectContainer mapStateToPRops!  state is:  ", state )   // Id + token, CORRECT!   
       return({
           user: state.user,
-          searchTerm: state.searchTerm
+          searchTerm: state.searchTerm,
+          activeProjectId: state.activeProjectId
       })
   }
   

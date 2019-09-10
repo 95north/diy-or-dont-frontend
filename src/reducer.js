@@ -11,7 +11,10 @@ const defaultState ={
 	userProjects: [],       //  IS NOT USED HERE??  Is just PROJECTS[  [(user_proj/“reviews”,  proj,  proj_supplies], … ]
     userSupplies: [],       //  user’s user_supplies     — set in ProjectContainer 
     relevantSupplyObjs: [], //  Supply DB Table objects that user has    — set in ProjectContainer
-	searchTerm: ''	
+    searchTerm: '',
+    activeProjectId: false,
+
+
 }
 
 
@@ -31,15 +34,11 @@ function userReducer(state=defaultState.user, action){   //App
 
 
 function projectContainerReducer(state=defaultState.userProjects, action){
-    console.log("user App Data - action payload : ", action.payload) // now id&token showing undefined after log in 
+    // console.log("user App Data - action payload : ", action.payload) // now id&token showing undefined after log in 
 
     switch(action.type){
         // toggle have / need tool.
         // need to update store - trigger re-render
-        // case "ADD_TOOL_NEED":
-        //     return({...state});
-        // case "UN_NEED_TOOL":
-        //     return({...state});
         case "ADD_USER_APP_DATA":
             return action.payload;
         case "DELETE_USER_SUPPLY":
@@ -73,7 +72,7 @@ function projectContainerReducer(state=defaultState.userProjects, action){
 
 
 function searchTermReducer(state=defaultState.searchTerm, action){   //App
-    console.log("action payload  SEARCH TERM: ", action.payload) // now id&token showing undefined after log in 
+    // console.log("action payload  SEARCH TERM: ", action.payload) // now id&token showing undefined after log in 
     switch(action.type){
         // toggle have / need tool.
         case "UPDATE_SEARCH_TERM":
@@ -84,6 +83,19 @@ function searchTermReducer(state=defaultState.searchTerm, action){   //App
 }
 
 
+function activeProjectIdReducer(state=defaultState.activeProjectId, action){
+    switch(action.type){
+        // toggle have / need tool.
+        case "UPDATE_ACTIVE_PROJECT_ID":
+            // console.log("UPDATE_ACTIVE_PROJECT_ID in the redcer", action.payload)
+            // OK- allProjectsCont + ReviewsCont both getting this in props
+            return action.payload   // is ONLY: {user_id: x, user_token: x}
+        case "VOID_ACTIVE_PROJECT_ID":
+            return false  // is ONLY: {user_id: x, user_token: x}
+        default: 
+            return state
+    }
+}
 
 // function UserSupplyReducer(state= defaultState.userSupplies){
 
@@ -93,7 +105,8 @@ function searchTermReducer(state=defaultState.searchTerm, action){   //App
 const reducer=combineReducers({
     userSupplies: projectContainerReducer,
     user: userReducer,
-    searchTerm: searchTermReducer
+    searchTerm: searchTermReducer,
+    activeProjectId: activeProjectIdReducer
 })
 
 export default reducer;

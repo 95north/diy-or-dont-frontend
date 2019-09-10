@@ -8,10 +8,6 @@ import { throwStatement } from '@babel/types';
 
 
 class ReviewContainer extends React.Component{
-    // Generate a sidebar
-    // do fetch request, get reviews (& user info for ea) for a given project,
-    // ( in store, only have logged in user's reviews )
-    // Map each review to a ReviewCard
 
     constructor(props) {
         super(props)
@@ -21,7 +17,6 @@ class ReviewContainer extends React.Component{
             reviewData: [], 
             reviewCardsArr : []
         }
-        // console.log("Review container props: ", this.props)
     }
 
     // componentDidMount = () =>{
@@ -32,9 +27,8 @@ class ReviewContainer extends React.Component{
     shouldComponentUpdate(nextProps) {
         //const diffDisplayReviews = this.props.displayReviews !== nextProps.displayReviews
         const diffDisplayReviews = this.state.displayReviews !== nextProps.displayReviews
-        console.log("this.props.displayReviews", this.props.displayReviews )
-        console.log("nextProps.displayReviews", nextProps.displayReviews )
-
+        // console.log("this.props.displayReviews", this.props.displayReviews )
+        // console.log("nextProps.displayReviews", nextProps.displayReviews )
         console.log("shouldComponentUpdate",  diffDisplayReviews)
         return diffDisplayReviews 
     }
@@ -61,12 +55,12 @@ class ReviewContainer extends React.Component{
 
     fetchReviews = () =>{
         // console.log("props: ", this.props)
-        fetch(`http://localhost:3000/reviews/${this.props.reviewToDisplay}`, {
+        fetch(`http://localhost:3000/reviews/${this.props.activeProjectId}`, {
         // fetch(`http://localhost:3000/reviews/${this.props.project_id}`, {
             method: 'GET'
         })
         .then( res => {
-            console.log("Resp is: ", res) // gets 200 OK
+            // console.log("Resp is: ", res) // gets 200 OK
             return res.json(); 
         })
         .then( reviewData => {
@@ -100,67 +94,86 @@ class ReviewContainer extends React.Component{
     }
 
 
-    onClickHandlerXButton = (e)=>{
-        e.target.parentElement.style.display='none'   
+    onClickHandlerXButton = (e, project_id)=>{          // should now not be used.
+        this.props.toggleReviewToDisplay(project_id)
+        // e.target.parentElement.style.display='none'   
         // AND UNCHECK THE BOX !!!! 
     }
  
 
     render(){
-        this.fetchReviews();
-        console.log("Props in Review Container Render:: ", this.props)
+        // this.fetchReviews();
+        console.log("Props in Review Container Render (does project_id = displayreviews?):: ", this.props)
 
-        //if (this.props.displayReviews === this.props.project_id){  //Before Refactor
-        if (this.props.displayReviews === this.props.reviewToDisplay){  //Before Refactor
+        //if (this.props.displayReviews === this.props.project_id){  
+        //  ^^ Before Refactor. project_id only comes from the CARD
 
-            console.log("Called Fetch Reviews! ")
+        // if (this.props.displayReviews === this.props.reviewToDisplay){ 
+        //     this.fetchReviews();
+        // }
+
+        if(this.props.activeProjectId){
             this.fetchReviews();
         }
-        // console.log(this.props)
-        // console.log("State in MY reviews Container", this.state)
 
 
-
+        if(this.props.activeProjectId){
         return(
+                <React.Fragment>
+                    {/* className={this.props.displayReviewFlag ?  null : "go-none" } */}
+                    {/* The ReviewContainer in AllProjectContainer is rendering, not AllPCard!  */}
+                    {/* <div className="panel-wrap" className={this.props.displayReviewFlag ?  "display-it" : "go-none" } > */}
+                    
+
+                    {/* <div className={(this.props.displayReviews) ?  null : "go-away" }  > */}
+                    {/* ^^^ Makes varying height review containers show, one for ea AllProjCard */}
+                    {/* ^^ For Button to Work bc. unchecked pseudoclass for Checkbox only */}
+                    
+                    {/* <div className="panel-wrap"> */}
+                        {/* <div className="panel"> */}
+                        <div id="mypanel">
+                        <div>
+                        {/* <div className={this.props.activeProjectId ? "display-block" : null }> */}
+                            
+                            <span onClick={((e)=>this.props.activeProjectIdVoidInStore(this.props.project_id))}> X </span>
+                            {/* <span onClick={((e)=>this.onClickHandlerXButton(e, this.props.project_id))}> X </span> */}
+                            {/* <span onClick={"this.parentElement.style.display='none'"}> X </span> */}
+                            {/*  ^^^ Get error message onClick is string, not a function!! */}
+
+                            <h1> Reviews: </h1>
 
 
-            <React.Fragment>
-
-                <div className="panel-wrap">
-                    <div className="panel">
-                        
-                        <span onClick={((e)=>this.onClickHandlerXButton(e))}> X </span>
-                        {/* <span onClick={"this.parentElement.style.display='none'"}> X </span> */}
-                        {/*  ^^^ Get error message onClick is string, not a function!! */}
-
-                        <h1> Reviews: </h1>
-
-
-                        {this.state.reviewCardsArr}
+                            {this.state.reviewCardsArr}
+                        </div>
+                        {/* </div> */}
                     </div>
-                </div>
-
-            </React.Fragment>
-    
-        )
+                    {/* </div> */}
+                </React.Fragment>
+            )
+        } else {
+            return( null )
+        }
     }
 
-}
+} // end class
 
 
 
 function mapDispatchToProps(dispatch){
-    return({
-        // addNeedTool: ()=> dispatch({type: "ADD_TOOL_NEED"}),
-        // unNeedTool: ()=> dispatch({type: "UN_NEED_TOOL"})
+    return({        
+        activeProjectIdVoidInStore: (projectId)=> dispatch(
+            {type: "VOID_ACTIVE_PROJECT_ID",
+            payload: projectId
+        }),
+
     })
 }
-
 
 function mapStateToProps(state){
     return({
         // userSupplies: state.userSupplies,
-        user: state.user
+        user: state.user,
+        activeProjectId: state.activeProjectId
     })
 }
 
