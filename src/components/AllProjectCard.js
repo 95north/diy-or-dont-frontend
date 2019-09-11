@@ -2,7 +2,7 @@ import React from 'react';
 import  './Card.css'
 import {connect} from 'react-redux';
 import ReviewContainer from './ReviewContainer.js'
-import { tsObjectKeyword, throwStatement } from '@babel/types';
+import { tsObjectKeyword, throwStatement, thisExpression } from '@babel/types';
 import { timingSafeEqual } from 'crypto';
 
 
@@ -171,10 +171,88 @@ class AllProjectCard extends React.Component{
     //     // this.setState({displayReviews: !this.state.displayReviews})
     // }
 
+    checkIfUserHasProject = (projectId)=>{   // REFACTORED, NOT USING!
+        console.log("this.props.userProjects :", this.props.userProjects)
+        if (this.props.userProjects){
+            let returnVal = false
+            this.props.userProjects.forEach(function(proj){
+                console.log("Proj ---", proj)
+                console.log("Proj ---", proj[3]["id"])
+                console.log("Proj Id ---", projectId)
+
+                if (proj[3]["id"] === projectId){
+                    returnVal = true
+                }
+            })
+            return returnVal;
+        } else {
+            return false
+        }
+    }
+
+
+
+    renderAddToMyProjectsCheckbox = (projectId)=>{
+        console.log("this.props.userProjects :", this.props.userProjects)
+        if (this.props.userProjects){
+            let returnVal = false
+            this.props.userProjects.forEach(function(proj){
+                console.log("Proj ---", proj)
+                console.log("Proj ---", proj[3]["id"])
+                console.log("Proj Id ---", projectId)
+
+                if (proj[3]["id"] === projectId){
+                    returnVal = true
+                } 
+            }) // end forEach
+
+            if (returnVal===true){
+                return(
+                    <span> Already In Your Projects: 
+                    <input type="checkbox" 
+                        name="addToMyProjects" 
+                        value={"projectID"+projectId} 
+                        //defaultChecked={false} 
+                        defaultChecked={true} 
+                        disabled
+                    /> 
+                </span>
+                )
+            } else {
+                return(
+                    <span> Add to My Projects: 
+                    <input type="checkbox" 
+                        name="addToMyProjects" 
+                        value={"projectID"+projectId} 
+                        //defaultChecked={false} 
+                        defaultChecked={false} 
+                        //disabled={isDisabled ? "disabled" : false}
+                        onChange={((e)=>this.handleAddToMyProjectsCheckboxChange(e))} 
+                    /> 
+                </span>
+                )
+            }            
+        } else {            // If not logged in
+            return (
+                                
+                <span> Add to My Projects: 
+                    <input type="checkbox" 
+                        name="addToMyProjects" 
+                        value={"projectID"+projectId} 
+                        //defaultChecked={false} 
+                        defaultChecked={false} 
+                        //disabled={isDisabled ? "disabled" : false}
+                        onChange={((e)=>this.handleAddToMyProjectsCheckboxChange(e))} 
+                    /> 
+                </span>
+            )
+        }
+    }
 
 
     render(){
         let project = this.props.project
+        let inProjectsCheckbox = this.renderAddToMyProjectsCheckbox(project[0].id)
         // console.log("ALLPROJ CARD - One General Project details: ", project[0].id)
 
         return(
@@ -227,15 +305,21 @@ class AllProjectCard extends React.Component{
                     project_id={project[0].id}
                     reviewToDisplay={this.state.displayReviews} 
                 /> */}
-
-
-
-
-
-
-
                 <br/>
-                <span> {this.state.addToProjectsCheckbox ? "Already In Your Projects" : "Add to My Projects"}: <input type="checkbox" name="addToMyProjects" value={"projectID"+project[0].id} defaultChecked={false} onChange={((e)=>this.handleAddToMyProjectsCheckboxChange(e))} /> </span><br/>
+
+                {inProjectsCheckbox}
+                {/*    REFACTORED checkIfUserHasProject, not using this!             
+                <span> {this.state.addToProjectsCheckbox ? 
+                    "Already In Your Projects" : "Add to My Projects"}: 
+                    <input type="checkbox" 
+                        name="addToMyProjects" 
+                        value={"projectID"+project[0].id} 
+                        //defaultChecked={false} 
+                        defaultChecked={this.checkIfUserHasProject(project[0].id)} 
+                        //disabled={isDisabled ? "disabled" : false}
+                        onChange={((e)=>this.handleAddToMyProjectsCheckboxChange(e))} 
+                    /> 
+                </span><br/> */}
                 
             </div>
 
@@ -263,7 +347,8 @@ function mapStateToProps(state){
     // console.log("Called mapStateToPRops! ")   CORRECT, this gets called!
       return({
           user: state.user,
-          userSupplies: state.userSupplies.userSupplies
+          userSupplies: state.userSupplies.userSupplies,
+          userProjects: state.userSupplies.projects
       })
   }
   

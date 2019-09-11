@@ -76,7 +76,6 @@ function projectContainerReducer(state=defaultState.userProjects, action){
 function searchTermReducer(state=defaultState.searchTerm, action){   //App
     // console.log("action payload  SEARCH TERM: ", action.payload) // now id&token showing undefined after log in 
     switch(action.type){
-        // toggle have / need tool.
         case "UPDATE_SEARCH_TERM":
             return action.payload   // is ONLY: {user_id: x, user_token: x}
         default: 
