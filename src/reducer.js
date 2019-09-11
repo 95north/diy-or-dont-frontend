@@ -44,6 +44,7 @@ function projectContainerReducer(state=defaultState.userProjects, action){
         case "ADD_USER_APP_DATA":
             return action.payload;
         case "DELETE_USER_SUPPLY":
+            // console.log("in Reducer DELETE_USER_SUPPLY")
             let userSuppliesCopy = state.userSupplies
             let eliminate= userSuppliesCopy.find(us => us.id === action.payload.userSupplyId)
             let returnArr = userSuppliesCopy.filter(function (us){

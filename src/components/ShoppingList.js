@@ -25,13 +25,14 @@ class ShoppingList extends React.Component{
         })
         .then( res => {
             console.log("Resp is: ", res) //
+            this.props.deleteUserSupplyFromShoppingList({
+                userSupplyId: userSupplyId
+            })
             return res.json(); 
         })
         .then( dData => {
             console.log("deleted Tooxbox item resp:", dData)
-            this.props.deleteUserSupplyFromShoppingList({
-                userSupplyId: userSupplyId
-            })
+            console.log("deleted Tooxbox item userSupplyId:", userSupplyId)
             // this.props.triggerReRender()  // GETS CALLED, BUT DOESNT WORK
         })
     }
