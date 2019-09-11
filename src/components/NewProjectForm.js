@@ -16,8 +16,8 @@ class NewProjectForm extends React.Component{
     }
 
 
-    componentDidMount = () =>{
-    // fetchAllTools = () =>{
+    componentDidMount = () =>{      // fetchAllTools 
+    
         fetch(`http://localhost:3000/supplies`, {
                 headers: { "Content-Type": "application/json; charset=utf-8",
                     Accepts: 'application/json'
@@ -104,9 +104,13 @@ class NewProjectForm extends React.Component{
 
     newProjectFormSubmitHandler = (e) =>{
         e.preventDefault();
-        console.log("state in new project form SUBMIT: ", this.state)
 
-        console.log("this.props.user.user_id, ", this.props.user.user_id)
+        let localTools = []
+        this.state.tools.forEach( function(tool){
+            if (tool["name"] !== "trashMe" ){
+                localTools.push(tool)
+            }
+        })
 
         fetch(`http://localhost:3000/projects`, {
                 headers: { "Content-Type": "application/json; charset=utf-8",
@@ -117,7 +121,7 @@ class NewProjectForm extends React.Component{
                     newProjectName: this.state.newProjectName,
                     newProjectOverview: this.state.newProjectOverview,
                     newProjectDescription: this.state.newProjectDescription,
-                    tools: this.state.tools
+                    tools: localTools
                 })
             }).then(res => res.json() )
             .then(postResp => {
@@ -125,7 +129,6 @@ class NewProjectForm extends React.Component{
                 this.props.activeNewProjectVoidInStore();
                 alert("Created Okay!")
             })
-        
     }
 
 
