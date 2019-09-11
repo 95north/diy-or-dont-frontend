@@ -1,5 +1,6 @@
 import React from 'react';
 import  './Card.css'
+import  './Tooltip.css'
 import {connect} from 'react-redux';
 import ReviewContainer from './ReviewContainer.js'
 import { tsObjectKeyword, throwStatement, thisExpression } from '@babel/types';
@@ -218,30 +219,36 @@ class AllProjectCard extends React.Component{
                     /> 
                 </span>
                 )
-            } else {
+            } else {         
                 return(
-                    <span> Add to My Projects: 
-                    <input type="checkbox" 
-                        name="addToMyProjects" 
-                        value={"projectID"+projectId} 
-                        //defaultChecked={false} 
-                        defaultChecked={false} 
-                        //disabled={isDisabled ? "disabled" : false}
-                        onChange={((e)=>this.handleAddToMyProjectsCheckboxChange(e))} 
-                    /> 
+                <span>
+                        Add to My Projects: 
+                        <input type="checkbox" 
+                            name="addToMyProjects" 
+                            value={"projectID"+projectId} 
+                            //defaultChecked={false} 
+                            defaultChecked={false} 
+                            //disabled={isDisabled ? "disabled" : false}
+                            onChange={((e)=>this.handleAddToMyProjectsCheckboxChange(e))}
+                            disabled
+                            
+                        /> 
                 </span>
                 )
             }            
         } else {            // If not logged in
             return (
-                                
-                <span> Add to My Projects: 
+                <span
+                    class="tooltip"
+                > 
+                <span class="tooltiptext">Please login first :) </span>                
+                Add to My Projects: 
                     <input type="checkbox" 
                         name="addToMyProjects" 
                         value={"projectID"+projectId} 
                         //defaultChecked={false} 
                         defaultChecked={false} 
-                        //disabled={isDisabled ? "disabled" : false}
+                        disabled
                         onChange={((e)=>this.handleAddToMyProjectsCheckboxChange(e))} 
                     /> 
                 </span>
@@ -265,6 +272,8 @@ class AllProjectCard extends React.Component{
                 <div> Tools Required: <br/>
                     <ul>{this.renderToolLIs(project[2], project[0].name)}</ul>
                 </div><br/>
+
+
 
                 {/* <label for="clicker" id="expand-btn"> Read Reviews? </label> */}
                 {/* <input type="hidden" id="clicker" type="checkbox" onClick={this.toggleDisplayReviewsState}></input> */}
@@ -298,13 +307,6 @@ class AllProjectCard extends React.Component{
                 > Show Reviews </button> 
 
 
-                {/* // Now THIS is rendering, AllProjC one isn't.  */}
-                {/* <ReviewContainer 
-                    toggleReviewToDisplay={this.props.toggleReviewToDisplay}
-                    displayReviews={this.state.displayReviews} 
-                    project_id={project[0].id}
-                    reviewToDisplay={this.state.displayReviews} 
-                /> */}
                 <br/>
 
                 {inProjectsCheckbox}
