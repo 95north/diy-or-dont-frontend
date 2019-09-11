@@ -43,32 +43,22 @@ class AllProjectCard extends React.Component{
                 // console.log(" ALLPROJECTCARD  toolbox.includes(tool.id)", toolbox.includes(tool.id))
 
                 rArr.push(<li><b> {tool.name} </b></li>)
+                rArr.push(this.generateAddToToolboxCheckbox(toolbox, tool.id, projectName) )
+                rArr.push(this.generateAddToShoppingListCheckbox(toolbox, tool.id, projectName) )
 
-                rArr.push(<li> 
-                    <span> {toolbox.includes(tool.id) ? 
-                    "In Your Toolbox!" : "Add to My Toolbox"} : 
-                    <input 
-                        type="checkbox" 
-                        name="addToMyToolbox" 
-                        value={"toolboxID"+tool.id} 
-                        defaultChecked={toolbox.includes(tool.id)} 
-                        onChange={((e)=>this.handleAddToToolboxCheckboxChange(e, projectName))} 
-                    /> 
-                    </span>
-                </li>)
+                // rArr.push(<li> 
+                //     <span> {shoppingList.includes(tool.id) ? 
+                //     "In Your Shopping List" : "Add to Shopping List"} : 
+                //     <input 
+                //         type="checkbox" 
+                //         name="addToMyShoppingList" 
+                //         value={"shoppinID"+tool.id} 
+                //         defaultChecked={shoppingList.includes(tool.id)} 
+                //         onChange={((e)=>this.handleAddToShoppingListCheckboxChange(e, projectName))} 
+                //     /> 
+                //     </span>
+                // </li>)
 
-                rArr.push(<li> 
-                    <span> {shoppingList.includes(tool.id) ? 
-                    "In Your Shopping List" : "Add to Shopping List"} : 
-                    <input 
-                        type="checkbox" 
-                        name="addToMyShoppingList" 
-                        value={"shoppinID"+tool.id} 
-                        defaultChecked={shoppingList.includes(tool.id)} 
-                        onChange={((e)=>this.handleAddToShoppingListCheckboxChange(e, projectName))} 
-                    /> 
-                    </span>
-                </li>)
             })
             return rArr
         } else {
@@ -77,9 +67,123 @@ class AllProjectCard extends React.Component{
     }
 
 
+    generateAddToToolboxCheckbox =(toolbox, toolId, projectName)=>{
+        let inToolbox= false;
+        
+        if(toolbox.includes(toolId)){
+            inToolbox= true
+        } 
+
+        if (this.props.userProjects && inToolbox){
+            return(<li> 
+                <span> 
+                In Your Toolbox!: 
+                <input 
+                    type="checkbox" 
+                    name="addToMyToolbox" 
+                    value={"toolboxID"+toolId} 
+                    defaultChecked="true"
+                    disabled
+                /> 
+                </span>
+            </li>)
+        } else if (this.props.userProjects && !inToolbox){    
+            
+                return(<li> 
+                    <span> Add to My Toolbox : 
+                    <input 
+                        type="checkbox" 
+                        name="addToMyToolbox" 
+                        value={"toolboxID"+toolId} 
+                        //defaultChecked={toolbox.includes(toolId)}
+                        onChange={((e)=>this.handleAddToToolboxCheckboxChange(e, projectName))} 
+                    /> 
+                    </span>
+                </li>) 
+
+        } else {                // if not logged in
+            return(<li> 
+                <span
+                    class="tooltip"
+                > 
+                <span class="tooltiptext">Please login first :) </span> 
+                Add to My Toolbox : 
+                <input 
+                    type="checkbox" 
+                    name="addToMyToolbox" 
+                    value={"toolboxID"+toolId} 
+                    // defaultChecked={toolbox.includes(toolId)}
+                    disabled
+                    // onChange={((e)=>this.handleAddToToolboxCheckboxChange(e, projectName))} 
+                /> 
+                </span>
+            </li>)
+        }
+    }
+
+
+    generateAddToShoppingListCheckbox =(shoppingList, toolId, projectName)=>{
+        let inShoppingList = false;
+        
+        if(shoppingList.includes(toolId)){
+            inShoppingList= true
+        } 
+
+        if (this.props.userProjects && inShoppingList) {
+            
+            return(<li> 
+                <span> 
+                In Your Shopping List : 
+                <input 
+                    type="checkbox" 
+                    name="addToMyShoppingList" 
+                    value={"shoppinID"+toolId} 
+                    disabled
+                    defaultChecked={inShoppingList} 
+                /> 
+                </span>
+            </li>)
+
+        } else if(this.props.userProjects && !inShoppingList){    
+                    
+            return(<li> 
+                <span> 
+                Add To Shopping List : 
+                <input 
+                    type="checkbox" 
+                    name="addToMyShoppingList" 
+                    value={"shoppinID"+toolId} 
+                    defaultChecked={inShoppingList}
+                    onChange={((e)=>this.handleAddToShoppingListCheckboxChange(e, projectName))} 
+                    // onClick="this.disabled=true"
+                /> 
+                </span>
+            </li>)
+
+        } else {        // if not logged in
+            return(<li> 
+                <span
+                    class="tooltip"
+                > 
+                <span class="tooltiptext">Please login first :) </span> 
+                Add to Shopping List : 
+                <input 
+                    type="checkbox" 
+                    name="addToMyShoppingList" 
+                    value={"shoppinID"+toolId} 
+                    disabled
+                /> 
+
+                </span>
+            </li>)
+        }
+    }
+
 
 
     handleAddToToolboxCheckboxChange = (e, projectName) =>{
+        e.target.disabled=true;
+
         let postbody={
             userId: this.props.user.user_id,
             supplyId: parseInt(e.target.value.slice(9, e.target.value.length)),
@@ -106,6 +210,8 @@ class AllProjectCard extends React.Component{
 
 
     handleAddToShoppingListCheckboxChange = (e, projectName) =>{
+        e.target.disabled=true;
+
         let postbody={
             userId: this.props.user.user_id,
             supplyId: parseInt(e.target.value.slice(9, e.target.value.length)),
@@ -194,18 +300,18 @@ class AllProjectCard extends React.Component{
 
 
     renderAddToMyProjectsCheckbox = (projectId)=>{
-        console.log("this.props.userProjects :", this.props.userProjects)
+        // console.log("this.props.userProjects :", this.props.userProjects)
         if (this.props.userProjects){
             let returnVal = false
             this.props.userProjects.forEach(function(proj){
-                console.log("Proj ---", proj)
-                console.log("Proj ---", proj[3]["id"])
-                console.log("Proj Id ---", projectId)
+                // console.log("Proj ---", proj)
+                // console.log("Proj ---", proj[3]["id"])
+                // console.log("Proj Id ---", projectId)
 
                 if (proj[3]["id"] === projectId){
                     returnVal = true
                 } 
-            }) // end forEach
+            })  // end forEach
 
             if (returnVal===true){
                 return(

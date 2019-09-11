@@ -75,10 +75,12 @@ class ProjectCard extends React.Component{
         } else {
             return <li>No Tools Listed</li>
         }
-    }
+    }  // end render Tool LIs 
 
 
     handleAddToToolboxCheckboxChange = (e, projectName) =>{
+        e.target.disabled=true;
+
         let postbody={
             userId: this.props.user.user_id,
             supplyId: parseInt(e.target.value.slice(9, e.target.value.length)),
@@ -106,6 +108,8 @@ class ProjectCard extends React.Component{
 
 
     handleAddToShoppingListCheckboxChange = (e, projectName) =>{
+        e.target.disabled=true;
+
         let postbody={
             userId: this.props.user.user_id,
             supplyId: parseInt(e.target.value.slice(9, e.target.value.length)),
@@ -157,7 +161,7 @@ class ProjectCard extends React.Component{
     render(){
         let project = this.props.project
         // console.log("MYYY PROJ CARD - One General Project details: ", project)
-
+        // console.log("testing projectName project[3].name", project[3].name)
 
         return(
             <div className="card">
