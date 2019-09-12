@@ -78,6 +78,8 @@ class ReviewContainer extends React.Component{
                     return(
                         <ReviewCard 
                             review={review}
+                            userProject_id ={this.props.userProject_id}
+
                         />
                     )
                 })

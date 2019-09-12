@@ -12,8 +12,16 @@ class ReviewCard extends React.Component{
     render(){
         let user = this.props.review[1]
         let review = this.props.review[0]
+        let review_id = this.props.review[0]["id"]
+        // console.log("this.props.review[0][ id ]  props in ReviewCard: ", this.props.review[0]["id"])
+        console.log("userProject_id props in ReviewCard: ", this.props.userProject_id)
+        console.log("activeReviewId store  props in ReviewCard: ", this.props.activeReviewId )
 
-        console.log("props in ReviewCard: ", this.props)
+ 
+
+       //if( this.props.activeReviewId === this.props.userProject_id){
+
+      
         return(
             <div>
                 <div>
@@ -32,6 +40,10 @@ class ReviewCard extends React.Component{
             </div>
 
         )
+    // } else {
+    //     return null
+    // }
+
     }
 
 
@@ -52,7 +64,8 @@ function mapDispatchToProps(dispatch){
 function mapStateToProps(state){
     return({
         // userSupplies: state.userSupplies,
-        user: state.user
+        user: state.user,
+        activeReviewId: state.activeReviewId
     })
 }
 

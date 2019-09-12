@@ -39,6 +39,8 @@
     padding: 0px 0px 0px 5px;  
     box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.658);
     transition: 0.7s;
+    max-height: 30px;
+    position: float;
 
   }
   
@@ -75,7 +77,7 @@
     /* display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: auto; */
-
+    padding-top: 15px;
     display: flex; 
     justify-content: space-evenly;
     flex-wrap: wrap;
@@ -86,9 +88,9 @@
     padding-left: 15px;
     background-image: url('https://images.homedepot-static.com/productImages/7888ad7d-d803-4644-ae83-e2e9beb7aa2c/svn/blue-ivy-hill-tile-ceramic-tile-ext3rd100048-64_1000.jpg');
     background-size: 200pct;
-    opacity: 0.8;
+    /* opacity: 0.8; */
     padding-bottom: 900px;
-    margin-bottom: 900px;
+
 
     /* background-image: url(''); */
 
@@ -122,7 +124,7 @@
     background-size: cover; */
     background: linear-gradient(#daf2ed, #ccdaf0);
     padding: 0px 0px 0px 0px;
-    opacity: 0.9;
+    opacity: 0.8;
     /* height: 40px;
     width: 70px; */
     border-radius: 5px;

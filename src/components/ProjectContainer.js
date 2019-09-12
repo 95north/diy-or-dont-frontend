@@ -85,17 +85,20 @@ class ProjectContainer extends React.Component{
         if (this.state.projects){
             let projectCardsArr = this.state.projects.map( project => {
                 slideIndexCounter += 1;
+               // {/* <ProjectCard /> */}
                 return(
-                <Slide index={slideIndexCounter}>
-                <ProjectCard 
+                // <Slide index={slideIndexCounter}>
+                    <ProjectCard
+
                     project={project} 
                     addNeedTool={this.props.addNeedTool}
                     unNeedTool={this.props.unNeedTool}
                     onEditClickHandler={this.onEditClickHandler}
                     onDeleteUserProjectClick={this.onDeleteUserProjectClick}
                     //toggleReviewToDisplay={this.toggleReviewToDisplay}
-                />
-                </Slide>
+                    >
+                    </ProjectCard>
+                // </Slide>
                 )
             })
 
@@ -103,9 +106,15 @@ class ProjectContainer extends React.Component{
             return(
                 <React.Fragment>
 
-                    <div className="carousel-container">
+                    {/* <div className="carousel-container"> */}
+                    <div className="headerDiv">
+                        <div className="headerText"> Your Projects: </div>
+                    </div>
+                    
+                    <div className="thecontainer">
+
                     {/* <br/> */}
-                    <div className="headerText"> Your Projects: </div>
+                    
                         {/* <br></br> */}
                         {/* <div className={this.state.editInProgress ? "displayEdit" : "hideEdit" }> 
                             <EditForm onEditSubmitHandler={this.onEditSubmitHandler}   
@@ -117,8 +126,9 @@ class ProjectContainer extends React.Component{
                                 editPonyImage={this.state.editPonyImage} 
                             />
                         </div> */}
-                              <CarouselProvider
-                               
+
+
+                            {/* <CarouselProvider       
                                 naturalSlideWidth={250}
                                 naturalSlideHeight={950}
                                 totalSlides={projectCardsArr.length}
@@ -129,10 +139,10 @@ class ProjectContainer extends React.Component{
 
                                 <Slider className="carousel">
                                     {projectCardsArr}
- 
                                 </Slider>
+                            </CarouselProvider> */}
 
-                            </CarouselProvider>
+                            {projectCardsArr}
 
                         {/* MESSED UP REFACTOR, DONT NEED THIS HERE */}
                         {/* <ReviewContainer 

@@ -43,7 +43,7 @@ class ProjectCard extends React.Component{
         let rArr = [];
         if(toolObjsArr.length > 0){
             toolObjsArr.map( tool =>{           //refactor to Each or using Map functionality? 
-                console.log("TOOL IN PROJECT CARD: ", tool)
+                // console.log("TOOL IN PROJECT CARD: ", tool)
                 rArr.push(<li><b> {tool.name} </b></li>)
 
                 rArr.push(this.generateAddToToolboxCheckbox(toolbox, tool.id, projectName, projectId) )
@@ -261,8 +261,8 @@ class ProjectCard extends React.Component{
 
         return(
             <div className="card">
-                <h3> {project[3].name}</h3>
-                <img className="projectpic" src={this.props.project.image} alt="A project" />
+                <h3> {project[3].name}</h3> <br/>
+                {/* <img className="projectpic" src={this.props.project.image} alt="A project" /> */}
                 <div>  User Notes: {project[2].usernote}</div> <br/>
                 <div>  Date Added: {project[2].created_at.slice(0, 10)} </div><br/>
 
@@ -271,7 +271,7 @@ class ProjectCard extends React.Component{
                 <ul>{this.renderToolLIs(project[4], project[3].name, project[3].id )}</ul>
                 
                 <h3> {project[3].overview}</h3>  <br/>
-                <div>  Status:  {project[2].status === "Completed" ? <span> Completed <input type="checkbox" name="completeProject" value="completed" defaultChecked={true} disabled/> </span>: project[2].status}</div><br/>
+                <div>  Status:  {project[2].status === "Completed" ? <span> Completed <input type="checkbox" name="completeProject" value="completed" defaultChecked={true} disabled/> </span>: project[2]["status"]}</div><br/>
                  {/* ^^^ Change so Edit form displays if user wants to complete */}
 
 

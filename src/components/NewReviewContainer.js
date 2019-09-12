@@ -109,7 +109,7 @@ class NewReviewContainer extends React.Component{
 
     render(){
         // console.log("New Review Containter props: USER PROJECT ID??  ", this.props)
-        if(this.props.activeReviewId){
+        if(this.props.activeReviewId === this.props.userProject_id){
         return(
             // <div className={ this.state.displayReviewForm ? null : "go-away"}> 
             // ^^ Makes it super buggy, and review forms align with cards roughly (but staggered)

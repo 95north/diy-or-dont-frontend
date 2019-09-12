@@ -135,47 +135,49 @@ class NewProjectForm extends React.Component{
 
     render(){
         let project = this.props.project
-        if(this.props.newProjectFormFlag){
-        return(
-            <>
-            {/* <input id="clicker" type="checkbox" onClick={this.toggleDisplayReviewsState}/>
-            <label for="clicker">Show New Project Form</label>
-             */}
-            {/* <div className="panel-wrap"> */}
-                {/* <div className="panel"> */}
-                <div id="mypanel">
-                <span onClick={this.props.activeNewProjectVoidInStore}> X </span>
-                    <h1> Create New Project: </h1>
-                        <form 
-                            onChange={( (e)=>this.changeHandler(e) )} 
-                            onSubmit={((e)=>this.newProjectFormSubmitHandler(e))}
-                        >
-                            Project Name: <input type="text" placeholder="Eg. Hang a Shelf, Replace Crown Molding, Fix Leaky Toilet" name="newProjectName" onChange={this.changeHandler}/> <br/>
-                            Project Overview / Description:<input type="text" placeholder="Eg. Hang a Shelf Using Brackets and Nails or Screws" name="newProjectOverview" onChange={this.changeHandler}/> <br/>
-                            Project Instructions: <input type="text" placeholder="Detailed Instructions for how to complete project, plus any tips" name="newProjectDescription" onChange={this.changeHandler}/> <br/>
+        // console.log("this.props.userProject_id", this.props.userProject_id )
+        // console.log("this.props.activeReviewId", this.props.activeReviewId)
+        if(this.props.newProjectFormFlag ){
+            return(
+                <>
+                {/* <input id="clicker" type="checkbox" onClick={this.toggleDisplayReviewsState}/>
+                <label for="clicker">Show New Project Form</label>
+                */}
+                {/* <div className="panel-wrap"> */}
+                    {/* <div className="panel"> */}
+                    <div id="mypanel">
+                    <span onClick={this.props.activeNewProjectVoidInStore}> X </span>
+                        <h1> Create New Project: </h1>
+                            <form 
+                                onChange={( (e)=>this.changeHandler(e) )} 
+                                onSubmit={((e)=>this.newProjectFormSubmitHandler(e))}
+                            >
+                                Project Name: <input type="text" placeholder="Eg. Hang a Shelf, Replace Crown Molding, Fix Leaky Toilet" name="newProjectName" onChange={this.changeHandler}/> <br/>
+                                Project Overview / Description:<input type="text" placeholder="Eg. Hang a Shelf Using Brackets and Nails or Screws" name="newProjectOverview" onChange={this.changeHandler}/> <br/>
+                                Project Instructions: <input type="text" placeholder="Detailed Instructions for how to complete project, plus any tips" name="newProjectDescription" onChange={this.changeHandler}/> <br/>
 
-                            <br/>
-                            <AddProjectToolForm 
-                                tools={this.state.tools} 
-                                allSupplies={this.state.allSupplies} 
-                                showNewTool={this.state.showNewTool}
-                                // displayCreateNewToolForm = {this.displayCreateNewToolForm}
-                            /><br/> 
-                            <button type="button" onClick={this.addTool} >Add Another Tool to this Project</button><br/>
-
-
-                            <br/>
-                            <input type="submit" value="Create New Project"/>
+                                <br/>
+                                <AddProjectToolForm 
+                                    tools={this.state.tools} 
+                                    allSupplies={this.state.allSupplies} 
+                                    showNewTool={this.state.showNewTool}
+                                    // displayCreateNewToolForm = {this.displayCreateNewToolForm}
+                                /><br/> 
+                                <button type="button" onClick={this.addTool} >Add Another Tool to this Project</button><br/>
 
 
-                        </form>
-                </div>
-            {/* </div> */}
-            </>
-        )
-        } else {
-            return null
-        } 
+                                <br/>
+                                <input type="submit" value="Create New Project"/>
+
+
+                            </form>
+                    </div>
+                {/* </div> */}
+                </>
+            )
+            } else {
+                return null
+            } 
     }
 
 }
