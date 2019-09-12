@@ -3,6 +3,7 @@ import { Route , withRouter, Redirect} from 'react-router-dom';
 import { browserHistory } from 'react-router';
 import {connect} from 'react-redux';
 import './Sidebar.css'
+import './ToolContainer.css'
 import ToolboxDisplay from './ToolboxDisplay.js';
 import ShoppingList from './ShoppingList.js';
 
@@ -70,10 +71,13 @@ class NewReviewContainer extends React.Component{
         if (this.props.userSupplies.userSupplies !== "undefined" && this.props.userSupplies.userSupplies !== [] && this.props.userSupplies.userSupplies !== undefined){
             return(
                 <> 
-                    ~*+ Tool Display +*~
+                    <div className="toolboxContainer">                    
+                    
                     <ShoppingList triggerReRender={this.triggerReRender}/>
                     <ToolboxDisplay triggerReRender={this.triggerReRender}/>
-                    <br/>
+                    <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/>
+                    <p></p> <p></p> <p></p> <p></p> <p></p> <p></p> <p></p>
+                    </div>
                 </>
             )
         } else {

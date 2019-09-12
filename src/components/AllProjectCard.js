@@ -17,7 +17,7 @@ class AllProjectCard extends React.Component{
 
 
 
-    renderToolLIs = (toolObjsArr, projectName) =>{
+    renderToolLIs = (toolObjsArr, projectName, projectId) =>{
 
         // console.log("props in allProjectCAarD: ", this.props)
         let toolbox = []
@@ -42,9 +42,9 @@ class AllProjectCard extends React.Component{
                 // console.log("ALLPROJECTCARD tool is -- ", tool)
                 // console.log(" ALLPROJECTCARD  toolbox.includes(tool.id)", toolbox.includes(tool.id))
 
-                rArr.push(<li><b> {tool.name} </b></li>)
-                rArr.push(this.generateAddToToolboxCheckbox(toolbox, tool.id, projectName) )
-                rArr.push(this.generateAddToShoppingListCheckbox(toolbox, tool.id, projectName) )
+                rArr.push(<li className="rounded"><b> {tool.name} </b></li>)
+                rArr.push(this.generateAddToToolboxCheckbox(toolbox, tool.id, projectName, projectId) )
+                rArr.push(this.generateAddToShoppingListCheckbox(shoppingList, tool.id, projectName, projectId) )
 
                 // rArr.push(<li> 
                 //     <span> {shoppingList.includes(tool.id) ? 
@@ -67,7 +67,7 @@ class AllProjectCard extends React.Component{
     }
 
 
-    generateAddToToolboxCheckbox =(toolbox, toolId, projectName)=>{
+    generateAddToToolboxCheckbox =(toolbox, toolId, projectName, projectId)=>{
         let inToolbox= false;
         
         if(toolbox.includes(toolId)){
@@ -96,7 +96,7 @@ class AllProjectCard extends React.Component{
                         name="addToMyToolbox" 
                         value={"toolboxID"+toolId} 
                         //defaultChecked={toolbox.includes(toolId)}
-                        onChange={((e)=>this.handleAddToToolboxCheckboxChange(e, projectName))} 
+                        onChange={((e)=>this.handleAddToToolboxCheckboxChange(e, projectName, projectId))} 
                     /> 
                     </span>
                 </li>) 
@@ -122,7 +122,7 @@ class AllProjectCard extends React.Component{
     }
 
 
-    generateAddToShoppingListCheckbox =(shoppingList, toolId, projectName)=>{
+    generateAddToShoppingListCheckbox =(shoppingList, toolId, projectName, projectId)=>{
         let inShoppingList = false;
         
         if(shoppingList.includes(toolId)){
@@ -154,7 +154,7 @@ class AllProjectCard extends React.Component{
                     name="addToMyShoppingList" 
                     value={"shoppinID"+toolId} 
                     defaultChecked={inShoppingList}
-                    onChange={((e)=>this.handleAddToShoppingListCheckboxChange(e, projectName))} 
+                    onChange={((e)=>this.handleAddToShoppingListCheckboxChange(e, projectName, projectId))} 
                     // onClick="this.disabled=true"
                 /> 
                 </span>
@@ -181,14 +181,15 @@ class AllProjectCard extends React.Component{
 
 
 
-    handleAddToToolboxCheckboxChange = (e, projectName) =>{
+    handleAddToToolboxCheckboxChange = (e, projectName, projectId) =>{
         e.target.disabled=true;
 
         let postbody={
             userId: this.props.user.user_id,
             supplyId: parseInt(e.target.value.slice(9, e.target.value.length)),
             intoolbox: "true",
-            projectName: projectName
+            project_name: projectName,
+            project_id: projectId
         }
         if (this.props.user.user_id === undefined || this.props.user.user_id === "undefined" ){
             alert("Login!")
@@ -209,14 +210,15 @@ class AllProjectCard extends React.Component{
     }
 
 
-    handleAddToShoppingListCheckboxChange = (e, projectName) =>{
+    handleAddToShoppingListCheckboxChange = (e, projectName, projectId) =>{
         e.target.disabled=true;
 
         let postbody={
             userId: this.props.user.user_id,
             supplyId: parseInt(e.target.value.slice(9, e.target.value.length)),
             userneeds: "true",
-            projectName: projectName
+            project_name: projectName,
+            project_id: projectId
         }
         if (this.props.user.user_id === undefined || this.props.user.user_id === "undefined" ){
             alert("Login!")
@@ -239,6 +241,7 @@ class AllProjectCard extends React.Component{
 
 
     handleAddToMyProjectsCheckboxChange = (e) =>{
+        e.target.disabled=true;
         // console.log('card props - ', this.props)
         this.setState({ addToProjectsCheckbox: e.target.checked })
         // console.log("this.props.user.user_id, ", this.props.user.user_id)
@@ -354,7 +357,6 @@ class AllProjectCard extends React.Component{
                         value={"projectID"+projectId} 
                         //defaultChecked={false} 
                         defaultChecked={false} 
-                        disabled
                         onChange={((e)=>this.handleAddToMyProjectsCheckboxChange(e))} 
                     /> 
                 </span>
@@ -376,7 +378,11 @@ class AllProjectCard extends React.Component{
                 <span> Avg Hours To Complete: {project.avgTime ? project.avgTime : "N/A" } </span><br/>
                 <span> Total Reviews: {project.ratingsCount ? project.ratingsCount : "N/A" } </span><br/><br/>
                 <div> Tools Required: <br/>
-                    <ul>{this.renderToolLIs(project[2], project[0].name)}</ul>
+                    <div className="yo">
+                    <ul>
+                    {this.renderToolLIs(project[2], project[0].name, project[0]["id"])}
+                    </ul>
+                    </div>
                 </div><br/>
 
 

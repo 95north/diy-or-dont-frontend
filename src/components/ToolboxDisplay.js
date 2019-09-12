@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router';
 import {connect} from 'react-redux';
 import './Sidebar.css'
 import './Table.css'
+import './ToolContainer.css'
 
 
 class ToolboxDisplay extends React.Component{
@@ -163,7 +164,12 @@ class ToolboxDisplay extends React.Component{
 
         return(
             <> 
-            <br/><br/>  TOOLBOX
+            <br/><br/>  
+            <div className="toolboxHeaderDiv"> 
+                <div className="headerText"> 
+                TOOLBOX 
+                </div>
+            </div>
             <table>
             {/* <table style="width:100%"> */}
                 <tr>
@@ -178,6 +184,7 @@ class ToolboxDisplay extends React.Component{
                 </tr>
                 {tableRows}
             </table>
+            <br/>
             </>
         )
     }

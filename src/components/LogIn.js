@@ -1,4 +1,5 @@
 import React from 'react';
+import './LoginSignup.css'
 
 class LogIn extends React.Component{
     state={
@@ -23,7 +24,17 @@ class LogIn extends React.Component{
     render(){
         return(
             <React.Fragment>
-                <h1>Log In Below: </h1>
+                <div className="loginSignup" >
+                
+                <div className="linear-wipe">
+                    {/* <div className="diyTitle">  */}
+                    DIY or Don't 
+                    {/* </div> */}
+                </div>
+                
+                <div className="sticky" >
+                <div className="loginForm" >
+                <h1>Log In: </h1>
                 <form onSubmit={e => this.props.submitHandler(e, this.state)} >
                     <input 
                         type = "text" 
@@ -43,7 +54,9 @@ class LogIn extends React.Component{
                 </form>
                 <br/><br/>
                 New Here?  <a href="/signup"> Sign Up!</a>
-
+                </div>
+                </div>
+                </div>
             </React.Fragment>
         )
     }

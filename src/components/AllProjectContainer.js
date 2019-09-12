@@ -161,8 +161,10 @@ class AllProjectContainer extends React.Component{
 
             return(
                 <React.Fragment>
-    
-                    <h1> Showing All Projects: </h1>
+                    <div className="headerDiv">
+                        <div className="headerText"> Showing All Projects: </div>
+                    </div>
+                    
                     <div className="thecontainer">
                         <br/>
     
@@ -193,7 +195,10 @@ class AllProjectContainer extends React.Component{
             return (
                     <React.Fragment>
         
-                        <h1> Showing All Projects: </h1>
+                    <div className="headerDiv">
+                        <div className="headerText"> Showing All Projects: </div>
+                    </div>
+                    
                         <div className="thecontainer">
                             <br/>
         

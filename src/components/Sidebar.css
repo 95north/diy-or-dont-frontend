@@ -9,9 +9,9 @@
     padding: 2em;
     background: #b0964d;
     color: #eee;
-    width: 240px;
-    animation: mypanel-animation 1s ease-in;  
-    opacity: 0.8;
+    width: 30em;
+    animation: mypanel-animation .3s ease-in;  
+    opacity: 1;
   }
 
   @keyframes mypanel-animation {

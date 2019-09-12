@@ -241,7 +241,12 @@ class ShoppingList extends React.Component{
 
         return(
             <> 
-            <br/><br/>  SHOPPING LIST
+            <br/><br/>  
+            <div className="toolboxHeaderDiv">
+                <div className="headerText"> 
+                SHOPPING LIST
+                </div>
+            </div>
             <table>
                 <tr>
                     <th> Tool/Supply Name </th>
