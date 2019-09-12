@@ -105,7 +105,7 @@ class ProjectContainer extends React.Component{
 
                     <div className="carousel-container">
                     {/* <br/> */}
-                    <h1> Your Projects: </h1>
+                    <div className="headerText"> Your Projects: </div>
                         {/* <br></br> */}
                         {/* <div className={this.state.editInProgress ? "displayEdit" : "hideEdit" }> 
                             <EditForm onEditSubmitHandler={this.onEditSubmitHandler}   
@@ -120,14 +120,14 @@ class ProjectContainer extends React.Component{
                               <CarouselProvider
                                
                                 naturalSlideWidth={250}
-                                naturalSlideHeight={375}
+                                naturalSlideHeight={950}
                                 totalSlides={projectCardsArr.length}
-                                visibleSlides={3}
+                                visibleSlides={4}
                             >
-                            <span className="carousel" id="leftNextButton"> <ButtonBack>  👈🏽  </ButtonBack> </span> 
-                            <span className="carousel" id="rightNextButton"> <ButtonNext> 👉🏼 </ButtonNext> </span> 
+                            <span  id="leftNextButton"> <ButtonBack>  👈🏽  </ButtonBack> </span> 
+                            <span  id="rightNextButton"> <ButtonNext> 👉🏼 </ButtonNext> </span> 
 
-                                <Slider>
+                                <Slider className="carousel">
                                     {projectCardsArr}
  
                                 </Slider>

@@ -18,7 +18,7 @@
 
   .headerDiv{
     background-image: url('https://www.ivcfloors.com/wp-content/uploads/2016/06/andorra_503.jpg');
-    background-size: 35px;
+    /* background-size: 35px; */
     box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.658);
     transition: 0.7s;
     text-align: left;
@@ -32,24 +32,29 @@
   }
   
   .headerText{
-    font-size: 2.5em;
-    left: 5px;
+    font-family: 'Permanent Marker', cursive;
+    font-size: 1.9em;
+    left: 2px;
     text-align: left;
-    padding: 0px 0px 0px 15px;  
+    padding: 0px 0px 0px 5px;  
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.658);
+    transition: 0.7s;
+
   }
   
 
   /* On mouse-over, add a deeper shadow */
   .card:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    background-color: #d3e8e6;
+    /* background-color: #d3e8e6; */
+    background-color: #c8e3e1;
 
   }
   
   /* Add some padding inside the card container */
-  .container {
+  /* .container {
     padding: 2px 16px;
-  }
+  } */
 
   .ponypic {
       width: 150px;
@@ -65,16 +70,26 @@
   }
 
   .thecontainer {
-      /* DONT FUSS W TOO MUCH, WANT TO USE FLICKITY ANYWAY!  */
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: auto;
+      /* grid-template-columns: 1fr 1fr 1fr; */
+
+    /* display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto; */
+
+    display: flex; 
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+
+     /* ^^ Row height */
     width: 100vw;
     min-height: 450px;
     padding-left: 15px;
     background-image: url('https://images.homedepot-static.com/productImages/7888ad7d-d803-4644-ae83-e2e9beb7aa2c/svn/blue-ivy-hill-tile-ceramic-tile-ext3rd100048-64_1000.jpg');
     background-size: 200pct;
     opacity: 0.8;
+    padding-bottom: 900px;
+    margin-bottom: 900px;
+
     /* background-image: url(''); */
 
 
@@ -102,24 +117,51 @@
   } */
 
  
-  ul.yo:not(li) {
-    background-image: url("https://upload.wikimedia.org/wikipedia/commons/7/7d/Screwgun.jpg");
-    background-size: cover;
+  div.cardList:not(li) {
+    /* background-image: url("https://upload.wikimedia.org/wikipedia/commons/7/7d/Screwgun.jpg");
+    background-size: cover; */
+    background: linear-gradient(#daf2ed, #ccdaf0);
     padding: 0px 0px 0px 0px;
-    opacity: 0.5;
+    opacity: 0.9;
+    /* height: 40px;
+    width: 70px; */
     border-radius: 5px;
     color: black;
   }
 
+  ul.toolsUl li{
+    left: 2px;
+    color: black;
+
+    opacity: 0.9;
+    text-align: left;
+    border-radius: 100px;
+    margin: 0;
+    padding: 0px 0px 0px 17px;
+    list-style: none;
+    /* background-image: url("https://png.pngtree.com/png-vector/20190810/ourlarge/pngtree-hammer-crash-break-tool-flat-color-icon-vector-icon-png-image_1655732.jpg"); */
+    /* background-image: url("http://cqrecords.com/wp-content/uploads/pn/png-claw-hammer-vector-hammer.jpg"); */
+    /* background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4I-2pSGnF7S6WyjOgolwR-v5M23kS4S8IfP81LLa52JbQVKwM"); */
+    /* background-image: url("https://article.images.consumerreports.org/w_767,c_lfill,ar_32:11,f_auto/prod/content/dam/CRO%20Images%202017/Magazine-Articles/December/CR-Magazine-Hero-December-2017-strip-screw-1017"); */
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/7/7d/Screwgun.jpg");
+    /* -moz-border-radius: 10px;
+    -webkit-border-radius: 10px; */
    
-  .yo {
+    background-repeat: no-repeat;
+    /* background-position:50% 50%; */
+    background-position: left center;
+    background-size: 10px;
+  }
+
+   
+  /* .yo {
     background-image: url("https://upload.wikimedia.org/wikipedia/commons/7/7d/Screwgun.jpg");
     background-size: cover;
     padding: 0px 0px 0px 0px;
     opacity: 0.5;
     border-radius: 5px;
     color: black;
-  }
+  } */
 
 
   li{

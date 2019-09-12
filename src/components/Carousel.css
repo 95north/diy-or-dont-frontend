@@ -1,19 +1,6 @@
 
-.carousel{
-    /* Attempt to make emokis larger */
-    /* font-size: 100px; */
-    /* width:100%; */
-    /* text-align:center; */
-    /* display: block; */
-    /* background-color: tan; */
-    /* position: absolute; */
-    /* position: -webkit-sticky; */
-    top: 150px;
-
-}
-
 #rightNextButton{
-    right: 5px;
+    right: 15px;
     position: relative;
     float: right;
     background-color: #A0FAEB;
@@ -32,6 +19,9 @@
       /* display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       grid-template-rows: auto; */
+      margin-right: 10px;
+      padding-right: 10px;
+      /* margin-left: 10px; */
       width: 100vw;
       min-height: 1000px;
       padding-left: 15px;
@@ -51,3 +41,16 @@
       align-content: space-around; */
   }
 
+
+  .carousel{
+    /* Attempt to make emokis larger */
+    /* font-size: 100px; */
+    width: 90em;
+    /* text-align:center; */
+    /* display: block; */
+    /* background-color: tan; */
+    /* position: absolute; */
+    /* position: -webkit-sticky; */
+    /* top: 150px; */
+
+}

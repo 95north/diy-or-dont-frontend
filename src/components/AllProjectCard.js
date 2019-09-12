@@ -42,7 +42,7 @@ class AllProjectCard extends React.Component{
                 // console.log("ALLPROJECTCARD tool is -- ", tool)
                 // console.log(" ALLPROJECTCARD  toolbox.includes(tool.id)", toolbox.includes(tool.id))
 
-                rArr.push(<li className="rounded"><b> {tool.name} </b></li>)
+                rArr.push(<li className="rounded" style={{opacity: "1"}}><b> {tool.name} </b></li>)
                 rArr.push(this.generateAddToToolboxCheckbox(toolbox, tool.id, projectName, projectId) )
                 rArr.push(this.generateAddToShoppingListCheckbox(shoppingList, tool.id, projectName, projectId) )
 
@@ -376,11 +376,14 @@ class AllProjectCard extends React.Component{
                 <span> Avg Hours To Complete: {project.avgTime ? project.avgTime : "N/A" } </span><br/>
                 <span> Total Reviews: {project.ratingsCount ? project.ratingsCount : "N/A" } </span><br/><br/>
                 <div> Tools Required: <br/>
-                    <div className="yo">
-                    <ul>
+                    <div className="cardList">
+                    {/* <div> */}
+                        
+                    <ul className="toolsUl">
                     {this.renderToolLIs(project[2], project[0].name, project[0]["id"])}
                     </ul>
                     </div>
+                    {/* </div> */}
                 </div><br/>
 
 

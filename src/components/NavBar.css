@@ -4,9 +4,49 @@
     /* color: #efadf7;  DOESNT WORK */
     background-color: #d8e3e2;
     /* position: fixed; */
-    min-height: 35px;
+    max-height: 32px;
+    min-height: 30px;
     /* position: fixed; */
   }
+
+
+
+
+.linear-wipeNav {
+  font-family: 'Permanent Marker', cursive;
+  /* font-size: 28px; */
+  font-size: 17px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-left: 8px;
+
+  padding-bottom: 0px;
+  min-width: 20px;
+  float: left;
+  display: block;
+  /* float: left;   Shows no nav bar */
+  
+  /* top: 2px; */
+  /* text-align: center; */
+
+  /* background: linear-gradient(to right, #bdbaa8 20%, #966f33 40%, #f87217 60%, #fdd017 80%); */
+  white-space:nowrap;
+  background: linear-gradient(to right, #bba 10%, #963 65%, rgb(168, 95, 43) 90%);
+  /* background-size: 200% auto; */
+  
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* animation: shine 3s linear;
+  @keyframes shine {
+    to {
+      background-position: 100% left;
+    }
+  } */
+
+}
   
   /* Style the links inside the navigation bar */
   .topnav a {
@@ -14,7 +54,7 @@
     display: block;
     color: teal;
     text-align: center;
-    padding: 14px 16px;
+    padding: 5px 8px;
     text-decoration: none;
     font-size: 17px;
   }
@@ -22,7 +62,6 @@
   /* Change the color of links on hover */
   .topnav a:hover {
     background-color: yellowgreen;
-    color: fuschia;
   }
   
   /* Style the "active" element to highlight the current page */
@@ -33,12 +72,15 @@
   
   /* Style the search box inside the navigation bar */
   .topnav input[type=text] {
-    float: right;
+    /* float: right; */
+    position: absolute;
+    top: 4px;
+    right: 15px;
     padding: 3px;
     border: none;
-    margin-top: 5px;
+    margin-top: 1px;
     margin-right: 16px;
-    margin-left: 20px;
+    /* margin-left: 20px; */
     font-size: 14px;
 
   }
@@ -56,15 +98,13 @@
         .topnav input[type=text] {
           border: 1px solid green;
         }
-      }
+    }
 
 
     .menu {
       background-color: #d8e3e2;
-      width: 22vw; 
+      /* width: 22vw;  */
     }
-
-
 
 
     .hideElement {

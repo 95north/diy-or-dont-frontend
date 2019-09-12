@@ -2,6 +2,7 @@
 
   #mypanel{
     position: fixed;
+
     right: 0px;
     top: 30px;
     bottom: 0;
@@ -10,8 +11,10 @@
     background: #b0964d;
     color: #eee;
     width: 30em;
+    height: 300px;
     animation: mypanel-animation .3s ease-in;  
     opacity: 1;
+    z-index: 1;
   }
 
   @keyframes mypanel-animation {
