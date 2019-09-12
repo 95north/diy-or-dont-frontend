@@ -3,12 +3,13 @@ import ProjectCard from './ProjectCard.js'
 import { Route , withRouter, Redirect} from 'react-router-dom';
 import { browserHistory } from 'react-router';
 import {connect} from 'react-redux';
-import ReviewContainer from './ReviewContainer.js';
 import cloneDeep from 'lodash/cloneDeep';
-
+import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
+import 'pure-react-carousel/dist/react-carousel.es.css';
+import './Carousel.css'
+import './Card.css'
 
 // import cloneDeep from 'lodash/cloneDeep'
-import './Card.css'
 
 
 class ProjectContainer extends React.Component{
@@ -80,9 +81,12 @@ class ProjectContainer extends React.Component{
 
 
     render(){
+        let slideIndexCounter = -1
         if (this.state.projects){
             let projectCardsArr = this.state.projects.map( project => {
+                slideIndexCounter += 1;
                 return(
+                <Slide index={slideIndexCounter}>
                 <ProjectCard 
                     project={project} 
                     addNeedTool={this.props.addNeedTool}
@@ -91,6 +95,7 @@ class ProjectContainer extends React.Component{
                     onDeleteUserProjectClick={this.onDeleteUserProjectClick}
                     //toggleReviewToDisplay={this.toggleReviewToDisplay}
                 />
+                </Slide>
                 )
             })
 
@@ -98,9 +103,9 @@ class ProjectContainer extends React.Component{
             return(
                 <React.Fragment>
 
+                    <div className="carousel-container">
+                    {/* <br/> */}
                     <h1> Your Projects: </h1>
-                    <br/>
-                    <div className="thecontainer">
                         {/* <br></br> */}
                         {/* <div className={this.state.editInProgress ? "displayEdit" : "hideEdit" }> 
                             <EditForm onEditSubmitHandler={this.onEditSubmitHandler}   
@@ -112,7 +117,22 @@ class ProjectContainer extends React.Component{
                                 editPonyImage={this.state.editPonyImage} 
                             />
                         </div> */}
-                        {projectCardsArr}
+                              <CarouselProvider
+                               
+                                naturalSlideWidth={250}
+                                naturalSlideHeight={375}
+                                totalSlides={projectCardsArr.length}
+                                visibleSlides={3}
+                            >
+                            <span className="carousel" id="leftNextButton"> <ButtonBack>  👈🏽  </ButtonBack> </span> 
+                            <span className="carousel" id="rightNextButton"> <ButtonNext> 👉🏼 </ButtonNext> </span> 
+
+                                <Slider>
+                                    {projectCardsArr}
+ 
+                                </Slider>
+
+                            </CarouselProvider>
 
                         {/* MESSED UP REFACTOR, DONT NEED THIS HERE */}
                         {/* <ReviewContainer 

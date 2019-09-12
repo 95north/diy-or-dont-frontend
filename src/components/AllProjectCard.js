@@ -339,8 +339,6 @@ class AllProjectCard extends React.Component{
                             defaultChecked={false} 
                             //disabled={isDisabled ? "disabled" : false}
                             onChange={((e)=>this.handleAddToMyProjectsCheckboxChange(e))}
-                            disabled
-                            
                         /> 
                 </span>
                 )

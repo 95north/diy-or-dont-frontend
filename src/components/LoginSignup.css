@@ -119,7 +119,7 @@
 
     /* background: linear-gradient(to right, #bdbaa8 20%, #966f33 40%, #f87217 60%, #fdd017 80%); */
 
-    background: linear-gradient(to right, #bba 20%, #963 40%, #f71 60%, #fd1 80%);
+    background: linear-gradient(to right, #bba 10%, #963 30%, #f71 60%, #fd1 80%);
     background-size: 200% auto;
     
     /* color: #000; */

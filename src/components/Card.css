@@ -70,6 +70,7 @@
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto;
     width: 100vw;
+    min-height: 450px;
     padding-left: 15px;
     background-image: url('https://images.homedepot-static.com/productImages/7888ad7d-d803-4644-ae83-e2e9beb7aa2c/svn/blue-ivy-hill-tile-ceramic-tile-ext3rd100048-64_1000.jpg');
     background-size: 200pct;
