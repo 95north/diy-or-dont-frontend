@@ -8,6 +8,7 @@ import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-re
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import './Carousel.css'
 import './Card.css'
+import { isParenthesizedExpression, throwStatement } from '@babel/types';
 
 // import cloneDeep from 'lodash/cloneDeep'
 
@@ -16,11 +17,18 @@ class ProjectContainer extends React.Component{
 
 // check user logged in (token) / get who user is.. 
 // fetch all of user's projects. 
-    state = {
-        projects: [],
-        userSupplies: [],
-        relevantSupplyObjs: []
+
+
+    constructor(props) {
+        super(props)
+        this.reviewContRef = React.createRef()
+        this.state = {
+            projects: [],
+            userSupplies: [],
+            relevantSupplyObjs: []
+        }
     }
+
 
 
     componentDidMount(){
@@ -81,13 +89,18 @@ class ProjectContainer extends React.Component{
 
 
     render(){
+        let activeReview = (this.state.activeReviewId > 0)? true : false;
+        console.log("this.state.activeReviewId ", this.state.activeReviewId);
+        
+        console.log("in Project Container, activeReview t f is: ", activeReview);
+
         let slideIndexCounter = -1
-        if (this.state.projects){
+        if (this.state.projects){    // else = you are not logged in!
             let projectCardsArr = this.state.projects.map( project => {
                 slideIndexCounter += 1;
                // {/* <ProjectCard /> */}
-                return(
-                // <Slide index={slideIndexCounter}>
+                return(         // returning individual slides being created. 
+                <Slide index={slideIndexCounter}>
                     <ProjectCard
 
                     project={project} 
@@ -110,8 +123,18 @@ class ProjectContainer extends React.Component{
                     <div className="headerDiv">
                         <div className="headerText"> Your Projects: </div>
                     </div>
+
+                    <div  className={activeReview ? "theContainerCarouselReviewOpen" : "thecarouselcontainer"} >
+                    {/* <div  className={activeReview ? "theContainerCarouselReviewOpen" : "carousel"} ref={this.reviewContRef}> */}
+                    {/* <div className="reviewCont"> */}
+                    {/* Changed the ELSE ^ from: "reviewCont"   makes card behind review disappear,  */}                                                              
+                    {/* </div> */}
                     
-                    <div className="thecontainer">
+                    {/* <div className="thecarouselcontainer"> */}
+
+                    {/* VS  commented out below line to retry Carousel */}
+                    {/* {projectCardsArr} */}
+
 
                     {/* <br/> */}
                     
@@ -128,7 +151,7 @@ class ProjectContainer extends React.Component{
                         </div> */}
 
 
-                            {/* <CarouselProvider       
+                            <CarouselProvider       
                                 naturalSlideWidth={250}
                                 naturalSlideHeight={950}
                                 totalSlides={projectCardsArr.length}
@@ -137,12 +160,15 @@ class ProjectContainer extends React.Component{
                             <span  id="leftNextButton"> <ButtonBack>  👈🏽  </ButtonBack> </span> 
                             <span  id="rightNextButton"> <ButtonNext> 👉🏼 </ButtonNext> </span> 
 
-                                <Slider className="carousel">
+                               {/* Below:  Commented out Dec 14  */}
+                                {/* <Slider className="carousel"> */}
+                                <Slider className={activeReview ? "theContainerCarouselReviewOpen" : "" } ref={this.reviewContRef}>
                                     {projectCardsArr}
                                 </Slider>
-                            </CarouselProvider> */}
 
-                            {projectCardsArr}
+                            </CarouselProvider>
+
+                        
 
                         {/* MESSED UP REFACTOR, DONT NEED THIS HERE */}
                         {/* <ReviewContainer 
@@ -181,7 +207,8 @@ function mapDispatchToProps(dispatch){
 function mapStateToProps(state){
     return({
         userSupplies: state.userSupplies,
-        user: state.user
+        user: state.user,
+        activeReviewId: state.activeReviewId // added Dec 14. projCd adds it to store
     })
 }
 

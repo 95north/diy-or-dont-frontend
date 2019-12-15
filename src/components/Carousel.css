@@ -19,6 +19,7 @@
       /* display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       grid-template-rows: auto; */
+      position: fixed;
       margin-right: 10px;
       padding-right: 10px;
       /* margin-left: 10px; */
@@ -42,10 +43,12 @@
   }
 
 
-  .carousel{
+  .carouselNONONO{
     /* Attempt to make emokis larger */
     /* font-size: 100px; */
     width: 90em;
+    height: 3px;
+    /* width: 90vw; Works weird! Cards mash over ea */  
     /* text-align:center; */
     /* display: block; */
     /* background-color: tan; */

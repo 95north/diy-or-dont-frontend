@@ -71,6 +71,8 @@
 
   }
 
+
+
   .thecontainer {
       /* grid-template-columns: 1fr 1fr 1fr; */
 
@@ -90,11 +92,7 @@
     background-size: 200pct;
     /* opacity: 0.8; */
     padding-bottom: 900px;
-
-
     /* background-image: url(''); */
-
-
     /* display: grid;
     padding: 15px, 15px, 15px, 15px;
     grid-template-columns: 1fr 1fr 1fr; */
@@ -103,6 +101,45 @@
     /* Background color above overrides NavBar :(  */
     /* justify-content: space-between;
     align-content: space-around; */
+}
+
+
+.theContainerCarouselReviewOpen {
+  /* Carousel that holds the cards, is NOT the review!  */
+padding-top: 15px;
+
+/* For ea review to appear on top of its card! : */
+/* display: flex;  */
+
+/* justify-content: space-evenly; */
+/* flex-wrap: wrap; */
+
+/* align-self: right;  DOES NOTHING */
+/* right: -50px;
+position: absolute; */
+
+width: 60vw;
+min-height: 450px;
+padding-left: 15px;
+background-image: url('https://images.homedepot-static.com/productImages/7888ad7d-d803-4644-ae83-e2e9beb7aa2c/svn/blue-ivy-hill-tile-ceramic-tile-ext3rd100048-64_1000.jpg');
+background-size: 200pct;
+padding-bottom: 9px;
+}
+
+
+
+.thecarouselcontainer {
+padding-top: 15px;
+/* display: flex;  */
+justify-content: space-evenly;
+flex-wrap: wrap;
+
+width: 100vw;
+min-height: 450px;
+padding-left: 15px;
+background-image: url('https://images.homedepot-static.com/productImages/7888ad7d-d803-4644-ae83-e2e9beb7aa2c/svn/blue-ivy-hill-tile-ceramic-tile-ext3rd100048-64_1000.jpg');
+background-size: 200pct;
+padding-bottom: 900px;
 }
 
   .hideEdit {

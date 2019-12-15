@@ -115,7 +115,7 @@ class NewReviewContainer extends React.Component{
             // ^^ Makes it super buggy, and review forms align with cards roughly (but staggered)
             // <div className="panel-wrap">
             //     <div className="panel">
-                <div id="mypanel">
+                <div id="myreviewpanel">
 
                     <form onSubmit={((e)=>this.onSubmitReviewForm(e))}>
                     <span onClick={((e)=>this.props.activeReviewIdVoidInStore(this.props.project_id))}> X </span>

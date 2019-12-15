@@ -42,6 +42,8 @@ class NavBar extends React.Component{
                 {/* <button  >  i do nothing! </button> */}
                 {/* ......*~+  +~*   *~+  +~*   *~+  +~*   *~+  +~*   *~+  +~* */}
                 <input type="text" onChange={((e)=> this.props.updateSearchTerm(e))} placeholder="Search All Projects"  name="allProjSearch"/>
+                <span>  {this.props.user.username ? <button onClick={this.props.logOut} > Log Out </button>  : null } </span>
+
             </div>
         )
     }

@@ -16,19 +16,40 @@ const defaultState ={
     activeReviewId: false,
     newProjectFormFlag: false,
 
-
 }
+
+
+// function allUserInfoReducer(state={  //this is not how redux works
+//     defaultState.user, 
+//     defaultState.user_id, 
+//     defaultState.userProjects,
+//     defaultState.userSupplies,
+//     defaultState.relevantSupplyObjs
+//     }, action ){
+//         switch(action.type){
+//             case "LOGGED_OUT":
+//                 return defaultState;
+//             default: 
+//                 return state
+//         }
+// }
 
 
 // only extracts/manipulates the user portion of state
 function userReducer(state=defaultState.user, action){   //App
-    console.log(" userReducer on login action payload : ", action.payload) // now id&token showing undefined after log in 
+    console.log(" userReducer on login's  Action payload : ", action.payload) // now id&token showing undefined after log in 
     switch(action.type){
         // toggle have / need tool.
         case "LOGGED_IN":
             return action.payload   // is ONLY: {user_id: x, user_token: x}
+        case "LOGGED_OUT":
+            //state = defaultState  // not mutating state, but reassigning ref.
+            return defaultState;
+            // Still shows Checkboxes checked, toolbox. 
 
-            //return([...state, state.user:state]);
+            // return appReducer(state, action)
+            // ^    const appReducer = combineReducers({
+            //      /* your app’s top-level reducers */  })
         default: 
             return state
     }
@@ -67,7 +88,8 @@ function projectContainerReducer(state=defaultState.userProjects, action){
                 }
             })
             return ({...state, projects: returnArray}) // is ONLY: {user_id: x, user_token: x}
-        
+        case "LOGGED_OUT":
+            return defaultState;
         default: 
             return state
     }
@@ -126,11 +148,23 @@ function newProjectFormFlagReducer(state=defaultState.activeReviewId, action){
 
 
 // function UserSupplyReducer(state= defaultState.userSupplies){
-
 // }
 
 
-const reducer=combineReducers({
+
+// reducers are supposed to return the initial state when they are called 
+// with undefined as the first argument, no matter the action
+const rootReducer = (state, action) => { // wrapping root reducer
+    console.log("Action Type in root Reducer: ", action.type)
+    if (action.type === 'LOGGED_OUT_RESET_STORE') {
+        state = undefined;
+    }
+    return reducer(state, action);
+}
+
+
+const reducer=combineReducers({     // root reducer that gets 
+                                    // passed to redux's createStore func.                           
     userSupplies: projectContainerReducer,
     user: userReducer,
     searchTerm: searchTermReducer,
@@ -139,5 +173,6 @@ const reducer=combineReducers({
     newProjectFormFlag: newProjectFormFlagReducer
 
 })
+
 
 export default reducer;

@@ -123,6 +123,18 @@ class App extends React.Component {
       }
     }
 
+    logOut = (e, user) =>{
+      console.log("in App logout")
+      localStorage.clear();
+      this.setState({ user: null });
+      // CHANGE STORE TOO. 
+      this.props.logOutRemoveFromStore({ 
+        // user_token: user.token,
+        // user_id: user.user_id,
+        // username: user.user_name,
+        // location: user.user_location,
+      });
+    }
 
 
   render(){
@@ -156,7 +168,9 @@ class App extends React.Component {
             path="/home" 
             render={() => 
               <React.Fragment>
-                <NavBar />
+                <NavBar 
+                  logOut={this.logOut}
+                />
                 <AllProjectContainer />
               </React.Fragment>
             } 
@@ -169,7 +183,9 @@ class App extends React.Component {
             // component={ProjectContainer}
             render={() => 
               <React.Fragment>
-                <NavBar />
+                <NavBar 
+                  logOut={this.logOut}
+                />
                 <ProjectContainer />
               </React.Fragment>
             }
@@ -180,7 +196,9 @@ class App extends React.Component {
             path="/mytoolbox" 
             render={() => 
               <React.Fragment>
-                <NavBar />
+                <NavBar 
+                    logOut={this.logOut}
+                />
                 <ToolContainer />
               </React.Fragment>
             }
@@ -190,7 +208,9 @@ class App extends React.Component {
             path="/createproject" 
             render={() => 
               <React.Fragment>
-                <NavBar />
+                <NavBar 
+                  logOut={this.logOut}
+                />
                 <NewProjectForm />
               </React.Fragment>
             }
@@ -225,7 +245,11 @@ class App extends React.Component {
         loggedInAddIdToStore: (userinfo)=> dispatch(
           {type: "LOGGED_IN",
           payload: userinfo   //userReducer gets id  & token, OK! 
-        })
+        }),
+        logOutRemoveFromStore: ()=> dispatch(
+          {type: "LOGGED_OUT"}
+        )
+
     })
 }
 
