@@ -124,8 +124,11 @@ class ProjectContainer extends React.Component{
                         <div className="headerText"> Your Projects: </div>
                     </div>
 
-                    <div  className={activeReview ? "theContainerCarouselReviewOpen" : "thecarouselcontainer"} >
-                    {/* <div  className={activeReview ? "theContainerCarouselReviewOpen" : "carousel"} ref={this.reviewContRef}> */}
+                    {/* <div  className={activeReview ? "theContainerCarouselReviewOpen" : "thecarouselcontainer"} > */}
+                    {/* <div  className={activeReview ? "theContainerCarouselReviewOpen" : "reviewCont"} No formatting, forms fields broken>                     */}
+                    <div  className={activeReview ? "theContainerCarouselReviewOpen" : "theContainerCarouselReviewOpen"} >
+
+                    {/* <div  className={activeReview ? "theContainerCarouselReviewOpen" : "carousel"} ref={this.reviewContRef}>  BAD */}
                     {/* <div className="reviewCont"> */}
                     {/* Changed the ELSE ^ from: "reviewCont"   makes card behind review disappear,  */}                                                              
                     {/* </div> */}
@@ -162,7 +165,7 @@ class ProjectContainer extends React.Component{
 
                                {/* Below:  Commented out Dec 14  */}
                                 {/* <Slider className="carousel"> */}
-                                <Slider className={activeReview ? "theContainerCarouselReviewOpen" : "" } ref={this.reviewContRef}>
+                                <Slider className={activeReview ? "" : "" } ref={this.reviewContRef}>
                                     {projectCardsArr}
                                 </Slider>
 

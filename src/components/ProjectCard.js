@@ -285,7 +285,6 @@ class ProjectCard extends React.Component{
                     Leave Review  OR Edit Your Review 
                 </button>
 
-
                 <NewReviewContainer 
                     // displayReviewForm={this.state.displayReviewForm} 
                     userProject_id={project[2].id} 
