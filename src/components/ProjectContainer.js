@@ -124,61 +124,65 @@ class ProjectContainer extends React.Component{
                         <div className="headerText"> Your Projects: </div>
                     </div>
 
-                    {/* <div  className={activeReview ? "theContainerCarouselReviewOpen" : "thecarouselcontainer"} > */}
-                    {/* <div  className={activeReview ? "theContainerCarouselReviewOpen" : "reviewCont"} No formatting, forms fields broken>                     */}
-                    <div  className={activeReview ? "theContainerCarouselReviewOpen" : "theContainerCarouselReviewOpen"} >
-
-                    {/* <div  className={activeReview ? "theContainerCarouselReviewOpen" : "carousel"} ref={this.reviewContRef}>  BAD */}
-                    {/* <div className="reviewCont"> */}
-                    {/* Changed the ELSE ^ from: "reviewCont"   makes card behind review disappear,  */}                                                              
-                    {/* </div> */}
-                    
-                    {/* <div className="thecarouselcontainer"> */}
-
-                    {/* VS  commented out below line to retry Carousel */}
-                    {/* {projectCardsArr} */}
-
-
-                    {/* <br/> */}
-                    
-                        {/* <br></br> */}
-                        {/* <div className={this.state.editInProgress ? "displayEdit" : "hideEdit" }> 
-                            <EditForm onEditSubmitHandler={this.onEditSubmitHandler}   
-                                onEditFormChangeHandler={this.onEditFormChangeHandler}
-                                editPonyId={this.state.editPonyId} 
-                                editPonyName={this.state.editPonyName} 
-                                editPonyFavorite={this.state.editPonyFavorite} 
-                                editPonyButt={this.state.editPonyButt} 
-                                editPonyImage={this.state.editPonyImage} 
-                            />
-                        </div> */}
-
-
-                            <CarouselProvider       
-                                naturalSlideWidth={250}
-                                naturalSlideHeight={950}
-                                totalSlides={projectCardsArr.length}
-                                visibleSlides={4}
-                            >
-                            <span  id="leftNextButton"> <ButtonBack>  👈🏽  </ButtonBack> </span> 
-                            <span  id="rightNextButton"> <ButtonNext> 👉🏼 </ButtonNext> </span> 
-
-                               {/* Below:  Commented out Dec 14  */}
-                                {/* <Slider className="carousel"> */}
-                                <Slider className={activeReview ? "" : "" } ref={this.reviewContRef}>
-                                    {projectCardsArr}
-                                </Slider>
-
-                            </CarouselProvider>
+                    <div className="bgpic">
 
                         
+                        {/* <div  className={activeReview ? "theContainerCarouselReviewOpen" : "thecarouselcontainer"} > */}
+                        {/* <div  className={activeReview ? "theContainerCarouselReviewOpen" : "reviewCont"} No formatting, forms fields broken>                     */}
+                        <div  className={activeReview ? "theContainerCarouselReviewOpen" : "theContainerCarouselReviewOpen"} >
 
-                        {/* MESSED UP REFACTOR, DONT NEED THIS HERE */}
-                        {/* <ReviewContainer 
-                        reviewToDisplay={this.state.reviewToDisplay} 
-                        className={this.state.displayReviewFlag ? "newToolShow" : "newToolHide"}
-                        />  */}
+                        {/* <div  className={activeReview ? "theContainerCarouselReviewOpen" : "carousel"} ref={this.reviewContRef}>  BAD */}
+                        {/* <div className="reviewCont"> */}
+                        {/* Changed the ELSE ^ from: "reviewCont"   makes card behind review disappear,  */}                                                              
+                        {/* </div> */}
+                        
+                        {/* <div className="thecarouselcontainer"> */}
 
+                        {/* VS  commented out below line to retry Carousel */}
+                        {/* {projectCardsArr} */}
+
+
+                        {/* <br/> */}
+                        
+                            {/* <br></br> */}
+                            {/* <div className={this.state.editInProgress ? "displayEdit" : "hideEdit" }> 
+                                <EditForm onEditSubmitHandler={this.onEditSubmitHandler}   
+                                    onEditFormChangeHandler={this.onEditFormChangeHandler}
+                                    editPonyId={this.state.editPonyId} 
+                                    editPonyName={this.state.editPonyName} 
+                                    editPonyFavorite={this.state.editPonyFavorite} 
+                                    editPonyButt={this.state.editPonyButt} 
+                                    editPonyImage={this.state.editPonyImage} 
+                                />
+                            </div> */}
+
+
+                                <CarouselProvider       
+                                    naturalSlideWidth={250}
+                                    naturalSlideHeight={950}
+                                    totalSlides={projectCardsArr.length}
+                                    visibleSlides={4}
+                                >
+                                <span  id="leftNextButton"> <ButtonBack>  👈🏽  </ButtonBack> </span> 
+                                <span  id="rightNextButton"> <ButtonNext> 👉🏼 </ButtonNext> </span> 
+
+                                {/* Below:  Commented out Dec 14  */}
+                                    {/* <Slider className="carousel"> */}
+                                    <Slider className={activeReview ? "" : "" } ref={this.reviewContRef}>
+                                        {projectCardsArr}
+                                    </Slider>
+
+                                </CarouselProvider>
+
+                            
+
+                            {/* MESSED UP REFACTOR, DONT NEED THIS HERE */}
+                            {/* <ReviewContainer 
+                            reviewToDisplay={this.state.reviewToDisplay} 
+                            className={this.state.displayReviewFlag ? "newToolShow" : "newToolHide"}
+                            />  */}
+
+                        </div>
                     </div>
 
                 </React.Fragment>

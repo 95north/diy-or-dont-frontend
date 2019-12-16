@@ -98,6 +98,10 @@
     align-content: space-around; */
 }
 
+.bgpic{
+  background-image: url('https://images.homedepot-static.com/productImages/7888ad7d-d803-4644-ae83-e2e9beb7aa2c/svn/blue-ivy-hill-tile-ceramic-tile-ext3rd100048-64_1000.jpg');
+  background-size: 200pct;
+}
 
 .theContainerCarouselReviewOpen {
   /* Carousel that holds the cards, is NOT the review!  */
@@ -119,8 +123,7 @@
   padding-left: 15px;
   padding-bottom: 9px;
 
-  background-image: url('https://images.homedepot-static.com/productImages/7888ad7d-d803-4644-ae83-e2e9beb7aa2c/svn/blue-ivy-hill-tile-ceramic-tile-ext3rd100048-64_1000.jpg');
-  background-size: 200pct;
+
 }
 
 
