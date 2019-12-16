@@ -89,7 +89,7 @@ class ProjectContainer extends React.Component{
 
 
     render(){
-        let activeReview = (this.state.activeReviewId > 0)? true : false;
+        let activeReview = (this.props.activeReviewId > 0)? true : false;
         console.log("this.state.activeReviewId ", this.state.activeReviewId);
         console.log("in Project Container, activeReview t f is: ", activeReview);
 
