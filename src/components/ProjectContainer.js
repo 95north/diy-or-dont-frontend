@@ -91,12 +91,12 @@ class ProjectContainer extends React.Component{
     render(){
         let activeReview = (this.state.activeReviewId > 0)? true : false;
         console.log("this.state.activeReviewId ", this.state.activeReviewId);
-        
         console.log("in Project Container, activeReview t f is: ", activeReview);
 
         let slideIndexCounter = -1
+        let projectCardsArr;
         if (this.state.projects){    // else = you are not logged in!
-            let projectCardsArr = this.state.projects.map( project => {
+            projectCardsArr = this.state.projects.map( project => {
                 slideIndexCounter += 1;
                // {/* <ProjectCard /> */}
                 return(         // returning individual slides being created. 
@@ -114,80 +114,83 @@ class ProjectContainer extends React.Component{
                 // </Slide>
                 )
             })
+        }
 
+            if(activeReview === true) {
+                return(                     // returned if you are logged in AND clicked a review button
+                    <React.Fragment>
 
-            return(
-                <React.Fragment>
-
-                    {/* <div className="carousel-container"> */}
-                    <div className="headerDiv">
-                        <div className="headerText"> Your Projects: </div>
-                    </div>
-
-                    <div className="bgpic">
-
-                        
-                        {/* <div  className={activeReview ? "theContainerCarouselReviewOpen" : "thecarouselcontainer"} > */}
-                        {/* <div  className={activeReview ? "theContainerCarouselReviewOpen" : "reviewCont"} No formatting, forms fields broken>                     */}
-                        <div  className={activeReview ? "theContainerCarouselReviewOpen" : "theContainerCarouselReviewOpen"} >
-
-                        {/* <div  className={activeReview ? "theContainerCarouselReviewOpen" : "carousel"} ref={this.reviewContRef}>  BAD */}
-                        {/* <div className="reviewCont"> */}
-                        {/* Changed the ELSE ^ from: "reviewCont"   makes card behind review disappear,  */}                                                              
-                        {/* </div> */}
-                        
-                        {/* <div className="thecarouselcontainer"> */}
-
-                        {/* VS  commented out below line to retry Carousel */}
-                        {/* {projectCardsArr} */}
-
-
-                        {/* <br/> */}
-                        
-                            {/* <br></br> */}
-                            {/* <div className={this.state.editInProgress ? "displayEdit" : "hideEdit" }> 
-                                <EditForm onEditSubmitHandler={this.onEditSubmitHandler}   
-                                    onEditFormChangeHandler={this.onEditFormChangeHandler}
-                                    editPonyId={this.state.editPonyId} 
-                                    editPonyName={this.state.editPonyName} 
-                                    editPonyFavorite={this.state.editPonyFavorite} 
-                                    editPonyButt={this.state.editPonyButt} 
-                                    editPonyImage={this.state.editPonyImage} 
-                                />
-                            </div> */}
-
-
-                                <CarouselProvider       
-                                    naturalSlideWidth={250}
-                                    naturalSlideHeight={950}
-                                    totalSlides={projectCardsArr.length}
-                                    visibleSlides={4}
-                                >
-                                <span  id="leftNextButton"> <ButtonBack>  👈🏽  </ButtonBack> </span> 
-                                <span  id="rightNextButton"> <ButtonNext> 👉🏼 </ButtonNext> </span> 
-
-                                {/* Below:  Commented out Dec 14  */}
-                                    {/* <Slider className="carousel"> */}
-                                    <Slider className={activeReview ? "" : "" } ref={this.reviewContRef}>
-                                        {projectCardsArr}
-                                    </Slider>
-
-                                </CarouselProvider>
-
-                            
-
-                            {/* MESSED UP REFACTOR, DONT NEED THIS HERE */}
-                            {/* <ReviewContainer 
-                            reviewToDisplay={this.state.reviewToDisplay} 
-                            className={this.state.displayReviewFlag ? "newToolShow" : "newToolHide"}
-                            />  */}
-
+                        {/* <div className="carousel-container"> */}
+                        <div className="headerDiv">
+                            <div className="headerText"> Your Projects: </div>
                         </div>
-                    </div>
 
-                </React.Fragment>
+                        <div className="bgpic">
+                            <div  className="theContainerCarouselReviewOpen" >
+
+                            {/* Changed the ELSE in ternary ^ from: "reviewCont"   makes card behind review disappear,  */}                                                              
+
+                            {/* VS  commented out below line to retry Carousel */}
+                            {/* {projectCardsArr} */}
+
+                                    <CarouselProvider       
+                                        naturalSlideWidth={250}
+                                        naturalSlideHeight={950}
+                                        totalSlides={projectCardsArr.length}
+                                        visibleSlides={3}
+                                    >
+                                    <span  id="leftNextButton"> <ButtonBack>  👈🏽  </ButtonBack> </span> 
+                                    <span  id="rightNextButton"> <ButtonNext> 👉🏼 </ButtonNext> </span> 
+
+                                    {/* Below:  Commented out Dec 14  */}
+                                        {/* <Slider className="carousel"> */}
+                                        <Slider className={activeReview ? "" : "" } ref={this.reviewContRef}>
+                                            {projectCardsArr}
+                                        </Slider>
+
+                                    </CarouselProvider>
+                                
+                                {/* MESSED UP REFACTOR, DONT NEED THIS HERE */}
+                                {/* <ReviewContainer 
+                                reviewToDisplay={this.state.reviewToDisplay} 
+                                className={this.state.displayReviewFlag ? "newToolShow" : "newToolHide"}
+                                />  */}
+
+                            </div>
+                        </div>
+                    </React.Fragment>
+                )
+            } else if (activeReview === false ) {                        // if no active review, return 
+
+                return(                     // returned if you are logged in 
+                    <React.Fragment>
+                        <div className="headerDiv">
+                            <div className="headerText"> Your Projects: </div>
+                        </div>
+                        <div className="bgpic">
+                            
+                            <div  className="thecarouselcontainer" >
+
+                                    <CarouselProvider       
+                                        naturalSlideWidth={250}
+                                        naturalSlideHeight={950}
+                                        totalSlides={projectCardsArr.length}
+                                        visibleSlides={4}
+                                    >
+                                        <span  id="leftNextButton"> <ButtonBack>  👈🏽  </ButtonBack> </span> 
+                                        <span  id="rightNextButton"> <ButtonNext> 👉🏼 </ButtonNext> </span> 
+
+                                        <Slider className={activeReview ? "" : "" } ref={this.reviewContRef}>
+                                            {projectCardsArr}
+                                        </Slider>
+                                    </CarouselProvider>
+
+                            </div>
+                        </div>
+                    </React.Fragment>
+                )
         
-            )
+
         } else {
             return(
                 <h2> Login! </h2>
