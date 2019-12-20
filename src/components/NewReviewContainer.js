@@ -2,6 +2,7 @@ import React from 'react';
 import { Route , withRouter, Redirect} from 'react-router-dom';
 import { browserHistory } from 'react-router';
 import {connect} from 'react-redux';
+import ReactDOM from 'react-dom';
 import './Sidebar.css'
 
 
@@ -24,6 +25,99 @@ class NewReviewContainer extends React.Component{
         displayReviewForm: false   // NEW
     }
 
+
+    renderNewReviewForm = () => {
+        if(this.props.activeReviewId === this.props.userProject_id){
+            return(
+                // <div className={ this.state.displayReviewForm ? null : "go-away"}> 
+                // ^^ Makes it super buggy, and review forms align with cards roughly (but staggered)
+                // <div className="panel-wrap">
+                //     <div className="panel">
+                    <div id="myreviewpanel">
+    
+                        <form onSubmit={((e)=>this.onSubmitReviewForm(e))}>
+                        <span onClick={((e)=>this.props.activeReviewIdVoidInStore(this.props.project_id))}> X </span>
+                            <br/>
+                            {/* Was:   */}
+                            {/* <span onClick={"this.parentElement.style.display='none'"}> X </span><br/><br/> */}
+                                Review:  {this.props.userProject_name} <br/><br/>
+    
+                                Status: 
+                                <select
+                                    name="status" 
+                                    value={this.state.status} 
+                                    onChange={this.changeHandler}
+                                >
+                                    <option value="" selected="selected" disabled> Chose One </option>
+                                    <option value="Not Started"> Not Started </option>
+                                    <option value="In Progress"> In Progress </option>
+                                    <option value="Completed"> Completed </option>
+                                    <option value="Gave Up"> I Gave Up </option>
+                                </select><br/>
+    
+                                Difficulty of Project: <br/>
+                                <select
+                                    name="reviewDifficulty" 
+                                    value={this.state.reviewDifficulty} 
+                                    onChange={this.changeHandler}
+                                >
+                                    <option value="" selected="selected" disabled> Chose One </option>
+                                    <option value="1"> 1 (Very Easy) </option>
+                                    <option value="2"> 2 </option>
+                                    <option value="3"> 3 </option>
+                                    <option value="4"> 4 </option>
+                                    <option value="5"> 5 (Difficult) </option>
+                                </select><br/>
+    
+                               Miserable or Fun? : <br/>
+                                <select
+                                    name="reviewFun" 
+                                    value={this.state.reviewFun} 
+                                    onChange={this.changeHandler}
+                                >
+                                    <option value="" selected="selected" disabled> Chose One </option>
+                                    <option value="1"> 1 (Miserable) </option>
+                                    <option value="2"> 2 </option>
+                                    <option value="3"> 3 </option>
+                                    <option value="4"> 4 </option>
+                                    <option value="5"> 5 (Fun) </option>
+                                </select><br/>
+    
+                                Time to Complete Project: <br/>
+                                <input 
+                                    type="text" 
+                                    name="reviewTime" 
+                                    value={this.state.reviewTime} 
+                                    placeholder="# Hours to Complete?" 
+                                    onChange={this.changeHandler}
+                                /><br/>
+    
+                                Add Notes:  <br/>
+                                <input 
+                                    type="text" 
+                                    name="reviewText" 
+                                    value={this.state.reviewText} 
+                                    placeholder="Enter review text here" 
+                                    onChange={this.changeHandler}
+                                /><br/>
+    
+                                Completed Date <br/><br/>
+    
+                                <input 
+                                    type="submit" 
+                                    value=" Submit "
+                                    
+                                /><br/>
+    
+                        </form>
+                    </div>
+                // </div>
+                // </div>
+            )
+            } else {
+                return(null)
+            }
+    }
 
 
     toggleDisplayReviewFormState = () => {   // NOT USED, NOW IN STORE
@@ -109,96 +203,7 @@ class NewReviewContainer extends React.Component{
 
     render(){
         // console.log("New Review Containter props: USER PROJECT ID??  ", this.props)
-        if(this.props.activeReviewId === this.props.userProject_id){
-        return(
-            // <div className={ this.state.displayReviewForm ? null : "go-away"}> 
-            // ^^ Makes it super buggy, and review forms align with cards roughly (but staggered)
-            // <div className="panel-wrap">
-            //     <div className="panel">
-                <div id="myreviewpanel">
-
-                    <form onSubmit={((e)=>this.onSubmitReviewForm(e))}>
-                    <span onClick={((e)=>this.props.activeReviewIdVoidInStore(this.props.project_id))}> X </span>
-                        <br/>
-                        {/* Was:   */}
-                        {/* <span onClick={"this.parentElement.style.display='none'"}> X </span><br/><br/> */}
-                            Review:  {this.props.userProject_name} <br/><br/>
-
-                            Status: 
-                            <select
-                                name="status" 
-                                value={this.state.status} 
-                                onChange={this.changeHandler}
-                            >
-                                <option value="" selected="selected" disabled> Chose One </option>
-                                <option value="Not Started"> Not Started </option>
-                                <option value="In Progress"> In Progress </option>
-                                <option value="Completed"> Completed </option>
-                                <option value="Gave Up"> I Gave Up </option>
-                            </select><br/>
-
-                            Difficulty of Project: <br/>
-                            <select
-                                name="reviewDifficulty" 
-                                value={this.state.reviewDifficulty} 
-                                onChange={this.changeHandler}
-                            >
-                                <option value="" selected="selected" disabled> Chose One </option>
-                                <option value="1"> 1 (Very Easy) </option>
-                                <option value="2"> 2 </option>
-                                <option value="3"> 3 </option>
-                                <option value="4"> 4 </option>
-                                <option value="5"> 5 (Difficult) </option>
-                            </select><br/>
-
-                           Miserable or Fun? : <br/>
-                            <select
-                                name="reviewFun" 
-                                value={this.state.reviewFun} 
-                                onChange={this.changeHandler}
-                            >
-                                <option value="" selected="selected" disabled> Chose One </option>
-                                <option value="1"> 1 (Miserable) </option>
-                                <option value="2"> 2 </option>
-                                <option value="3"> 3 </option>
-                                <option value="4"> 4 </option>
-                                <option value="5"> 5 (Fun) </option>
-                            </select><br/>
-
-                            Time to Complete Project: <br/>
-                            <input 
-                                type="text" 
-                                name="reviewTime" 
-                                value={this.state.reviewTime} 
-                                placeholder="# Hours to Complete?" 
-                                onChange={this.changeHandler}
-                            /><br/>
-
-                            Add Notes:  <br/>
-                            <input 
-                                type="text" 
-                                name="reviewText" 
-                                value={this.state.reviewText} 
-                                placeholder="Enter review text here" 
-                                onChange={this.changeHandler}
-                            /><br/>
-
-                            Completed Date <br/><br/>
-
-                            <input 
-                                type="submit" 
-                                value=" Submit "
-                                
-                            /><br/>
-
-                    </form>
-                </div>
-            // </div>
-            // </div>
-        )
-        } else {
-            return(null)
-        }
+        return ReactDOM.createPortal(this.renderNewReviewForm(), document.body);
     }
 }
 

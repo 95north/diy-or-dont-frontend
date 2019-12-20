@@ -9,6 +9,7 @@ import 'pure-react-carousel/dist/react-carousel.es.css';
 import './Carousel.css'
 import './Card.css'
 import { isParenthesizedExpression, throwStatement } from '@babel/types';
+import NewReviewContainer from './NewReviewContainer.js'; //for Portal 
 
 // import cloneDeep from 'lodash/cloneDeep'
 
@@ -95,26 +96,27 @@ class ProjectContainer extends React.Component{
 
         let slideIndexCounter = -1
         let projectCardsArr;
-        if (this.state.projects){    // else = you are not logged in!
-            projectCardsArr = this.state.projects.map( project => {
-                slideIndexCounter += 1;
-               // {/* <ProjectCard /> */}
-                return(         // returning individual slides being created. 
-                <Slide index={slideIndexCounter}>
-                    <ProjectCard
 
-                    project={project} 
-                    addNeedTool={this.props.addNeedTool}
-                    unNeedTool={this.props.unNeedTool}
-                    onEditClickHandler={this.onEditClickHandler}
-                    onDeleteUserProjectClick={this.onDeleteUserProjectClick}
-                    //toggleReviewToDisplay={this.toggleReviewToDisplay}
-                    >
-                    </ProjectCard>
-                // </Slide>
-                )
-            })
-        }
+            if (this.state.projects){    // else = you are not logged in!
+                projectCardsArr = this.state.projects.map( project => {
+                    slideIndexCounter += 1;
+                // {/* <ProjectCard /> */}
+                    return(         // returning individual slides being created. 
+                    <Slide index={slideIndexCounter}>
+                        <ProjectCard
+
+                        project={project} 
+                        addNeedTool={this.props.addNeedTool}
+                        unNeedTool={this.props.unNeedTool}
+                        onEditClickHandler={this.onEditClickHandler}
+                        onDeleteUserProjectClick={this.onDeleteUserProjectClick}
+                        //toggleReviewToDisplay={this.toggleReviewToDisplay}
+                        >
+                        </ProjectCard>
+                    // </Slide>
+                    )
+                })
+            }
 
             if(activeReview === true) {
                 return(                     // returned if you are logged in AND clicked a review button
@@ -149,6 +151,8 @@ class ProjectContainer extends React.Component{
                                         </Slider>
 
                                     </CarouselProvider>
+
+                                    <NewReviewContainer/>
                                 
                                 {/* MESSED UP REFACTOR, DONT NEED THIS HERE */}
                                 {/* <ReviewContainer 
