@@ -18,6 +18,12 @@
 .env.test.local
 .env.production.local
 
+# yarn.lock
+
 npm-debug.log*
+
+# Commented out - deploying to heroku got error 
+# bc using yan & npm, was told to delete yarn.lock
+
 # yarn-debug.log*
 # yarn-error.log*
