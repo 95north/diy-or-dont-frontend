@@ -1,0 +1,137 @@
+
+  .loginSignup {
+  width: 100vw;
+  height: 100vw;
+  padding-left: 15px;
+  background-image: url('http://www.tallgeorge.com/images/Projects/ProjectBathroom02BIG.JPG');
+  background-size: cover;
+  opacity: 1;
+  padding-top: -70px;
+  /* background-image: url(''); */
+  }
+
+  div.sticky {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    padding-left: 60px;
+    top: 200px;
+    /* background-color: green; */
+    
+  }
+
+
+
+  .loginForm{
+    box-shadow: 0 6px 9px 0 rgba(0,0,0,0.4);
+    transition: 0.7s;
+    border-radius: 11px; /* 5px rounded corners */
+    width: 400px;
+    height: 170px;
+    background-color:  #e6c493;
+    color: #e6c493;
+    background-position: center bottom;
+    background-image: url('https://image.freepik.com/free-photo/spanners-tools-open-drawer-old-blue-toolbox_42510-193.jpg');
+    background-size: cover;
+    /* color: saddlebrown; */
+    text-align: center;
+    opacity: 0.8;
+    /* padding: .5rem;     */
+    padding-left: 15px;   
+    padding-top: 5px;
+    margin: 10px;
+    border: 2px solid saddlebrown;
+
+  }
+
+  a { color: pink; }
+  a:visited { color: salmon; }
+
+  h1 {
+    font-size: 2.5em;
+    background: -webkit-linear-gradient(#e0ddca, #bdbaa8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: solid;
+
+    /* -webkit-text-fill-color: transparent; */
+    text-shadow: 5px 5px 5px rgba(68,68,68,0.6);
+    /* text-shadow:         inset 0 0 10px #000000; */
+    /* text-shadow: 0 8px 6px -12px red; */
+    /* text-shadow: 2px 2px #f5f7a2; */
+  }
+
+.diyTitle{
+    /* font-family: 'Cabin Sketch', cursive; */
+    font-family: 'Permanent Marker', cursive;
+    font-size: 90px;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    padding-left: 60px;
+    top: 90px;
+    padding-left: 60px;
+    /* padding-top: 80px; */
+    color:#e3b36d;
+
+
+    
+    -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: ease 6s; /* Safari 4.0 - 8.0 */
+    animation-name: example;
+    animation-duration: ease 6s;
+    animation-iteration-count: 10;
+
+}
+
+
+@keyframes examplez {
+    0%   {      background: -webkit-linear-gradient(#e0ddca, #bdbaa8);
+                /* -webkit-background-clip: text; */
+                -webkit-text-fill-color: solid;}
+    25%  {      background: -webkit-linear-gradient(#ffcba4, #966f33);
+                /* -webkit-background-clip: text; */
+                -webkit-text-fill-color: solid;}
+    50%  {      background: -webkit-linear-gradient(#f87217 , #fdd017);
+                /* -webkit-background-clip: text; */
+                -webkit-text-fill-color: solid;}
+    100% {      background: -webkit-linear-gradient(#bdbaa8,#e18b6b);
+                /* -webkit-background-clip: text; */
+                -webkit-text-fill-color: solid;}
+}
+
+@keyframes example {
+    0%   {color: #bdbaa8;}
+    25%  {color: #966f33;}
+    50%  {color: #f87217;}
+    100% {color: #fdd017;} 
+}
+
+.linear-wipe {
+    /* font-family: 'Cabin Sketch', cursive; */
+    font-family: 'Permanent Marker', cursive;
+    font-size: 90px;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    padding-left: 60px;
+    top: 90px;
+    padding-left: 60px;
+
+
+    /* text-align: center; */
+
+    /* background: linear-gradient(to right, #bdbaa8 20%, #966f33 40%, #f87217 60%, #fdd017 80%); */
+
+    background: linear-gradient(to right, #bba 10%, #963 30%, #f71 60%, #fd1 80%);
+    background-size: 200% auto;
+    
+    /* color: #000; */
+    background-clip: text;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    animation: shine 3s linear;
+    @keyframes shine {
+      to {
+        background-position: 200% center;
+      }
+    }
+  }

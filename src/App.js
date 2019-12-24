@@ -1,11 +1,17 @@
 import React from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
-import logo from './logo.svg';
+import { Route, Switch, withRouter, BrowserRouter as Router, Redirect, Link } from 'react-router-dom';
 import './App.css';
+import './components/Sidebar.css';
 import SignUp from './SignUp';
 import LogIn from './components/LogIn.js';
 import Home from './components/Home.js';
 import ProjectContainer from './components/ProjectContainer';
+import AllProjectContainer from './components/AllProjectContainer';
+import NewProjectForm from './components/NewProjectForm';
+import ToolContainer from './components/ToolContainer';
+import NavBar from './components/NavBar';
+import {connect} from 'react-redux';
+// import NewProjectForm from './components/NewProjectForm';
 // import NavBar from './NavBar.js'
 
 
@@ -13,8 +19,13 @@ import ProjectContainer from './components/ProjectContainer';
 class App extends React.Component {
 
   state={
+    user_token: null,     // refactoring to put to Store
+    user_id: null,         // refactoring to put to Store
+    appstateLOLOLO : null
     
   }
+
+
 
 
     componentDidMount() {
@@ -38,8 +49,12 @@ class App extends React.Component {
         //  this.props.history.push('/dogs');
         });
       }
-    }
+
+
+    }  // end componentDidMount
   
+
+
 
     signUpSubmit = (e, user) => {
       e.preventDefault();
@@ -88,16 +103,37 @@ class App extends React.Component {
           // })
         .then(resp => resp.json())
         .then(user => {
-          console.log('Response Data', user);
           localStorage.setItem('token', user.token);
-          this.setState({ user: user.user });
 
-          // REDIRECT TO HOME !!!!!!
+          this.setState({ user_token: user.token,
+          user_id: user.user_id});
+
+          this.props.loggedInAddIdToStore({ user_token: user.token,
+            user_id: user.user_id,
+            username: user.user_name,
+            location: user.user_location,
+          
+          });
+
+          this.props.history.push('/home');  //redirect to home.
           // store the JWT in session storage, 
           // dispatch another action that tells the session reducer we had a successful log in.
-          // this.props.history.push('/dogs');
-        });
+        });  // closes the .then 
+
       }
+    }
+
+    logOut = (e, user) =>{
+      console.log("in App logout")
+      localStorage.clear();
+      this.setState({ user: null });
+      // CHANGE STORE TOO. 
+      this.props.logOutRemoveFromStore({ 
+        // user_token: user.token,
+        // user_id: user.user_id,
+        // username: user.user_name,
+        // location: user.user_location,
+      });
     }
 
 
@@ -105,11 +141,16 @@ class App extends React.Component {
 
     return (
 
+      
       // <div className="topnav">
       //     <NavBar onDeleteSubmit={this.onDeleteSubmit} ponies={this.state.ponies} />
       // </div>
 
+      // <div className="panel-wrap"> 
+      // <div className="panel"> 
       <Switch>
+
+
 
         <Route
             path="/signup"
@@ -125,21 +166,104 @@ class App extends React.Component {
 
         <Route 
             path="/home" 
-            component={Home} 
+            render={() => 
+              <React.Fragment>
+                <NavBar 
+                  logOut={this.logOut}
+                />
+                <AllProjectContainer />
+              </React.Fragment>
+            } 
         />
 
 
-        <Route 
+        <Route
             path="/projects" 
-            component={ProjectContainer} 
+            // component={NavBar}
+            // component={ProjectContainer}
+            render={() => 
+              <React.Fragment>
+                <NavBar 
+                  logOut={this.logOut}
+                />
+                <ProjectContainer />
+              </React.Fragment>
+            }
+        />
+
+
+        <Route
+            path="/mytoolbox" 
+            render={() => 
+              <React.Fragment>
+                <NavBar 
+                    logOut={this.logOut}
+                />
+                <ToolContainer />
+              </React.Fragment>
+            }
         />  
+
+        <Route
+            path="/createproject" 
+            render={() => 
+              <React.Fragment>
+                <NavBar 
+                  logOut={this.logOut}
+                />
+                <NewProjectForm />
+              </React.Fragment>
+            }
+        />  
+
+        <Route 
+            // Display on all pages. If @ top, doesn't hit more specific page
+            path="/" 
+            component={NavBar} 
+        />
 
 
       </Switch>
+
+      // {/* </div> */}
+      // {/* </div> */}
     );
   }
+} // end class
 
 
+  // console.log("Called MDP !  dispatch arg is:  ", dispatch )   // Id + token, CORRECT!   
+  // console.log("Called MDP !  argB arg is:  ", argB )   // meaninglessObj therefore useless  
 
+
+  function mapDispatchToProps(dispatch){
+    return({
+        addUserAppDataToStore: (projectsUserSuppliesAndUserSupplyObjs)=> dispatch(
+          {type: "ADD_USER_APP_DATA",
+          payload: projectsUserSuppliesAndUserSupplyObjs
+        }),
+        loggedInAddIdToStore: (userinfo)=> dispatch(
+          {type: "LOGGED_IN",
+          payload: userinfo   //userReducer gets id  & token, OK! 
+        }),
+        logOutRemoveFromStore: ()=> dispatch(
+          {type: "LOGGED_OUT"}
+        )
+
+    })
 }
-export default withRouter(App);
+
+
+function mapStateToProps(state){
+  // console.log("Called mapStateToPRops!  state is:  ", state )   // Id + token, CORRECT!   
+    return({
+        user: state.user,
+    })
+}
+
+
+
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));

@@ -1,0 +1,20 @@
+
+.newToolHide{
+    display: none;
+
+}; 
+
+.newToolShow{
+    display: block;
+}; 
+
+
+
+.hideThing{
+    display: none;
+
+}; 
+
+.showThing{
+    display: block;
+}; 

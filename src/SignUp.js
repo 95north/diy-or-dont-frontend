@@ -1,4 +1,5 @@
 import React from 'react';
+import './components/LoginSignup.css'
 
 class SignUp extends React.Component{
     state={
@@ -23,6 +24,11 @@ class SignUp extends React.Component{
     render(){
         return(
             <React.Fragment>
+                <div className="loginSignup" >
+
+                <div className="diyTitle"> DIY or Don't </div>
+                <div className="sticky" >
+                <div className="loginForm" >
                 <h1>Sign Up Below: </h1>
                 <form onSubmit={e => this.props.submitHandler(e, this.state)} >
                     <input 
@@ -41,6 +47,10 @@ class SignUp extends React.Component{
                     />
                     <button>Sign Up</button>
                 </form>
+                </div>
+                </div>
+                </div>
+
             </React.Fragment>
         )
     }
