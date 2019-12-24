@@ -12,6 +12,7 @@ Things to Try: <br/>
 •	Editing Own Review Controlled Form (broke during Portal refactor) <br/>
 •	Sign Up Page does not redirect to login  <br/>
 •	Disable Nexmo field and add tooltip with screenshot <br/>
+•	Position & Style Logout button <br/>
 •	Change password field back to password input type  <br/>
 
 ## Built With
