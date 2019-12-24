@@ -13,8 +13,10 @@ class NewReviewContainer extends React.Component{
     // Map each review to a ReviewCard
 
 
+constructor(props){
+    super(props);
 
-    state = {
+    this.state = {
         status: "",
         usernote:"",
         reviewDifficulty:"",
@@ -24,6 +26,9 @@ class NewReviewContainer extends React.Component{
         completedDate: "",
         displayReviewForm: false   // NEW
     }
+    this.changeHandler = this.changeHandler.bind(this);
+
+}
 
 
     renderNewReviewForm = () => {
@@ -47,8 +52,10 @@ class NewReviewContainer extends React.Component{
                                     name="status" 
                                     value={this.state.status} 
                                     onChange={this.changeHandler}
+                                    // onMouseEnter={() => console.log("onMouseEnter in status")} // works!!! bubbles ok
                                 >
-                                    <option value="" selected="selected" disabled> Chose One </option>
+                                    <option value="" selected="selected" disabled> Choose One </option>
+                                    {/* <option value="" selected="selected" disabled> Chose One </option> Commenting this out made no diff!  */}
                                     <option value="Not Started"> Not Started </option>
                                     <option value="In Progress"> In Progress </option>
                                     <option value="Completed"> Completed </option>
@@ -59,7 +66,7 @@ class NewReviewContainer extends React.Component{
                                 <select
                                     name="reviewDifficulty" 
                                     value={this.state.reviewDifficulty} 
-                                    onChange={this.changeHandler}
+                                    onChange={(e)=>{this.changeHandler(e)}}
                                 >
                                     <option value="" selected="selected" disabled> Chose One </option>
                                     <option value="1"> 1 (Very Easy) </option>
@@ -73,7 +80,8 @@ class NewReviewContainer extends React.Component{
                                 <select
                                     name="reviewFun" 
                                     value={this.state.reviewFun} 
-                                    onChange={this.changeHandler}
+                                    onChange={(e)=>{this.changeHandler(e)}}
+                                    // onChange={this.changeHandler}
                                 >
                                     <option value="" selected="selected" disabled> Chose One </option>
                                     <option value="1"> 1 (Miserable) </option>
@@ -89,16 +97,16 @@ class NewReviewContainer extends React.Component{
                                     name="reviewTime" 
                                     value={this.state.reviewTime} 
                                     placeholder="# Hours to Complete?" 
-                                    onChange={this.changeHandler}
+                                    onChange={(e)=>{this.changeHandler(e)}}
                                 /><br/>
     
                                 Add Notes:  <br/>
                                 <input 
                                     type="text" 
                                     name="reviewText" 
-                                    value={this.state.reviewText} 
+                                    defaultValue={this.state.reviewText} 
                                     placeholder="Enter review text here" 
-                                    onChange={this.changeHandler}
+                                    onChange={ ((e)=>this.changeHandler(e)) }
                                 /><br/>
     
                                 Completed Date <br/><br/>
@@ -156,8 +164,8 @@ class NewReviewContainer extends React.Component{
     changeHandler = (event)=>{
         // console.log("in change handler", event.target.value)
         let inputName = event.target.name
-        console.log("inputName", inputName)
-        this.setState(
+        console.log("inputName in NewReviewContainer change handler: ", inputName)
+        this.setState(                               //commented out to test for bug
             {[inputName]: event.target.value}
         )
     }
