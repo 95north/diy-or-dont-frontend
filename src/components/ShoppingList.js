@@ -16,7 +16,7 @@ class ShoppingList extends React.Component{
     onDeleteItemClick= (e, userSupplyId) =>{
         e.preventDefault();
         fetch(`http://localhost:3000/user_supplies/${userSupplyId}`, {
-            method: 'DELETE',                   // UserProject already exists, update review part
+            method: 'DELETE',                   
             headers: { "Content-Type": "application/json; charset=utf-8", 
             accepts: 'application/json' },
             body: JSON.stringify({
@@ -31,9 +31,6 @@ class ShoppingList extends React.Component{
             return res.json(); 
         })
         .then( dData => {
-            console.log("deleted Tooxbox item resp:", dData)
-            console.log("deleted Tooxbox item userSupplyId:", userSupplyId)
-            // this.props.triggerReRender()  // GETS CALLED, BUT DOESNT WORK
         })
     }
 
@@ -63,7 +60,7 @@ class ShoppingList extends React.Component{
 
         console.log("clicked Move to Toolbox")
         fetch(`http://localhost:3000/move_to_toolbox/${userSupplyId}`, {
-            method: 'PATCH',                                // UserProject already exists, update review part
+            method: 'PATCH',                                
             headers: { "Content-Type": "application/json; charset=utf-8", 
             accepts: 'application/json' },
             body: JSON.stringify({
@@ -71,7 +68,7 @@ class ShoppingList extends React.Component{
             })                
         })
         .then( res => {
-            console.log("Resp is: ", res) //
+            console.log("Resp is: ", res) 
             return res.json(); 
         })
         .then( patchJSON => {
@@ -79,7 +76,6 @@ class ShoppingList extends React.Component{
             this.props.moveFromShoppingListToToolbox({
                 userSupplyId: userSupplyId
             })
-            // this.props.triggerReRender()
         })
     }
 
@@ -87,17 +83,13 @@ class ShoppingList extends React.Component{
     renderTableRows = () => {
         let allUserSupplies = this.props.userSupplies.userSupplies
         let relevantCommoditySupplies = this.props.userSupplies.relevantSupplyObjs
-        // console.log("this.props.userSupplies.userSupplies", this.props.userSupplies.userSupplies)
-        // console.log("this.props.userSupplies.relevantSupplyObjs", this.props.userSupplies.relevantSupplyObjs)
         if (allUserSupplies!== "undefined" && allUserSupplies!== undefined ) {  
             console.log("Shopping list All User Supplies: ", allUserSupplies)
             return allUserSupplies.map(( uSupply ) => {
 
-            // for each relevantSupplyCommodity, find the userSupply record. 
             let supplyCommodity = relevantCommoditySupplies.find( s => uSupply.supply_id === s.id);            
             
-            if(uSupply.userneeds === true || uSupply.userneeds === "true"){  // only display if in shopping list
-                    // console.log("THIS", this) // undefined
+            if(uSupply.userneeds === true || uSupply.userneeds === "true"){  
                     let formatDate = (input) => {
                         if (input) {
                             let d = input.toString()     
@@ -119,9 +111,7 @@ class ShoppingList extends React.Component{
                     let date = formatDate(uSupply.updated_at)
 
 
-                    let supply_in_toolbox = (supply_id) =>{          //look if have item in toolbox 
-                        // console.log("supply_id", supply_id)
-                        // console.log("us_id.supply_id", uSupply.supply_id)
+                    let supply_in_toolbox = (supply_id) =>{         
                         return allUserSupplies.find( us => {
                             return (us.supply_id === supply_id && us.intoolbox)
                         })
@@ -136,20 +126,15 @@ class ShoppingList extends React.Component{
                             <td>{uSupply.quantity} </td>
                             <td>{uSupply.measurement} </td>
                             <td> {uSupply.project_name ? uSupply.project_name : "Not recorded"} </td>
-                            {/* <td>{String(uSupply.intoolbox)} </td> */}
                             <td>{haveSupplyInToolbox ? "yes" : "no"} </td>
-
-                            {/* <td>{formatDate(uSupply.updated_at)} </td> */}
                             <td>{date} </td>       
-
-                            {/* <td style="display:none;"> Project ID </td>  GETTTING ERROR*/}
                             <td> {uSupply.id} </td>
                             <td> <button onClick={(e)=>this.onDeleteItemClick(e, uSupply.id) }> Delete </button> </td>
                             <td> <button onClick={(e)=>this.moveUserSupplyFromShoppingListToToolbox(e, uSupply.id)}> Move To Toolbox </button> </td>
                         </tr>
                     )
                 } 
-            })  // ends .map
+            }) 
         } else {
             return (
                 null
@@ -160,14 +145,12 @@ class ShoppingList extends React.Component{
 
     onSendTextMessageButtonClick = (e)=>{
         e.preventDefault();
-        console.log("Clicked Send Text MESSAGE !! ")
         this.setState({textMessage: "true"})
     }
 
 
     changeHandler =(event)=>{
         let inputName = event.target.name
-        console.log("inputName", inputName)
         this.setState(
             {[inputName]: event.target.value}
         )
@@ -179,7 +162,7 @@ class ShoppingList extends React.Component{
         let toPhone = "1" + this.state.phoneNumber.toString()
 
         fetch(`http://localhost:3000/text_shopping_list`, {
-            method: 'POST',                                // UserProject already exists, update review part
+            method: 'POST',                                
             headers: { "Content-Type": "application/json; charset=utf-8", 
             accepts: 'application/json' },
             body: JSON.stringify({
@@ -199,13 +182,11 @@ class ShoppingList extends React.Component{
         let relevantCommoditySupplies = this.props.userSupplies.relevantSupplyObjs
 
         return allUserSupplies.map(( uSupply ) => {
-
-            // for each relevantSupplyCommodity, find the userSupply record. 
             let supplyCommodity = relevantCommoditySupplies.find( s => uSupply.supply_id === s.id);            
             
-            if(uSupply.userneeds === true || uSupply.userneeds === "true"){  // only display if in shopping list
+            if(uSupply.userneeds === true || uSupply.userneeds === "true"){  
 
-                let supply_in_toolbox = (supply_id) =>{          //look if have item in toolbox 
+                let supply_in_toolbox = (supply_id) =>{          
                     return allUserSupplies.find( us => {
                         return (us.supply_id === supply_id && us.intoolbox)
                     })
@@ -218,7 +199,6 @@ class ShoppingList extends React.Component{
                         supplyCommodity.description, 
                         (uSupply.quantity ? uSupply.quantity : 1), 
                         (!uSupply.measurement ?  "No measurement note" : uSupply.measurement ), 
-                        // ((uSupply.project_name === "" || uSupply.project_name === undefined) ?  "No Project Listed" : uSupply.project_name ), 
                         (!uSupply.project_name ?  "No Project Listed" : uSupply.project_name ), 
                         
                         (haveSupplyInToolbox ? "Is In My Toolbox" : "Not in My Toolbox") 
@@ -232,12 +212,7 @@ class ShoppingList extends React.Component{
 
 
     render(){
-        console.log("STATE is Shopping List   ", this.state)
-
-        // console.log("shopping list  props:   ", this.props)
         let tableRows = this.renderTableRows();
-        // console.log("tableRows in render Shopping List: ", tableRows)
-
 
         return(
             <> 
@@ -266,7 +241,6 @@ class ShoppingList extends React.Component{
             <br/>
             <button onClick={((e)=>this.onSendTextMessageButtonClick(e))}> Text Me My Shopping List!  </button>
 
-            {/* <div className="newToolHide">   NO Idea why it doesn't like this className but newToolHide works..*/}
             <div className={this.state.textMessage==="false" ? "newToolHide" : "newToolShow" } >                    
                 <form onSubmit={(e=>this.sendTextMessage(e))}>
                     Enter Your 10 digit Phone Number (no 1 US Code), no dashes or spaces: <br/>
@@ -279,8 +253,7 @@ class ShoppingList extends React.Component{
             <br/>
             </>
         )
-    } // render
-
+    } 
 
 }
 

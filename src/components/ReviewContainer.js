@@ -19,16 +19,8 @@ class ReviewContainer extends React.Component{
         }
     }
 
-    // componentDidMount = () =>{
-    //     console.log("props in reviews", this.props.displayReviews === this.props.project_id)
-        
-    // }
-
     shouldComponentUpdate(nextProps) {
-        //const diffDisplayReviews = this.props.displayReviews !== nextProps.displayReviews
         const diffDisplayReviews = this.state.displayReviews !== nextProps.displayReviews
-        // console.log("this.props.displayReviews", this.props.displayReviews )
-        // console.log("nextProps.displayReviews", nextProps.displayReviews )
         console.log("shouldComponentUpdate",  diffDisplayReviews)
         return diffDisplayReviews 
     }
@@ -54,17 +46,13 @@ class ReviewContainer extends React.Component{
 
 
     fetchReviews = () =>{
-        // console.log("props: ", this.props)
         fetch(`http://localhost:3000/reviews/${this.props.activeProjectId}`, {
-        // fetch(`http://localhost:3000/reviews/${this.props.project_id}`, {
             method: 'GET'
         })
         .then( res => {
-            // console.log("Resp is: ", res) // gets 200 OK
             return res.json(); 
         })
         .then( reviewData => {
-            console.log("reviewDATA :", reviewData)
             this.renderReviewCards(reviewData)
         })
     }
@@ -88,68 +76,29 @@ class ReviewContainer extends React.Component{
                     reviewData : reviewData,
                     displayReviews: this.props.displayReviews
                 })
-                // console.log("reviewCardsArr in renderRevCards, called in render", reviewCardsArr)
             } else {
                 return null
             }
         }
     }
 
-
-    onClickHandlerXButton = (e, project_id)=>{          // should now not be used.
-        this.props.toggleReviewToDisplay(project_id)
-        // e.target.parentElement.style.display='none'   
-        // AND UNCHECK THE BOX !!!! 
-    }
  
 
     render(){
-        // this.fetchReviews();
-        console.log("Props in Review Container Render (does project_id = displayreviews?):: ", this.props)
-
-        //if (this.props.displayReviews === this.props.project_id){  
-        //  ^^ Before Refactor. project_id only comes from the CARD
-
-        // if (this.props.displayReviews === this.props.reviewToDisplay){ 
-        //     this.fetchReviews();
-        // }
-
         if(this.props.activeProjectId){
             this.fetchReviews();
         }
 
-
         if(this.props.activeProjectId){
         return(
                 <React.Fragment>
-                    {/* className={this.props.displayReviewFlag ?  null : "go-none" } */}
-                    {/* The ReviewContainer in AllProjectContainer is rendering, not AllPCard!  */}
-                    {/* <div className="panel-wrap" className={this.props.displayReviewFlag ?  "display-it" : "go-none" } > */}
-                    
-
-                    {/* <div className={(this.props.displayReviews) ?  null : "go-away" }  > */}
-                    {/* ^^^ Makes varying height review containers show, one for ea AllProjCard */}
-                    {/* ^^ For Button to Work bc. unchecked pseudoclass for Checkbox only */}
-                    
-                    {/* <div className="panel-wrap"> */}
-                        {/* <div className="panel"> */}
                         <div id="mypanel">
                         <div>
-                        {/* <div className={this.props.activeProjectId ? "display-block" : null }> */}
-                            
                             <span onClick={((e)=>this.props.activeProjectIdVoidInStore(this.props.project_id))}> X </span>
-                            {/* <span onClick={((e)=>this.onClickHandlerXButton(e, this.props.project_id))}> X </span> */}
-                            {/* <span onClick={"this.parentElement.style.display='none'"}> X </span> */}
-                            {/*  ^^^ Get error message onClick is string, not a function!! */}
-
                             <h1> Reviews: </h1>
-
-
                             {this.state.reviewCardsArr}
                         </div>
-                        {/* </div> */}
                     </div>
-                    {/* </div> */}
                 </React.Fragment>
             )
         } else {
@@ -157,7 +106,7 @@ class ReviewContainer extends React.Component{
         }
     }
 
-} // end class
+} 
 
 
 
@@ -173,7 +122,6 @@ function mapDispatchToProps(dispatch){
 
 function mapStateToProps(state){
     return({
-        // userSupplies: state.userSupplies,
         user: state.user,
         activeProjectId: state.activeProjectId
     })

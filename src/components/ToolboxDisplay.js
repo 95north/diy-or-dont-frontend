@@ -13,17 +13,14 @@ class ToolboxDisplay extends React.Component{
       
         this.state = {
             triggerRender: ""
-          };
-      
-        // this.onDeleteItemClick = this.onDeleteItemClick.bind(this);
-      
+          };      
     }
 
 
     onDeleteItemClick111= (e, userSupplyId) =>{     // UNUSED, refactor map() to use THIS to access this
         e.preventDefault();
         fetch(`http://localhost:3000/user_supplies/${userSupplyId}`, {
-            method: 'DELETE',                   // UserProject already exists, update review part
+            method: 'DELETE',                   
             headers: { "Content-Type": "application/json; charset=utf-8", 
             accepts: 'application/json' },
             body: JSON.stringify({
@@ -54,7 +51,6 @@ class ToolboxDisplay extends React.Component{
                     deMilitarizedHour = parseInt( [d[11], d[12]].join(""))
                 }
 
-
             output.push(d[5],d[6], "-", d[8],d[9], "-", d[0],d[1],d[2],d[3], "    ", deMilitarizedHour,":",d[14],d[15], " ", amPm )
             return(output.join(""))
         } else {
@@ -65,9 +61,8 @@ class ToolboxDisplay extends React.Component{
 
     onDeleteItemClick= (e, userSupplyId) =>{
         e.preventDefault();
-        // e.target.parentElement.display
         fetch(`http://localhost:3000/user_supplies/${userSupplyId}`, {
-            method: 'DELETE',                   // UserProject already exists, update review part
+            method: 'DELETE',                 
             headers: { "Content-Type": "application/json; charset=utf-8", 
             accepts: 'application/json' },
             body: JSON.stringify({
@@ -75,11 +70,9 @@ class ToolboxDisplay extends React.Component{
             })                
         })
         .then( res => {
-            console.log("Resp is: ", res) //
             res.json(); 
         })
         .then( dData => {
-            // console.log("deleted Tooxbox item resp:", dData)
             this.props.deleteUserSupplyFromToolbox({
                 userSupplyId: userSupplyId
             })
@@ -93,14 +86,13 @@ class ToolboxDisplay extends React.Component{
 
         let filteredUserSupplies = this.props.userSupplies.userSupplies.filter(function(supply){
             return (supply.intoolbox === true  || supply.intoolbox === "true" )
-        })    // Checked, this works! 
+        })    
 
         let allRelevantSupplyObjs = this.props.userSupplies.relevantSupplyObjs 
         let allUserSupplies = this.props.userSupplies.userSupplies
 
         return filteredUserSupplies.map(( supply ) => {
             let relevantSupplyObj = allRelevantSupplyObjs.find( s => s.id === supply.supply_id);
-
 
             let formatDate = (input) => {
                 if (input) {
@@ -122,8 +114,7 @@ class ToolboxDisplay extends React.Component{
             }
             let date = formatDate(supply.updated_at)
 
-
-            let supply_in_shoppingList = (supply_id) =>{          //look if have item in toolbox 
+            let supply_in_shoppingList = (supply_id) =>{          
                 return allUserSupplies.find( us => {
                     return (us.supply_id === supply_id && us.userneeds)                
                 })
@@ -138,28 +129,17 @@ class ToolboxDisplay extends React.Component{
                         <td>{supply.quantity} </td>
                         <td>{supply.measurement}</td>
                         <td>{supply.project_name ? supply.project_name : "No Info" }</td>
-                        {/* <td>{String(supply.userneeds)} </td> */}
                         <td>{haveSupplyInshoppingList ? "yes" : "no"} </td>
-                        {/* <td>{this.formatDate(userSupply.updated_at)} </td> */}
-                        {/* <td>{supply.updated_at} </td>                      */}
                         <td>{date} </td> 
-                        {/* <td><button onClick={((e)=>onDeleteItemClick(e, supply.id))} > Delete From Toolbox! </button> </td>   */}
-                        <td><button onClick={(e)=>this.onDeleteItemClick(e, supply.id)} > Delete </button> </td>  
-                    
+                        <td><button onClick={(e)=>this.onDeleteItemClick(e, supply.id)} > Delete </button> </td>            
                     </tr>
                 )
         })
-
-        // let allUserSupplies = this.props.userSupplies.userSupplies
-        // return this.props.userSupplies.relevantSupplyObjs.map(function ( supply ){
-        //     // let userSupply = this.props.userSupplies.userSupplies.find( us => us.supply_id === supply.id);
-        //     //  ^ Can't nest this.props bc scope issues!   this.props undefined. 
     }
 
 
 
     render(){
-        console.log("Toolbox props:   ", this.props)
         let tableRows = this.renderTableRows();
 
         return(
@@ -195,8 +175,6 @@ class ToolboxDisplay extends React.Component{
 
 function mapDispatchToProps(dispatch){
     return({
-        // addNeedTool: ()=> dispatch({type: "ADD_TOOL_NEED"}),
-        // unNeedTool: ()=> dispatch({type: "UN_NEED_TOOL"})
         deleteUserSupplyFromToolbox: (userSupplyId)=> dispatch(
             {type: "DELETE_USER_SUPPLY",
             payload: userSupplyId

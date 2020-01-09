@@ -11,14 +11,8 @@ import './Card.css'
 import { isParenthesizedExpression, throwStatement } from '@babel/types';
 import NewReviewContainer from './NewReviewContainer.js'; //for Portal 
 
-// import cloneDeep from 'lodash/cloneDeep'
-
 
 class ProjectContainer extends React.Component{
-
-// check user logged in (token) / get who user is.. 
-// fetch all of user's projects. 
-
 
     constructor(props) {
         super(props)
@@ -33,7 +27,6 @@ class ProjectContainer extends React.Component{
 
 
     componentDidMount(){
-        // console.log("in ProjCont, props.user is : ", this.props.user.user_id)
         
         if (this.props.user.user_id !== "undefined" && this.props.user.user_id > 0 ){
             fetch(`http://localhost:3000/projects/${this.props.user.user_id}`)              
@@ -60,8 +53,6 @@ class ProjectContainer extends React.Component{
             })
         } else {
             return <Redirect to="/login" />
-            // ^^Source:   https://scotch.io/courses/using-react-router-4/authentication-with-redirect
-            // this.props.history.push('/login')  Need to pass down history to use
         }
     }
 
@@ -97,20 +88,17 @@ class ProjectContainer extends React.Component{
         let slideIndexCounter = -1
         let projectCardsArr;
 
-            if (this.state.projects){    // else = you are not logged in!
+            if (this.state.projects){   
                 projectCardsArr = this.state.projects.map( project => {
                     slideIndexCounter += 1;
-                // {/* <ProjectCard /> */}
-                    return(         // returning individual slides being created. 
+                    return(         
                     <Slide index={slideIndexCounter}>
                         <ProjectCard
-
-                        project={project} 
-                        addNeedTool={this.props.addNeedTool}
-                        unNeedTool={this.props.unNeedTool}
-                        onEditClickHandler={this.onEditClickHandler}
-                        onDeleteUserProjectClick={this.onDeleteUserProjectClick}
-                        //toggleReviewToDisplay={this.toggleReviewToDisplay}
+                            project={project} 
+                            addNeedTool={this.props.addNeedTool}
+                            unNeedTool={this.props.unNeedTool}
+                            onEditClickHandler={this.onEditClickHandler}
+                            onDeleteUserProjectClick={this.onDeleteUserProjectClick}
                         >
                         </ProjectCard>
                     // </Slide>
@@ -122,18 +110,12 @@ class ProjectContainer extends React.Component{
                 return(                     // returned if you are logged in AND clicked a review button
                     <React.Fragment>
 
-                        {/* <div className="carousel-container"> */}
                         <div className="headerDiv">
                             <div className="headerText"> Your Projects: </div>
                         </div>
 
                         <div className="bgpic">
                             <div  className="theContainerCarouselReviewOpen" >
-
-                            {/* Changed the ELSE in ternary ^ from: "reviewCont"   makes card behind review disappear,  */}                                                              
-
-                            {/* VS  commented out below line to retry Carousel */}
-                            {/* {projectCardsArr} */}
 
                                     <CarouselProvider       
                                         naturalSlideWidth={250}
@@ -144,8 +126,6 @@ class ProjectContainer extends React.Component{
                                     <span  id="leftNextButton"> <ButtonBack>  👈🏽  </ButtonBack> </span> 
                                     <span  id="rightNextButton"> <ButtonNext> 👉🏼 </ButtonNext> </span> 
 
-                                    {/* Below:  Commented out Dec 14  */}
-                                        {/* <Slider className="carousel"> */}
                                         <Slider className={activeReview ? "" : "" } ref={this.reviewContRef}>
                                             {projectCardsArr}
                                         </Slider>
@@ -154,19 +134,13 @@ class ProjectContainer extends React.Component{
 
                                     <NewReviewContainer/>
                                 
-                                {/* MESSED UP REFACTOR, DONT NEED THIS HERE */}
-                                {/* <ReviewContainer 
-                                reviewToDisplay={this.state.reviewToDisplay} 
-                                className={this.state.displayReviewFlag ? "newToolShow" : "newToolHide"}
-                                />  */}
-
                             </div>
                         </div>
                     </React.Fragment>
                 )
-            } else if (activeReview === false ) {                        // if no active review, return 
+            } else if (activeReview === false ) {                        
 
-                return(                     // returned if you are logged in 
+                return(                   
                     <React.Fragment>
                         <div className="headerDiv">
                             <div className="headerText"> Your Projects: </div>
@@ -200,9 +174,9 @@ class ProjectContainer extends React.Component{
                 <h2> Login! </h2>
             )
         }
-    } // ends render
-
-} // ends class
+    } 
+    
+} 
 
 
 

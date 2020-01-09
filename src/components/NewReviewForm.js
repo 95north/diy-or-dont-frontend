@@ -6,24 +6,21 @@ import './Sidebar.css'
 
 
 class NewReviewForm extends React.Component{
-    // Generate a sidebar
-    // do fetch request, get reviews (& user info for ea) for a given project,
-    // ( in store, only have logged in user's reviews )
-    // Map each review to a ReviewCard
-
 
     constructor(props){
         super(props);
-
         this.state = {
         }
 
     }
 
 
+    componentWillReceiveProps(nextProps){           // gets logged 6 times, once for each MyProjCard
+        // get a log for this after close each OPEN review, too, with the result of API fetch for user's review.
+        // ie. 6xm reviews each all hit componentWillUpdateProps
+        console.log("Inside componentWillReceiveProps, nextProps is: ", nextProps)
+        console.log("nextProps.value !== this.props.value : ", nextProps.value !== this.props.value);
 
-    componentWillReceiveProps(nextProps){
-        console.log("Inside componentWillReceiveProps ")
         if(nextProps.value !== this.props.value){
             if(typeof(this.props.changeHandler) === 'function'){
                 this.props.changeHandler(nextProps.name, nextProps.value)
@@ -32,8 +29,9 @@ class NewReviewForm extends React.Component{
     }
     
     handleOnChange=(e)=> {
+        console.log("In NewReviewForm, handleOnChange")
         let key = e.target.name
-            let value = e.target.value;
+        let value = e.target.value;
         
         if(typeof(this.props.changeHandler) === 'function'){
         this.props.changeHandler(key, value)
@@ -65,15 +63,13 @@ class NewReviewForm extends React.Component{
                         <form onSubmit={((e)=>this.onSubmitReviewForm(e))}>
                         <span onClick={((e)=>this.props.activeReviewIdVoidInStore(this.props.project_id))}> X </span>
                             <br/>
-                            {/* Was:   */}
-                            {/* <span onClick={"this.parentElement.style.display='none'"}> X </span><br/><br/> */}
                                 Review:  {this.props.userProject_name} <br/><br/>
     
                                 Status: 
                                 <select
                                     name="status" 
                                     onChange={this.handleOnChange.bind(this)}
-                                    value={this.props.status}  // got error: `value` prop on `select` should not be null..  It should be ""  ??!
+                                    defaultValue={this.props.status}  // got error: `value` prop on `select` should not be null..  It should be ""  ??!
                                     // onChange={() => console.log("onChange in status")}
                                     // onMouseEnter={() => console.log("onMouseEnter in status")} // works!!! bubbles ok
                                 >
@@ -88,8 +84,8 @@ class NewReviewForm extends React.Component{
                                 Difficulty of Project: <br/>
                                 <select
                                     name="reviewDifficulty" 
-                                    onChange={(e)=>{this.props.changeHandler(e)}}
-                                    value={this.props.reviewDifficulty} 
+                                    onChange={(e)=>{this.handleOnChange(e)}}
+                                    defaultValue={this.props.reviewDifficulty} 
                                     // onChange={() => console.log("onChange in status")}
                                 >
                                     <option value="" selected="selected" disabled> Choose One </option>
@@ -104,8 +100,8 @@ class NewReviewForm extends React.Component{
                                 <select
                                     name="reviewFun" 
                                     value={this.props.reviewFun} 
-                                    onChange={(e)=>{this.changeHandler(e)}}
-                                    // onChange={this.changeHandler}
+                                    onChange={(e)=>{this.handleOnChange(e)}}
+                                    // onChange={this.handleOnChange}
                                 >
                                     <option value="" selected="selected" disabled> Choose One </option>
                                     <option value="1"> 1 (Miserable) </option>
@@ -121,7 +117,7 @@ class NewReviewForm extends React.Component{
                                     name="reviewTime" 
                                     value={this.props.reviewTime} 
                                     placeholder="# Hours to Complete?" 
-                                    onChange={(e)=>{this.changeHandler(e)}}
+                                    onChange={(e)=>{this.handleOnChange(e)}}
                                 /><br/>
     
                                 Add Notes:  <br/>
@@ -130,7 +126,7 @@ class NewReviewForm extends React.Component{
                                     name="reviewText" 
                                     value={this.props.reviewText} 
                                     placeholder="Enter review text here" 
-                                    onChange={ ((e)=>this.changeHandler(e)) }
+                                    onChange={ ((e)=>this.handleOnChange(e)) }
                                 /><br/>
     
                                 Completed Date <br/><br/>
@@ -143,8 +139,6 @@ class NewReviewForm extends React.Component{
     
                         </form>
                     </div>
-                // </div>
-                // </div>
             )
             } else {
                 return(null)
@@ -194,6 +188,7 @@ class NewReviewForm extends React.Component{
 
 
     render(){
+        console.log("Props in NewReviewForm", this.props)
         // console.log("New Review Containter props: USER PROJECT ID??  ", this.props)
         return ReactDOM.createPortal(this.renderNewReviewForm(), document.body);
     }

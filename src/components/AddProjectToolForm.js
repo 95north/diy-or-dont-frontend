@@ -8,9 +8,6 @@ class addProjectToolForm extends React.Component{
     constructor(props) {
         super(props)
     
-        // Create the ref     HARD CODED!!!  Not using. 
-        // this.newTool0 = React.createRef()
-
         this.state={
             toolCounter : 0,
             tools: [],
@@ -48,7 +45,6 @@ class addProjectToolForm extends React.Component{
         let toolsCopy=this.props.tools
         console.log("toolsCopy --", toolsCopy)
         
-        {/* TOOLS IS NOT DEFINED !  */}
         if (toolsCopy.length > 0){
         return(               
              toolsCopy.map((tool, index)=>{
@@ -65,7 +61,6 @@ class addProjectToolForm extends React.Component{
                             name={"NewProjToolQuantity" + index}
                             data-id={index} 
                             id = {toolId}
-                            // value={this.props.tool[index].quantity}
                             value={toolsCopy[index].quantity}
                             className="quantity"
                             min="1" 
@@ -103,11 +98,6 @@ class addProjectToolForm extends React.Component{
                             value={toolsCopy[index].NewProjToolNewToolName}
                             placeholder= "New Tool Name"
                             className="NewProjToolNewToolName"
-                            // ref={ function(node){ this.inputValue = node }.bind(this) }
-                            // className={`newTool${index}`}
-                            // className="newToolHide"
-                            // style={display:'none'}
-
                         /><br/>
                         New Tool Description: <input 
                             type="text" 
@@ -124,8 +114,6 @@ class addProjectToolForm extends React.Component{
                     </div>
                 )
             })
-        
-
         )
         } else {
             return(

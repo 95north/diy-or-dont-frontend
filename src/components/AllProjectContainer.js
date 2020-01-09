@@ -10,8 +10,6 @@ import './Card.css'
 
 class AllProjectContainer extends React.Component{
 
-// check user logged in (token) / get who user is.. 
-// fetch all of user's projects.  (hardcode for now)
     state = {
         allProjects: [],
         reviewToDisplay: 0,
@@ -23,10 +21,7 @@ class AllProjectContainer extends React.Component{
         fetch("http://localhost:3000/allprojects")               
         .then( res => res.json() )
         .then( projectsData => {
-            // console.log("ALL projectsData is :", projectsData)  //ok for hard coded 
             this.setState({allProjects: projectsData})  
-            // Add to store: 
-            
         })
         if (this.props.user.user_id !== "undefined" && this.props.user.user_id > 0 ){
             fetch(`http://localhost:3000/projects/${this.props.user.user_id}`)              
@@ -53,25 +48,20 @@ class AllProjectContainer extends React.Component{
             })
         } else {
             return <Redirect to="/login" />
-            // ^^Source:   https://scotch.io/courses/using-react-router-4/authentication-with-redirect
-            // this.props.history.push('/login')  Need to pass down history to use
         }
 
 
     }
 
-    toggleReviewToDisplay =(project_id)=>{  /// NOT USING, CHANGED TO STORE
-        // console.log(" All PROJ cont  toggleReviewToDisplay   state before", this.state)
+    // toggleReviewToDisplay =(project_id)=>{  /// NOT USING, CHANGED TO STORE
+    //     if (this.state.reviewToDisplay === project_id){
 
-        if (this.state.reviewToDisplay === project_id){
-
-            this.setState({reviewToDisplay: project_id, displayReviewFlag: !this.state.displayReviewFlag})
-        } else {
-            this.setState({reviewToDisplay: project_id, displayReviewFlag: true})
-        }
-        console.log(" All PROJ cont   toggleReviewToDisplay   state After", this.state)
-
-    }
+    //         this.setState({reviewToDisplay: project_id, displayReviewFlag: !this.state.displayReviewFlag})
+    //     } else {
+    //         this.setState({reviewToDisplay: project_id, displayReviewFlag: true})
+    //     }
+    //     console.log(" All PROJ cont   toggleReviewToDisplay   state After", this.state)
+    // }
 
 
     onEditClickHandler = () =>{
@@ -106,7 +96,6 @@ class AllProjectContainer extends React.Component{
         proj["avgTime"] = timeTotal / timeCounter
         proj["ratingsCount"] = funCounter;
         proj["funRatings"] = funRatings;
-        // console.log("porj (for Averages) in AllProjectContainer -", proj)
     }
 
     filterProjectsBySearchTerm = ()=>{
@@ -117,11 +106,7 @@ class AllProjectContainer extends React.Component{
         }
 
         this.state.allProjects.forEach( proj =>{
-            // console.log("search Filter proj: ", proj[0].name)
-            // let p = proj[0].name.toLowerCase()
-            // p.includes(this.props.searchTerm.value)
             if (proj[0].name.toLowerCase().includes(searchTermCopy)){
-                // returnArr.push(proj)
                 returnArr.push(proj[0].name)
             }
         })
@@ -132,7 +117,7 @@ class AllProjectContainer extends React.Component{
     
     render(){
 
-        // finish filtering projects (should refactor, chunky), then create Project Card.
+        // finish filtering projects, then create Project Card.
         let displayProjectsCardArr 
         let filteredProjectsName = this.filterProjectsBySearchTerm();
         let filteredProjectsCardArr = [];
@@ -147,18 +132,16 @@ class AllProjectContainer extends React.Component{
                 project[0]["reviewDifficultyAvg"]=this.calculateAvgs(project)
 
                 return <AllProjectCard 
-                    displayReviewFlag={this.state.displayReviewFlag}  // change w toggleReviewToDisplay
-                    project={project} 
-                    onEditClickHandler={this.onEditClickHandler}  
-                    toggleReviewToDisplay={this.toggleReviewToDisplay}
-                    // does not pass down project ID, bc that is given as prop to ea. CARD
+                        displayReviewFlag={this.state.displayReviewFlag}  
+                        project={project} 
+                        onEditClickHandler={this.onEditClickHandler}  
+                        toggleReviewToDisplay={this.toggleReviewToDisplay}
                     />
             })
         }
 
 
         if (this.props.activeProjectId){
-
             return(
                 <React.Fragment>
                     <div className="headerDiv">
@@ -166,11 +149,8 @@ class AllProjectContainer extends React.Component{
                     </div>
                     
                     <div className="thecontainer">
-                        {/* <br/> */}
     
                         <ReviewContainer 
-                            // className={this.props.displayReviewFlag ?  "panel-wrap" : "go-none" }
-                            //  ^^ Was getting passed down as a Prop...
                             toggleReviewToDisplay={this.toggleReviewToDisplay}
                             displayReviews={this.state.reviewToDisplay}
                             reviewToDisplay={this.state.reviewToDisplay}
@@ -178,7 +158,6 @@ class AllProjectContainer extends React.Component{
                         />
 
                             {(displayProjectsCardArr && displayProjectsCardArr.length>0)? displayProjectsCardArr :  
-                            // <div className="card"><Link to="/createproject">Don't See It? Create a New Project</Link></div> }
                             <div className="card">
                             <button onClick={this.props.activeNewProjectVoidInStore}>
                                 Don't See It? Create a New Project
@@ -203,7 +182,6 @@ class AllProjectContainer extends React.Component{
                             <br/>
         
                                 {(displayProjectsCardArr && displayProjectsCardArr.length>0)? displayProjectsCardArr : 
-                                // <div className="card"><Link to="/createproject">Don't See It? Create a New Project</Link></div> }
                                 <div className="card">
                                     <button onClick={this.props.activeNewProjectVoidInStore}>
                                         Don't See It? Create a New Project
@@ -259,9 +237,6 @@ function mapDispatchToProps(dispatch){
                                 
 
 function mapStateToProps(state){
-    // console.log("state argument in MSP in aPP: ", state)  An empty obj.
-    // console.log("Called mapStateToPRops! ")   CORRECT, this gets called!
-    console.log("in AllProjectContainer mapStateToPRops!  state is:  ", state )   // Id + token, CORRECT!   
       return({
           user: state.user,
           searchTerm: state.searchTerm,

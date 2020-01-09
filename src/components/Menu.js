@@ -9,15 +9,6 @@ class Menu extends React.Component{
     }
     
     
-    // onDeleteClick = () =>{
-    //     this.setState({deleteInProgress: true})
-    //     console.log("DELETE")
-    // }
-    
-    // hideDeleteForm = () => {
-    //     this.setState({deleteInProgress: false})
-    // }
-    
     render(){
 
         return(

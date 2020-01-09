@@ -10,22 +10,18 @@ import ShoppingList from './ShoppingList.js';
 
 class NewReviewContainer extends React.Component{
     state = {
-        // arbitraryReRender: ""
     }
 
 
 
     componentDidMount(){
-        console.log("in TOOL Cont, props.user is : ", this.props.user)
         
         if (this.props.user.user_id !== "undefined" && this.props.user.user_id > 0 && this.props.user.user_id !== undefined){
             fetch(`http://localhost:3000/projects/${this.props.user.user_id}`)              
             .then( res => {
-                console.log("TOOL Container json fetch resp: ", res)
                 return res.json() 
             })
             .then( projectsData => {
-                console.log("TOOL Container json fetch resp: ", projectsData)
                 let rawDataCopy = [...projectsData]
                 rawDataCopy.pop()            
                 this.setState({
@@ -43,13 +39,10 @@ class NewReviewContainer extends React.Component{
             })
         } else {
             return <Redirect to="/login" />
-            // ^^Source:   https://scotch.io/courses/using-react-router-4/authentication-with-redirect
-            // this.props.history.push('/login')  Need to pass down history to use
         }
     }
 
     changeHandler = (event)=>{
-        // console.log("in change handler", event.target.value)
         let inputName = event.target.name
         console.log("inputName", inputName)
         this.setState(
@@ -58,21 +51,12 @@ class NewReviewContainer extends React.Component{
     }
 
 
-    // triggerReRender =()=>{     //GETS CALLED BUT DOESN'T TRIGGER RE-RENDER
-    //     console.log("ARBITRARY RE RENDER  ARBITRARY RE RENDER  ARBITRARY RE RENDER ")
-    //     this.setState({arbitraryReRender: Math.random()})
-    // }
-
-
-
 
     render(){
-        console.log("props in ToolContainer ", this.props)
         if (this.props.userSupplies.userSupplies !== "undefined" && this.props.userSupplies.userSupplies !== [] && this.props.userSupplies.userSupplies !== undefined){
             return(
                 <> 
-                    <div className="toolboxContainer">                    
-                    
+                    <div className="toolboxContainer">                                  
                     <ShoppingList triggerReRender={this.triggerReRender}/>
                     <ToolboxDisplay triggerReRender={this.triggerReRender}/>
                     <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/>

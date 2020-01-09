@@ -27,20 +27,15 @@ class NavBar extends React.Component{
 
         return(
             <div className="topnav" >
-                {/* <button> Menu Icon </button> */}
                 <span>  {this.props.user.username ? <span className="linear-wipeNav">  Hi {this.props.user.username}!  </span> : <Link to='/login'> Login </Link> } </span>
                 <Link to='/home'>All Projects</Link>
                 {this.props.user.user_id ? <Link to='/projects'>My Projects</Link> : null}
                 {this.props.user.user_id ? <Link to='/mytoolbox'>My Toolbox + Shopping List</Link>: null}
 
-
-                {/* <button onClick={this.onDeleteClick} > DeleteFunc? </button> */}
                 <div className="linear-wipeNav">
                     <div > DIY or Don't </div>
                 </div>
 
-                {/* <button  >  i do nothing! </button> */}
-                {/* ......*~+  +~*   *~+  +~*   *~+  +~*   *~+  +~*   *~+  +~* */}
                 <input type="text" onChange={((e)=> this.props.updateSearchTerm(e))} placeholder="Search All Projects"  name="allProjSearch"/>
                 <span>  {this.props.user.username ? <button onClick={this.props.logOut} > Log Out </button>  : null } </span>
 

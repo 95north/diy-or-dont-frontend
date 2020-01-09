@@ -7,11 +7,8 @@ class LogIn extends React.Component{
         password:""
     }
 
-    //  For Dogs Squirrels, this was in form. 
     changeHandler = (event)=>{
-        // console.log("in change handler", event.target.value)
         let inputName = event.target.name
-        // console.log("inputName", inputName)
         this.setState(
             {[inputName]: event.target.value}
             )
@@ -27,9 +24,7 @@ class LogIn extends React.Component{
                 <div className="loginSignup" >
                 
                 <div className="linear-wipe">
-                    {/* <div className="diyTitle">  */}
                     DIY or Don't 
-                    {/* </div> */}
                 </div>
                 
                 <div className="sticky" >
@@ -44,7 +39,7 @@ class LogIn extends React.Component{
                         onChange={this.changeHandler}
                     />    
                     <input 
-                        type = "text" //////  Change to password 
+                        type = "text" //////  Change back to password 
                         name = "password"
                         placeholder="Password" 
                         value={this.state.password} 

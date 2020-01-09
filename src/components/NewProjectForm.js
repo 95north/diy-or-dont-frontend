@@ -7,7 +7,7 @@ import AddProjectToolForm from './AddProjectToolForm.js'
 
 class NewProjectForm extends React.Component{
     state ={
-        allSupplies: [],    // list of all extant tools
+        allSupplies: [],    
         newProjectName: "",
         newProjectOverview: "",
         newProjectDescription: "",
@@ -16,7 +16,7 @@ class NewProjectForm extends React.Component{
     }
 
 
-    componentDidMount = () =>{      // fetchAllTools 
+    componentDidMount = () =>{     
     
         fetch(`http://localhost:3000/supplies`, {
                 headers: { "Content-Type": "application/json; charset=utf-8",
@@ -25,7 +25,6 @@ class NewProjectForm extends React.Component{
                 method: 'GET',
             }).then(res => res.json() )
             .then(supplyList => {
-                console.log("allSupplies in New Project Form: ", supplyList)
                 this.setState({allSupplies: supplyList})
             })
     }
@@ -33,13 +32,6 @@ class NewProjectForm extends React.Component{
 
     changeHandler = (event)=>{
         let inputName = event.target.name
-        console.log("New Project Form change handler: inputName---", inputName)
-        console.log("New Project Form change handler: event target value---", event.target.value)
-        console.log("New Project Form change handler: TypeOf target value---", typeof event.target.value)
-        console.log("New Project Form change handler: event target---", event.target)
-        console.log("New Project Form change handler: event.target.dataset.id---", event.target.dataset.id)
-        console.log("New Project Form change handler: event.target.className---", event.target.className)
-
 
         if (["name", "quantity", "note", "NewProjToolNewToolName", "NewProjToolNewToolDescription"].includes(event.target.className)) {
             if (event.target.value === "newTool"){
@@ -64,8 +56,6 @@ class NewProjectForm extends React.Component{
             tools[event.target.dataset.id][event.target.className]= !theBooleanVal;
             this.setState({tools}, ()=> console.log("State! changeHandler for TOOLS ", this.state.tools))
         } else if (event.target.className.includes("newTool")) {
-            console.log("In NEWProjectForm. e.target ID is: ", event.target.dataset.id) 
-            // ^^^ newProjTool0 -- On Select (dropdown's head, encloses options) tag.  
 
             let stateToolArrayIndex = event.target.dataset.id[11..event.target.dataset.id.length]
             let refId = "newTool" + stateToolArrayIndex
@@ -84,21 +74,6 @@ class NewProjectForm extends React.Component{
             tools: [...this.state.tools, {name: "", quantity:"", note: "", mandatory: "", NewProjToolNewToolName:"", NewProjToolNewToolDescription:"" }]
         })
     }
-
-
-
-    // displayCreateNewToolForm = (e) => {       // Tried using React Refs... nope. 
-    //     console.log("In NEWProjectForm. e.target is: ", e.target)
-    //     console.log("In NEWProjectForm. e.target ID is: ", e.target.id)
-    //     // ^^^ newProjTool0 -- On Select (dropdown's head, encloses options) tag.  
-
-    //     let toolSelectIdCopy = e.target.id 
-    //     let stateToolArrayIndex = toolSelectIdCopy.slice(11, toolSelectIdCopy.length)
-    //     let refId = "newTool" + stateToolArrayIndex
-
-    //     console.log("this.refs.refId --", this.refId)
-    //     // this.refs.refId.style.display = 'block';
-    // }
 
 
 
@@ -135,14 +110,9 @@ class NewProjectForm extends React.Component{
 
     render(){
         let project = this.props.project
-        // console.log("this.props.userProject_id", this.props.userProject_id )
-        // console.log("this.props.activeReviewId", this.props.activeReviewId)
         if(this.props.newProjectFormFlag ){
             return(
                 <>
-                {/* <input id="clicker" type="checkbox" onClick={this.toggleDisplayReviewsState}/>
-                <label for="clicker">Show New Project Form</label>
-                */}
                 {/* <div className="panel-wrap"> */}
                     {/* <div className="panel"> */}
                     <div id="mypanel">
@@ -161,7 +131,6 @@ class NewProjectForm extends React.Component{
                                     tools={this.state.tools} 
                                     allSupplies={this.state.allSupplies} 
                                     showNewTool={this.state.showNewTool}
-                                    // displayCreateNewToolForm = {this.displayCreateNewToolForm}
                                 /><br/> 
                                 <button type="button" onClick={this.addTool} >Add Another Tool to this Project</button><br/>
 
@@ -186,9 +155,7 @@ function mapDispatchToProps(dispatch){
     return({        
         activeNewProjectVoidInStore: ()=> dispatch(
             {type: "VOID_NEW_PROJECT_FORM_FLAG",
-            // payload: projectId
         }),
-
     })
 }
 
@@ -198,7 +165,6 @@ function mapStateToProps(state){
       return({
           user: state.user,
           newProjectFormFlag: state.newProjectFormFlag          
-
       })
   }
   
