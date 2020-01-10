@@ -92,7 +92,7 @@ class ProjectContainer extends React.Component{
                 projectCardsArr = this.state.projects.map( project => {
                     slideIndexCounter += 1;
                     return(         
-                    <Slide index={slideIndexCounter}>
+                    // <Slide index={slideIndexCounter}>
                         <ProjectCard
                             project={project} 
                             addNeedTool={this.props.addNeedTool}
@@ -117,20 +117,20 @@ class ProjectContainer extends React.Component{
                         <div className="bgpic">
                             <div  className="theContainerCarouselReviewOpen" >
 
-                                    <CarouselProvider       
+                                    {/* <CarouselProvider       
                                         naturalSlideWidth={250}
                                         naturalSlideHeight={950}
                                         totalSlides={projectCardsArr.length}
                                         visibleSlides={3}
-                                    >
-                                    <span  id="leftNextButton"> <ButtonBack>  👈🏽  </ButtonBack> </span> 
-                                    <span  id="rightNextButton"> <ButtonNext> 👉🏼 </ButtonNext> </span> 
+                                    > */}
+                                    {/* <span  id="leftNextButton"> <ButtonBack>  👈🏽  </ButtonBack> </span> 
+                                    <span  id="rightNextButton"> <ButtonNext> 👉🏼 </ButtonNext> </span>  */}
 
-                                        <Slider className={activeReview ? "" : "" } ref={this.reviewContRef}>
+                                        {/* <Slider className={activeReview ? "" : "" } ref={this.reviewContRef}> */}
                                             {projectCardsArr}
-                                        </Slider>
+                                        {/* </Slider> */}
 
-                                    </CarouselProvider>
+                                    {/* </CarouselProvider> */}
 
                                     <NewReviewContainer/>
                                 
@@ -149,19 +149,19 @@ class ProjectContainer extends React.Component{
                             
                             <div  className="thecarouselcontainer" >
 
-                                    <CarouselProvider       
+                                    {/* <CarouselProvider       
                                         naturalSlideWidth={250}
                                         naturalSlideHeight={950}
                                         totalSlides={projectCardsArr.length}
                                         visibleSlides={4}
-                                    >
-                                        <span  id="leftNextButton"> <ButtonBack>  👈🏽  </ButtonBack> </span> 
-                                        <span  id="rightNextButton"> <ButtonNext> 👉🏼 </ButtonNext> </span> 
+                                    > */}
+                                        {/* <span  id="leftNextButton"> <ButtonBack>  👈🏽  </ButtonBack> </span> 
+                                        <span  id="rightNextButton"> <ButtonNext> 👉🏼 </ButtonNext> </span>  */}
 
-                                        <Slider className={activeReview ? "" : "" } ref={this.reviewContRef}>
+                                        {/* <Slider className={activeReview ? "" : "" } ref={this.reviewContRef}> */}
                                             {projectCardsArr}
-                                        </Slider>
-                                    </CarouselProvider>
+                                        {/* </Slider> */}
+                                    {/* </CarouselProvider> */}
 
                             </div>
                         </div>
@@ -175,7 +175,7 @@ class ProjectContainer extends React.Component{
             )
         }
     } 
-    
+
 } 
 
 
