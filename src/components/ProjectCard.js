@@ -1,5 +1,6 @@
 import React from 'react';
-import NewReviewContainer from './NewReviewContainer'
+import NewReviewForm from './NewReviewForm'
+
 import {connect} from 'react-redux';
 
 
@@ -227,7 +228,11 @@ class ProjectCard extends React.Component{
                     Leave Review  OR Edit Your Review 
                 </button>
 
-                <NewReviewContainer 
+                {/* <NewReviewContainer 
+                    userProject_id={project[2].id} 
+                    userProject_name={project[3].name}
+                />  */}
+                <NewReviewForm
                     userProject_id={project[2].id} 
                     userProject_name={project[3].name}
                 /> 

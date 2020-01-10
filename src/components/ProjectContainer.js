@@ -1,5 +1,6 @@
 import React from 'react';
 import ProjectCard from './ProjectCard.js'
+import NewReviewForm from './NewReviewForm.js'
 import { Route , withRouter, Redirect} from 'react-router-dom';
 import { browserHistory } from 'react-router';
 import {connect} from 'react-redux';
@@ -9,7 +10,6 @@ import 'pure-react-carousel/dist/react-carousel.es.css';
 import './Carousel.css'
 import './Card.css'
 import { isParenthesizedExpression, throwStatement } from '@babel/types';
-import NewReviewContainer from './NewReviewContainer.js'; //for Portal 
 
 
 class ProjectContainer extends React.Component{
@@ -31,11 +31,9 @@ class ProjectContainer extends React.Component{
         if (this.props.user.user_id !== "undefined" && this.props.user.user_id > 0 ){
             fetch(`http://localhost:3000/projects/${this.props.user.user_id}`)              
             .then( res => {
-                console.log("PROJECt Container json fetch resp: ", res)
                 return res.json() 
             })
             .then( projectsData => {
-                console.log("PROJECt Container json fetch resp: ", projectsData)
                 let rawDataCopy = [...projectsData]
                 rawDataCopy.pop()            
                 this.setState({
@@ -82,15 +80,12 @@ class ProjectContainer extends React.Component{
 
     render(){
         let activeReview = (this.props.activeReviewId > 0)? true : false;
-        console.log("this.state.activeReviewId ", this.state.activeReviewId);
-        console.log("in Project Container, activeReview t f is: ", activeReview);
-
-        let slideIndexCounter = -1
+        // let slideIndexCounter = -1
         let projectCardsArr;
 
             if (this.state.projects){   
                 projectCardsArr = this.state.projects.map( project => {
-                    slideIndexCounter += 1;
+                    // slideIndexCounter += 1;
                     return(         
                     // <Slide index={slideIndexCounter}>
                         <ProjectCard
@@ -133,7 +128,9 @@ class ProjectContainer extends React.Component{
 
                                     {/* </CarouselProvider> */}
 
-                                    <NewReviewContainer/>
+                                    {/* <NewReviewContainer/> */}
+                                    <NewReviewForm/>
+
                                 
                             </div>
                         </div>

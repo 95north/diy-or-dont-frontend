@@ -8,7 +8,7 @@ import ToolboxDisplay from './ToolboxDisplay.js';
 import ShoppingList from './ShoppingList.js';
 
 
-class NewReviewContainer extends React.Component{
+class ToolContainer extends React.Component{  // I somehow overwrote this to NewReviewContainer? 
     state = {
     }
 
@@ -94,4 +94,4 @@ function mapStateToProps(state){
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewReviewContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ToolContainer);

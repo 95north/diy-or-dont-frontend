@@ -7,8 +7,6 @@ import './Sidebar.css'
 
 class ReviewCard extends React.Component{
 
-
-
     render(){
         let user = this.props.review[1]
         let review = this.props.review[0]

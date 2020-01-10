@@ -3,6 +3,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import ReactDOM from 'react-dom';
 import './Sidebar.css'
+import { throwStatement } from '@babel/types';
 
 
 class NewReviewForm extends React.Component{
@@ -10,35 +11,87 @@ class NewReviewForm extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            status: "",
+            usernote:"",
+            reviewDifficulty: "",
+            reviewFun: "",
+            reviewTime: "",
+            reviewText: "",
+            completedDate: "",
+            displayReviewForm: false   // NEW
         }
 
     }
 
-
-    componentWillReceiveProps(nextProps){           // gets logged 6 times, once for each MyProjCard
-        // get a log for this after close each OPEN review, too, with the result of API fetch for user's review.
-        // ie. 6xm reviews each all hit componentWillUpdateProps
-        console.log("Inside componentWillReceiveProps, nextProps is: ", nextProps)
-        console.log("nextProps.value !== this.props.value : ", nextProps.value !== this.props.value);
-
-        if(nextProps.value !== this.props.value){
-            if(typeof(this.props.changeHandler) === 'function'){
-                this.props.changeHandler(nextProps.name, nextProps.value)
-            }
-        }
+    componentDidMount = () =>{             // fetch own review to edit. 
+        fetch(`http://localhost:3000/review/${this.props.userProject_id}`, {
+            method: 'GET',
+            headers: { "Content-Type": "application/json; charset=utf-8", 
+            Accepts: 'application/json' }
+        })
+        .then( res => {
+            console.log("componentDidMount Resp is: ", res) // gets 200 OK
+            return res.json(); 
+        })
+        .then( reviewData => {
+            console.log(" componentDidMount review Show :", reviewData)
+            this.setState({
+                status: reviewData.status,
+                usernote: reviewData.usernote,
+                reviewDifficulty: reviewData.reviewDifficulty,
+                reviewFun: reviewData.reviewFun,
+                reviewText: reviewData.reviewTime,
+                reviewText: reviewData.reviewText,
+            })
+        })
     }
+
+
+    
+
+    // componentWillMount=()=>{
+    //     this.setState({
+    //         status: this.props.status ? this.props.status : "",
+    //         usernote:"",
+    //         reviewDifficulty: this.props.reviewDifficulty,
+    //         reviewFun: this.props.reviewFun,
+    //         reviewTime: this.props.reviewTime,
+    //         reviewText: this.props.reviewText,
+    //         completedDate: this.props.completedDate,
+    //         displayReviewForm: false   // NEW
+    //     })
+    //     console.log("state set in NewReviewForm: ", this.state) 
+    // }
+
+
+
+    // componentWillReceiveProps(nextProps){           // gets logged 6 times, once for each MyProjCard
+    //     // get a log for this after close each OPEN review, too, with the result of API fetch for user's review.
+    //     // ie. 6xm reviews each all hit componentWillUpdateProps
+    //     console.log("Inside componentWillReceiveProps, nextProps is: ", nextProps)
+    //     console.log("nextProps.value !== this.props.value : ", nextProps.value !== this.props.value);
+
+    //     if(nextProps.value !== this.props.value){
+    //         if(typeof(this.props.changeHandler) === 'function'){
+    //             this.props.changeHandler(nextProps.name, nextProps.value)
+    //         }
+    //     }
+    // }
     
     handleOnChange=(e)=> {
         console.log("In NewReviewForm, handleOnChange")
+        console.log("State in onChange is: ", this.state)
         let key = e.target.name
         let value = e.target.value;
-        
-        if(typeof(this.props.changeHandler) === 'function'){
-        this.props.changeHandler(key, value)
-        }
+
+        this.setState({[key] : value})
+
+        // if(typeof(this.props.changeHandler) === 'function'){
+        // this.props.changeHandler(key, value)
+        // }
     }
 
-    changeHandler=()=>{console.log("Not Crashing, good")}
+    // changeHandler=()=>{console.log("Not Crashing, good")}
   
 // render() {
 //     return (
@@ -57,8 +110,6 @@ class NewReviewForm extends React.Component{
             return(
                 // <div className={ this.state.displayReviewForm ? null : "go-away"}> 
                 // ^^ Makes it super buggy, and review forms align with cards roughly (but staggered)
-                // <div className="panel-wrap">
-                //     <div className="panel">
                     <div id="myreviewpanel">
     
                         <form onSubmit={((e)=>this.onSubmitReviewForm(e))}>
@@ -69,8 +120,8 @@ class NewReviewForm extends React.Component{
                                 Status: 
                                 <select
                                     name="status" 
-                                    onChange={this.handleOnChange.bind(this)}
-                                    defaultValue={this.props.status}  // got error: `value` prop on `select` should not be null..  It should be ""  ??!
+                                    onChange={(e)=>this.handleOnChange(e)}
+                                    value={this.state.status}  // got error: `value` prop on `select` should not be null..  It should be ""  ??!
                                     // onChange={() => console.log("onChange in status")}
                                     // onMouseEnter={() => console.log("onMouseEnter in status")} // works!!! bubbles ok
                                 >
@@ -86,7 +137,7 @@ class NewReviewForm extends React.Component{
                                 <select
                                     name="reviewDifficulty" 
                                     onChange={(e)=>{this.handleOnChange(e)}}
-                                    defaultValue={this.props.reviewDifficulty} 
+                                    value={this.state.reviewDifficulty} 
                                     // onChange={() => console.log("onChange in status")}
                                 >
                                     <option value="" selected="selected" disabled> Choose One </option>
@@ -100,7 +151,7 @@ class NewReviewForm extends React.Component{
                                Miserable or Fun? : <br/>
                                 <select
                                     name="reviewFun" 
-                                    value={this.props.reviewFun} 
+                                    value={this.state.reviewFun} 
                                     onChange={(e)=>{this.handleOnChange(e)}}
                                     // onChange={this.handleOnChange}
                                 >
@@ -116,16 +167,16 @@ class NewReviewForm extends React.Component{
                                 <input 
                                     type="text" 
                                     name="reviewTime" 
-                                    value={this.props.reviewTime} 
+                                    value={this.state.reviewTime} 
                                     placeholder="# Hours to Complete?" 
-                                    onChange={(e)=>{this.handleOnChange(e)}}
+                                    onChange={(e)=>this.handleOnChange(e)}
                                 /><br/>
     
                                 Add Notes:  <br/>
                                 <input 
                                     type="text" 
                                     name="reviewText" 
-                                    value={this.props.reviewText} 
+                                    value={this.state.reviewText} 
                                     placeholder="Enter review text here" 
                                     onChange={((e)=>this.handleOnChange(e))}
                                 /><br/>
@@ -151,13 +202,16 @@ class NewReviewForm extends React.Component{
 
 
 
-    onSubmitReviewForm = (e)=>{
+    onSubmitReviewForm = (e) => {
+            console.log(" onSubmitReviewForm called  -- New Review Form compo. State is: ", this.state)
+            console.log(" onSubmitReviewForm called  -- New Review Form compo. this.props.userProject_id ", this.props.userProject_id)
+
             e.preventDefault();
             this.props.activeReviewIdVoidInStore()
             // this.toggleDisplayReviewFormState()
             // Need User_Project Id! 
     
-            console.log(this.props.userProject_id)
+            // console.log(this.props.userProject_id)
             fetch(`http://localhost:3000/review/${this.props.userProject_id}`, {
                 method: 'PATCH',                                // UserProject already exists, update review part
                 headers: { "Content-Type": "application/json; charset=utf-8", 
@@ -172,15 +226,11 @@ class NewReviewForm extends React.Component{
                 })                
             })
             .then( res => {
-                console.log("Resp is: ", res) //
+                console.log("Submit Review Resp is: ", res) //
                 return res.json(); 
             })
             .then( reviewData => {
-                console.log("review :", reviewData)
-                // this.setState({
-                //     reviewData: reviewData
-                // })
-                // this.renderReviewCards();  
+                // console.log("review :", reviewData)
             })
     }
  
@@ -190,7 +240,6 @@ class NewReviewForm extends React.Component{
 
     render(){
         console.log("Props in NewReviewForm", this.props)
-        // console.log("New Review Containter props: USER PROJECT ID??  ", this.props)
         return ReactDOM.createPortal(this.renderNewReviewForm(), document.getElementById('root'));
     }
 }
