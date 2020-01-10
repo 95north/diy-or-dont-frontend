@@ -115,7 +115,8 @@ class ProjectContainer extends React.Component{
                         </div>
 
                         <div className="bgpic">
-                            <div  className="theContainerCarouselReviewOpen" >
+                            {/* <div  className="theContainerCarouselReviewOpen" > */}
+                            <div className="thecontainer">
 
                                     {/* <CarouselProvider       
                                         naturalSlideWidth={250}
@@ -147,7 +148,8 @@ class ProjectContainer extends React.Component{
                         </div>
                         <div className="bgpic">
                             
-                            <div  className="thecarouselcontainer" >
+                            {/* <div  className="thecarouselcontainer" > */}
+                            <div className="thecontainer">
 
                                     {/* <CarouselProvider       
                                         naturalSlideWidth={250}
