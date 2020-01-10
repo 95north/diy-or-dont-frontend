@@ -53,6 +53,7 @@ class NewReviewForm extends React.Component{
 
     renderNewReviewForm = () => {
         if(this.props.activeReviewId === this.props.userProject_id){
+            console.log("Active Review Id New Review Form is: ", this.props.activeReviewId ); //check only 1 active @ time
             return(
                 // <div className={ this.state.displayReviewForm ? null : "go-away"}> 
                 // ^^ Makes it super buggy, and review forms align with cards roughly (but staggered)
@@ -126,7 +127,7 @@ class NewReviewForm extends React.Component{
                                     name="reviewText" 
                                     value={this.props.reviewText} 
                                     placeholder="Enter review text here" 
-                                    onChange={ ((e)=>this.handleOnChange(e)) }
+                                    onChange={((e)=>this.handleOnChange(e))}
                                 /><br/>
     
                                 Completed Date <br/><br/>
@@ -190,7 +191,7 @@ class NewReviewForm extends React.Component{
     render(){
         console.log("Props in NewReviewForm", this.props)
         // console.log("New Review Containter props: USER PROJECT ID??  ", this.props)
-        return ReactDOM.createPortal(this.renderNewReviewForm(), document.body);
+        return ReactDOM.createPortal(this.renderNewReviewForm(), document.getElementById('root'));
     }
 }
 
