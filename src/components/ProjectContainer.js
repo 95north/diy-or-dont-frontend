@@ -80,14 +80,14 @@ class ProjectContainer extends React.Component{
 
     render(){
         let activeReview = (this.props.activeReviewId > 0)? true : false;
-        // let slideIndexCounter = -1
+        let slideIndexCounter = -1
         let projectCardsArr;
 
             if (this.state.projects){   
                 projectCardsArr = this.state.projects.map( project => {
-                    // slideIndexCounter += 1;
+                    slideIndexCounter += 1;
                     return(         
-                    // <Slide index={slideIndexCounter}>
+                    <Slide index={slideIndexCounter}>
                         <ProjectCard
                             project={project} 
                             addNeedTool={this.props.addNeedTool}
@@ -110,28 +110,32 @@ class ProjectContainer extends React.Component{
                         </div>
 
                         <div className="bgpic">
-                            {/* <div  className="theContainerCarouselReviewOpen" > */}
-                            <div className="thecontainer">
+                            <div  className="theContainerCarouselReviewOpen" >
+                            {/* <div className="thecontainer"> */}
 
-                                    {/* <CarouselProvider       
+                                    <CarouselProvider       
                                         naturalSlideWidth={250}
                                         naturalSlideHeight={950}
                                         totalSlides={projectCardsArr.length}
                                         visibleSlides={3}
-                                    > */}
-                                    {/* <span  id="leftNextButton"> <ButtonBack>  👈🏽  </ButtonBack> </span> 
-                                    <span  id="rightNextButton"> <ButtonNext> 👉🏼 </ButtonNext> </span>  */}
+                                        dragEnabled={false}
+                                        touchEnabled={false}
+                                        infinite={true}
+                                    >
+                                    <span  id="leftNextButton"> <ButtonBack>  👈🏽  </ButtonBack> </span> 
+                                    <span  id="rightNextButton"> <ButtonNext> 👉🏼 </ButtonNext> </span> 
 
-                                        {/* <Slider className={activeReview ? "" : "" } ref={this.reviewContRef}> */}
+                                        <Slider className={activeReview ? "" : "" } ref={this.reviewContRef}>
                                             {projectCardsArr}
-                                        {/* </Slider> */}
+                                        </Slider>
 
-                                    {/* </CarouselProvider> */}
+                                    </CarouselProvider>
 
                                     {/* <NewReviewContainer/> */}
                                     <NewReviewForm/>
 
                                 
+                            {/* </div> */}
                             </div>
                         </div>
                     </React.Fragment>
@@ -145,24 +149,28 @@ class ProjectContainer extends React.Component{
                         </div>
                         <div className="bgpic">
                             
-                            {/* <div  className="thecarouselcontainer" > */}
-                            <div className="thecontainer">
+                            <div  className="thecarouselcontainer" >
+                            {/* <div className="thecontainer"> */}
 
-                                    {/* <CarouselProvider       
+                                    <CarouselProvider       
                                         naturalSlideWidth={250}
                                         naturalSlideHeight={950}
                                         totalSlides={projectCardsArr.length}
                                         visibleSlides={4}
-                                    > */}
-                                        {/* <span  id="leftNextButton"> <ButtonBack>  👈🏽  </ButtonBack> </span> 
-                                        <span  id="rightNextButton"> <ButtonNext> 👉🏼 </ButtonNext> </span>  */}
+                                        dragEnabled={false}
+                                        touchEnabled={false}
+                                        infinite={true}
+                                    >
+                                        <span  id="leftNextButton"> <ButtonBack>  👈🏽  </ButtonBack> </span> 
+                                        <span  id="rightNextButton"> <ButtonNext> 👉🏼 </ButtonNext> </span> 
 
-                                        {/* <Slider className={activeReview ? "" : "" } ref={this.reviewContRef}> */}
+                                        <Slider className={activeReview ? "" : "" } ref={this.reviewContRef}>
                                             {projectCardsArr}
-                                        {/* </Slider> */}
-                                    {/* </CarouselProvider> */}
+                                        </Slider>
+                                    </CarouselProvider>
 
                             </div>
+                            {/* </div> */}
                         </div>
                     </React.Fragment>
                 )
