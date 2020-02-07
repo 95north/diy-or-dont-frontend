@@ -17,8 +17,6 @@ class NewProjectForm extends React.Component{
 
 
     componentDidMount = () =>{     
-    
-        console.log("this.props.user_token", this.props.user_token)
         fetch(`http://localhost:3000/supplies`, {
                 headers: { "Content-Type": "application/json; charset=utf-8",
                     Accepts: 'application/json',
@@ -37,7 +35,6 @@ class NewProjectForm extends React.Component{
 
         if (["name", "quantity", "note", "NewProjToolNewToolName", "NewProjToolNewToolDescription"].includes(event.target.className)) {
             if (event.target.value === "newTool"){
-                console.log("In new tool!")
                 this.setState({showNewTool : [...this.state.showNewTool, event.target.dataset.id]})
 
             } else {
@@ -115,8 +112,6 @@ class NewProjectForm extends React.Component{
         if(this.props.newProjectFormFlag ){
             return(
                 <>
-                {/* <div className="panel-wrap"> */}
-                    {/* <div className="panel"> */}
                     <div id="mypanel">
                     <span onClick={this.props.activeNewProjectVoidInStore}> X </span>
                         <h1> Create New Project: </h1>

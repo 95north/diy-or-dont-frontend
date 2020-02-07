@@ -18,8 +18,6 @@ class AllProjectContainer extends React.Component{
     }
 
     componentDidMount = ()=>{
-        console.log("this.props.user_token", this.props.user_token)
-        console.log("this.props.user.user_token", this.props.user.user_token)
         fetch("http://localhost:3000/allprojects",
         {method: "GET",
             headers: {"Authorization": `${this.props.user.user_token}`}}
@@ -28,17 +26,16 @@ class AllProjectContainer extends React.Component{
         .then( projectsData => {
             this.setState({allProjects: projectsData})  
         })
-        if (this.props.user.user_id !== "undefined" && this.props.user.user_id > 0 ){
-            // fetch(`http://localhost:3000/projects/${this.props.user.user_id}`)   
+        if (this.props.user.user_id !== "undefined" && this.props.user.user_id > 0 ){ 
             fetch(`http://localhost:3000/projects/${this.props.user.user_id}`,
             {method: "GET",
             headers: {"Authorization": `${this.props.user.user_token}`}})              
             .then( res => {
-                console.log("PROJECt Container json fetch resp: ", res)
+                console.log("Project Container json fetch resp: ", res)
                 return res.json() 
             })
             .then( projectsData => {
-                console.log("PROJECt Container json fetch resp: ", projectsData)
+                console.log("Project Container json fetch resp: ", projectsData)
                 let rawDataCopy = [...projectsData]
                 rawDataCopy.pop()            
                 this.setState({
@@ -60,17 +57,6 @@ class AllProjectContainer extends React.Component{
 
 
     }
-
-    // toggleReviewToDisplay =(project_id)=>{  /// NOT USING, CHANGED TO STORE
-    //     if (this.state.reviewToDisplay === project_id){
-
-    //         this.setState({reviewToDisplay: project_id, displayReviewFlag: !this.state.displayReviewFlag})
-    //     } else {
-    //         this.setState({reviewToDisplay: project_id, displayReviewFlag: true})
-    //     }
-    //     console.log(" All PROJ cont   toggleReviewToDisplay   state After", this.state)
-    // }
-
 
     onEditClickHandler = () =>{
         console.log("Edit CLick")

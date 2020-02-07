@@ -27,8 +27,6 @@ class ProjectContainer extends React.Component{
 
 
     componentDidMount(){
-        console.log("this.props.user_token", this.props.user.user_token)
-        console.log("this.props.user.user_token", this.props.user.user_token)
         if (this.props.user.user_id !== "undefined" && this.props.user.user_id > 0 ){
             fetch(`http://localhost:3000/projects/${this.props.user.user_id}`
             ,{method: 'GET',

@@ -98,9 +98,6 @@ class App extends React.Component {
           }
         })
       })
-          //   Authorization: `${token}`
-          //   }
-          // })
         .then(resp => resp.json())
         .then(user => {
           localStorage.setItem('token', user.token);
