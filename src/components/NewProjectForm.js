@@ -18,9 +18,11 @@ class NewProjectForm extends React.Component{
 
     componentDidMount = () =>{     
     
+        console.log("this.props.user_token", this.props.user_token)
         fetch(`http://localhost:3000/supplies`, {
                 headers: { "Content-Type": "application/json; charset=utf-8",
-                    Accepts: 'application/json'
+                    Accepts: 'application/json',
+                    "Authorization": `${this.props.user.user_token}`
                  },
                 method: 'GET',
             }).then(res => res.json() )

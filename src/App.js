@@ -134,6 +134,7 @@ class App extends React.Component {
         // username: user.user_name,
         // location: user.user_location,
       });
+      this.props.history.push('/login');  //redirect to home.
     }
 
 

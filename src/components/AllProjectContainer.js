@@ -18,13 +18,21 @@ class AllProjectContainer extends React.Component{
     }
 
     componentDidMount = ()=>{
-        fetch("http://localhost:3000/allprojects")               
+        console.log("this.props.user_token", this.props.user_token)
+        console.log("this.props.user.user_token", this.props.user.user_token)
+        fetch("http://localhost:3000/allprojects",
+        {method: "GET",
+            headers: {"Authorization": `${this.props.user.user_token}`}}
+        )               
         .then( res => res.json() )
         .then( projectsData => {
             this.setState({allProjects: projectsData})  
         })
         if (this.props.user.user_id !== "undefined" && this.props.user.user_id > 0 ){
-            fetch(`http://localhost:3000/projects/${this.props.user.user_id}`)              
+            // fetch(`http://localhost:3000/projects/${this.props.user.user_id}`)   
+            fetch(`http://localhost:3000/projects/${this.props.user.user_id}`,
+            {method: "GET",
+            headers: {"Authorization": `${this.props.user.user_token}`}})              
             .then( res => {
                 console.log("PROJECt Container json fetch resp: ", res)
                 return res.json() 
@@ -160,7 +168,7 @@ class AllProjectContainer extends React.Component{
                             {(displayProjectsCardArr && displayProjectsCardArr.length>0)? displayProjectsCardArr :  
                             <div className="card">
                             <button onClick={this.props.activeNewProjectVoidInStore}>
-                                Don't See It? Create a New Project
+                                Don't See It?  a New Project
                             </button>
                             </div> 
                             }

@@ -3,7 +3,9 @@
     right: 15px;
     position: relative;
     float: right;
-    background-color: #A0FAEB;
+    /* background-color: #A0FAEB; */
+    background-color: #000000;
+
 
 }
 
@@ -15,45 +17,14 @@
 }
 
 .carousel-container{
-      /* DONT FUSS W TOO MUCH, WANT TO USE FLICKITY ANYWAY!  */
-      /* display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: auto; */
       position: fixed;
       margin-right: 10px;
       padding-right: 10px;
-      /* margin-left: 10px; */
       width: 100vw;
       min-height: 1000px;
       padding-left: 15px;
       background-image: url('https://images.homedepot-static.com/productImages/7888ad7d-d803-4644-ae83-e2e9beb7aa2c/svn/blue-ivy-hill-tile-ceramic-tile-ext3rd100048-64_1000.jpg');
       background-size: 200pct;
       opacity: 0.9;
-      /* background-image: url(''); */
-  
-  
-      /* display: grid;
-      padding: 15px, 15px, 15px, 15px;
-      grid-template-columns: 1fr 1fr 1fr; */
-  
-      /* background-color: #ebc5fa; */
-      /* Background color above overrides NavBar :(  */
-      /* justify-content: space-between;
-      align-content: space-around; */
   }
 
-
-  .carouselNONONO{
-    /* Attempt to make emokis larger */
-    /* font-size: 100px; */
-    width: 90em;
-    height: 3px;
-    /* width: 90vw; Works weird! Cards mash over ea */  
-    /* text-align:center; */
-    /* display: block; */
-    /* background-color: tan; */
-    /* position: absolute; */
-    /* position: -webkit-sticky; */
-    /* top: 150px; */
-
-}

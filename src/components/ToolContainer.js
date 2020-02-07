@@ -15,9 +15,13 @@ class ToolContainer extends React.Component{  // I somehow overwrote this to New
 
 
     componentDidMount(){
-        
+        console.log("this.props.user_token", this.props.user_token)
+        console.log("this.props.user.user_token", this.props.user.user_token)
         if (this.props.user.user_id !== "undefined" && this.props.user.user_id > 0 && this.props.user.user_id !== undefined){
-            fetch(`http://localhost:3000/projects/${this.props.user.user_id}`)              
+            fetch(`http://localhost:3000/projects/${this.props.user.user_id}`
+            ,{method: 'GET',
+            headers: {authorization: `${this.props.user.user_token}`}
+            })                
             .then( res => {
                 return res.json() 
             })
