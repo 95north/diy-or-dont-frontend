@@ -15,3 +15,7 @@ Things to Try: <br/>
 •	JavaScript <br/>
 •	Custom HTML <br/>
 •	Custom CSS <br/>
+•	React Router DOM <br/>
+•	Nexmo API (to send text messages) <br/>
+•	Pure React Carousel <br/>
+•	Local Storage Tokens (JWT Tokens) <br/>
