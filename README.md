@@ -8,13 +8,6 @@ Things to Try: <br/>
 ## Nexmo Shopping List Text Message Screenshot
 [Text Message Screenshot](https://www.dropbox.com/s/32pprg36244jgyb/NexmoTextDiyOrDont.png)
 
-## Fixes are on the way for:
-•	Editing Own Review Controlled Form (broke during Portal refactor) <br/>
-•	Sign Up Page does not redirect to login  <br/>
-•	Disable Nexmo field and add tooltip with screenshot <br/>
-•	Position & Style Logout button <br/>
-•	Change password field back to password input type  <br/>
-•	Clean up code <br/>
 
 ## Built With
 •	React.js <br/>
