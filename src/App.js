@@ -11,8 +11,6 @@ import NewProjectForm from './components/NewProjectForm';
 import ToolContainer from './components/ToolContainer';
 import NavBar from './components/NavBar';
 import {connect} from 'react-redux';
-// import NewProjectForm from './components/NewProjectForm';
-// import NavBar from './NavBar.js'
 
 
 
@@ -32,7 +30,6 @@ class App extends React.Component {
       let token = localStorage.getItem('token');
       console.log("Token in frontend App.js: ", token)
       console.log("Token === undefined?  ", token== "undefined")  // undefined FALSE "undefined" TRUE
-      console.log("Token t/F: ", token ? "VERDAD" : "FALSO")
 
       if (token && (token != "undefined")) {
       fetch('http://localhost:3000/retrieve_user', {
@@ -46,7 +43,6 @@ class App extends React.Component {
         .then(resp => resp.json())
         .then(user => {
         this.setState({ user: user });
-        //  this.props.history.push('/dogs');
         });
       }
 
@@ -58,7 +54,6 @@ class App extends React.Component {
 
     signUpSubmit = (e, user) => {
       e.preventDefault();
-      console.log('Sign Up User:', user);
       fetch('http://localhost:3000/signup', {
        method: 'POST',
        headers: {
@@ -68,15 +63,16 @@ class App extends React.Component {
        body: JSON.stringify({
         user: {
          username: user.username,
-         password:  user.password //'test'
+         password:  user.password 
         }
        })
       })
        .then(resp => resp.json())
        .then(data => {
-        console.log('Response Data', data);
         localStorage.setItem('token', data.token);
         this.setState({ user: data.user });
+        alert("Creation successful. Please log in.")
+        this.props.history.push('/login'); 
        });
      };
 
@@ -111,27 +107,17 @@ class App extends React.Component {
             location: user.user_location,
           
           });
-
-          this.props.history.push('/home');  //redirect to home.
-          // store the JWT in session storage, 
-          // dispatch another action that tells the session reducer we had a successful log in.
-        });  // closes the .then 
-
+          this.props.history.push('/home');  
+        });  
       }
     }
 
     logOut = (e, user) =>{
-      console.log("in App logout")
       localStorage.clear();
       this.setState({ user: null });
-      // CHANGE STORE TOO. 
       this.props.logOutRemoveFromStore({ 
-        // user_token: user.token,
-        // user_id: user.user_id,
-        // username: user.user_name,
-        // location: user.user_location,
       });
-      this.props.history.push('/login');  //redirect to home.
+      this.props.history.push('/login');
     }
 
 
@@ -140,12 +126,6 @@ class App extends React.Component {
     return (
 
       
-      // <div className="topnav">
-      //     <NavBar onDeleteSubmit={this.onDeleteSubmit} ponies={this.state.ponies} />
-      // </div>
-
-      // <div className="panel-wrap"> 
-      // <div className="panel"> 
       <Switch>
 
 
@@ -177,8 +157,6 @@ class App extends React.Component {
 
         <Route
             path="/projects" 
-            // component={NavBar}
-            // component={ProjectContainer}
             render={() => 
               <React.Fragment>
                 <NavBar 
@@ -215,7 +193,6 @@ class App extends React.Component {
         />  
 
         <Route 
-            // Display on all pages. If @ top, doesn't hit more specific page
             path="/" 
             component={NavBar} 
         />
@@ -223,15 +200,12 @@ class App extends React.Component {
 
       </Switch>
 
-      // {/* </div> */}
-      // {/* </div> */}
     );
   }
 } // end class
 
 
-  // console.log("Called MDP !  dispatch arg is:  ", dispatch )   // Id + token, CORRECT!   
-  // console.log("Called MDP !  argB arg is:  ", argB )   // meaninglessObj therefore useless  
+
 
 
   function mapDispatchToProps(dispatch){
@@ -242,7 +216,7 @@ class App extends React.Component {
         }),
         loggedInAddIdToStore: (userinfo)=> dispatch(
           {type: "LOGGED_IN",
-          payload: userinfo   //userReducer gets id  & token, OK! 
+          payload: userinfo    
         }),
         logOutRemoveFromStore: ()=> dispatch(
           {type: "LOGGED_OUT"}
@@ -253,7 +227,7 @@ class App extends React.Component {
 
 
 function mapStateToProps(state){
-  // console.log("Called mapStateToPRops!  state is:  ", state )   // Id + token, CORRECT!   
+ 
     return({
         user: state.user,
     })
