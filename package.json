@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "flickity": "^2.2.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "pure-react-carousel": "^1.22.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
